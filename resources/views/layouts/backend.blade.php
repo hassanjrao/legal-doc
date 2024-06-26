@@ -196,7 +196,7 @@
                                         width="32" height="32" class="rounded-circle">
                                 </div>
                                 <div class="d-xxl-block d-none my-auto">
-                                    <h6 class="fw-semibold mb-0 lh-1 fs-14">Json Taylor</h6>
+                                    <h6 class="fw-semibold mb-0 lh-1 fs-14">{{ auth()->user()->name }}</h6>
                                 </div>
                             </div>
                         </a>
@@ -205,7 +205,7 @@
                             aria-labelledby="mainHeaderProfile">
                             <li class="drop-heading d-xxl-none d-block">
                                 <div class="text-center">
-                                    <h5 class="text-dark mb-0 fs-14 fw-semibold">Json Taylor</h5>
+                                    <h5 class="text-dark mb-0 fs-14 fw-semibold">{{ auth()->user()->name }}</h5>
 
                                 </div>
                             </li>
