@@ -34,7 +34,7 @@
                                         </a> --}}
                                     </label>
                                     <div class="input-group">
-                                        <input type="password" class="form-control form-control-lg" id="password"
+                                        <input type="password" name="password" class="form-control form-control-lg" id="password"
                                             placeholder="password" required>
 
                                         @error('password')
