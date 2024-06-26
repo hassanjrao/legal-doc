@@ -212,7 +212,18 @@
                             <li class="dropdown-item"><a class="d-flex w-100" href="profile.html"><i
                                         class="fe fe-user fs-18 me-2 text-primary"></i>Profile</a></li>
 
-                            <i class="fe fe-info fs-18 me-2 text-primary"></i>Log Out</a></li>
+
+                            <li class="dropdown-item">
+                                <a class="d-flex w-100" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                                    <i class="fe fe-power fs-18 me-2 text-danger"></i>Logout
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                    style="display: none;">
+                                    @csrf
+                                </form>
+                            </li>
+
                         </ul>
                     </div>
                     <!-- End::header-element -->
