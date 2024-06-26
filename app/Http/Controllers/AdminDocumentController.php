@@ -205,6 +205,10 @@ class AdminDocumentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $document = Document::findOrFail($id);
+
+        $document->delete();
+
+        return redirect()->route('admin.documents.index')->withToastSuccess('Document deleted successfully');
     }
 }
