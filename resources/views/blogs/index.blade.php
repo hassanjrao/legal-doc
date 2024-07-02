@@ -17,21 +17,23 @@
                     <!-- COL-END -->
                     <div class="col-sm-3 col-md-12 col-lg-3 col-xl-3">
                         <div class="card">
-                            <a href="{{ route('blogs.show',$blog->id) }}"><img class="card-img-top" src="../assets/images/media/photos/3.jpg"
-                                    alt="Well, I didn&#39;t vote for you."></a>
+                            <a href="{{ route('blogs.show', $blog->id) }}">
+                                <img class="card-img-top img-fluid" style="height: 200px" src="{{ $blog->image_url }}"
+                                    alt="Well, I didn&#39;t vote for you.">
+                            </a>
                             <div class="card-body d-flex flex-column">
-                                <h4 class="fw-normal"><a href="{{ route('blogs.show',$blog->id) }}"> {{ $blog->title }} </a></h4>
+                                <h4 class="fw-normal">
+                                    <a href="{{ route('blogs.show', $blog->id) }}">
+                                        {{ $blog->title }}
+                                    </a>
+                                </h4>
                                 <div class="text-muted">{{ $blog->short_content }}</div>
-                                <div class="d-flex align-items-center pt-4 mt-auto">
-                                    <div class="avatar avatar-rounded avatar-md me-3 cover-image"
-                                        data-bs-image-src="../assets/images/faces/16.jpg"></div>
-                                    <div>
-                                        <small class="d-block text-muted text-right">
-                                            {{ $blog->created_at->diffForHumans() }}
-                                        </small>
-                                    </div>
 
+                                <div class="mt-2">
+                                    <a href="{{ route('blogs.show', $blog->id) }}"
+                                        class="btn btn-light">Read More</a>
                                 </div>
+
                             </div>
                         </div>
 

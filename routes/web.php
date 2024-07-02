@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminDocumentController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +29,8 @@ Auth::routes([
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('documents/{id}/download', [HomeController::class, 'download'])->name('documents.download');
+Route::resource('documents',DocumentController::class);
 
 Route::resource('blogs',BlogController::class);
 

@@ -1,6 +1,12 @@
 @extends('layouts.front')
 
-@section('page-title','Home')
+@section('page-title', 'Home')
+
+@section('css')
+
+
+
+@endsection
 
 @section('content')
     <!-- Hero -->
@@ -18,7 +24,7 @@
                             <li>300+ Dokumente Ligjore Falas
                             </li>
                             <li>
-                                 Modifikoni dhe Shkarkoni Dokumentet që ju Nevojiten
+                                Modifikoni dhe Shkarkoni Dokumentet që ju Nevojiten
                             </li>
                             <li>
                                 Udhëzues Ligjorë Falas"</li>
@@ -38,8 +44,216 @@
     </div>
     <!-- End:: Section-1 -->
 
+
     <!-- Start:: Section-2 -->
-    <section class="section section-bg" id="about">
+    <section class="section section-bf" id="howitworks">
+        <div class="container text-center">
+            <p class="fs-18 fw-medium mb-1"><span class="landing-section-heading">How it works?</span></p>
+            <span class="landing-title"></span>
+            <h3 class="fw-semibold mb-5">Designed with precision and well documented</h3>
+        </div>
+        <div class="row justify-content-center align-items-center g-0">
+            <div class="col-xxl-5 col-xl-5 col-lg-5 customize-image text-center">
+                <div class="text-lg-end">
+                    <img src="{{ asset('assets/images/landing/1.png') }}" alt="" class="img-fluid">
+                </div>
+            </div>
+            <div class="col-xxl-5 col-xl-5 col-lg-5 my-auto text-start pt-5 pb-0 px-lg-2 px-5">
+                <h5 class="text-lg-start fw-semibold mb-0">Present your awesome product</h5>
+                <p class=" text-muted">lorem ipsum, dolor sit var ameto condesetrat aiatel varen or damsenlel verman code
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit</p>
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <div class="d-flex">
+                            <span>
+                                <i class="bx bxs-badge-check text-primary fs-18"></i>
+                            </span>
+                            <div class="ms-2">
+                                <h6 class="fw-semibold mb-0">Can Switch Easily From Vertical to HorizontalMenu.</h6>
+                                <p class=" text-muted">lorem ipsum, dolor sit var ameto condesetrat aiatel varen or
+                                    damsenlel verman code Lorem ipsum, dolor sit amet consectetur </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-12">
+                        <div class="d-flex">
+                            <span>
+                                <i class="bx bxs-badge-check text-primary fs-18"></i>
+                            </span>
+                            <div class="ms-2">
+                                <h6 class="fw-semibold mb-0">Switch Easily From One Color to Another Color style</h6>
+                                <p class=" text-muted">lorem ipsum, dolor sit var ameto condesetrat aiatel varen or
+                                    damsenlel verman code Lorem ipsum, dolor sit amet consectetur </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-12">
+                        <div class="d-flex">
+                            <span>
+                                <i class="bx bxs-badge-check text-primary fs-18"></i>
+                            </span>
+                            <div class="ms-2">
+                                <h6 class="fw-semibold mb-0">Switch Easily From Fixed to Scrollable Layout.</h6>
+                                <p class=" text-muted">lorem ipsum, dolor sit var ameto condesetrat aiatel varen or
+                                    damsenlel verman code Lorem ipsum, dolor sit amet consectetur </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End:: Section-2 -->
+
+
+    <section class="section section-bg" id="documents">
+        <div class="container text-center">
+            <p class="fs-18 fw-medium mb-1"><span class="landing-section-heading">Documents</span></p>
+            <span class="landing-title"></span>
+            <h3 class="fw-semibold mb-5">Latest Documents</h3>
+            <div class="row justify-content-center">
+
+                @foreach ($documents as $document)
+                    <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-12">
+                        <div class="card text-center team-card ">
+                            <div class="card-body p-5">
+                                <span class="avatar avatar-xxl avatar-rounded mb-3 team-avatar">
+                                    <i class="fe fe-file-text fs-40 text-primary"></i>
+                                </span>
+                                <p class="fw-semibold fs-17 mb-0 text-default">
+                                    {{ $document->title }}
+                                </p>
+                                <span class="text-muted fs-14 text-primary fw-semibold">
+                                    {{ $document->documentCategory->name }}
+                                </span>
+                                <div class="mt-2">
+                                    <a href="{{ route('documents.download', $document->id) }}"
+                                        class="btn btn-light">Download</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            <div class="mt-5">
+                <a href="{{ route('documents.index') }}" class="btn btn-primary">View All</a>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="section landing-Features" id="features">
+        <div class="container text-center">
+            <p class="fs-18 fw-medium mb-1 text-fixed-white"><span class="landing-section-heading">Donors</span></p>
+            <span class="landing-title"></span>
+            <h2 class="fw-semibold mb-3 text-fixed-white">Donors list</h2>
+            <div class="feature-logos mt-sm-5 flex-wrap">
+                <div class="swiper features-slide text-start">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <div class="ms-sm-5 ms-2 text-center">
+                                <img src="{{ asset('assets/images/landing/web/1.png') }}" alt="image"
+                                    class="featur-icon">
+                                <h5 class="mt-3 text-fixed-white ">Bootstrap5</h5>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="ms-sm-5 ms-2 text-center">
+                                <img src="{{ asset('assets/images/landing/web/2.png') }}" alt="image"
+                                    class="featur-icon">
+                                <h5 class="mt-3 text-fixed-white ">HTML5</h5>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="ms-sm-5 ms-2 text-center">
+                                <img src="{{ asset('assets/images/landing/web/3.png') }}" alt="image"
+                                    class="featur-icon">
+                                <h5 class="mt-3 text-fixed-white ">Sass</h5>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="ms-sm-5 ms-2 text-center">
+                                <img src="{{ asset('assets/images/landing/web/4.png') }}" alt="image"
+                                    class="featur-icon">
+                                <h5 class="mt-3 text-fixed-white ">Gulp</h5>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="ms-sm-5 ms-2 text-center">
+                                <img src="{{ asset('assets/images/landing/web/5.png') }}" alt="image"
+                                    class="featur-icon">
+                                <h5 class="mt-3 text-fixed-white ">NPM</h5>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="ms-sm-5 ms-2 text-center">
+                                <img src="{{ asset('assets/images/landing/web/3.png') }}" alt="image"
+                                    class="featur-icon">
+                                <h5 class="mt-3 text-fixed-white ">Sass</h5>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="ms-sm-5 ms-2 text-center">
+                                <img src="{{ asset('assets/images/landing/web/4.png') }}" alt="image"
+                                    class="featur-icon">
+                                <h5 class="mt-3 text-fixed-white ">Gulp</h5>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="ms-sm-5 ms-2 text-center">
+                                <img src="{{ asset('assets/images/landing/web/5.png') }}" alt="image"
+                                    class="featur-icon">
+                                <h5 class="mt-3 text-fixed-white ">NPM</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-bg" id="blogs">
+        <div class="container text-center">
+            <p class="fs-18 fw-medium mb-1"><span class="landing-section-heading">Blogs</span></p>
+            <span class="landing-title"></span>
+            <h3 class="fw-semibold mb-5">Latest Blogs</h3>
+            <div class="row justify-content-center">
+
+                @foreach ($blogs as $blog)
+                    <div class="col-sm-3 col-md-12 col-lg-3 col-xl-3">
+                        <div class="card">
+                            <a href="{{ route('blogs.show', $blog->id) }}">
+                                <img class="card-img-top img-fluid" style="height: 200px" src="{{ $blog->image_url }}"
+                                    alt="Well, I didn&#39;t vote for you.">
+                            </a>
+                            <div class="card-body d-flex flex-column">
+                                <h4 class="fw-normal">
+                                    <a href="{{ route('blogs.show', $blog->id) }}">
+                                        {{ $blog->title }}
+                                    </a>
+                                </h4>
+                                <div class="text-muted">{{ $blog->short_content }}</div>
+
+                                <div class="mt-2">
+                                    <a href="{{ route('blogs.show', $blog->id) }}"
+                                        class="btn btn-light">Read More</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            <div class="mt-5">
+                <a href="{{ route('blogs.index') }}" class="btn btn-primary">View All</a>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Start:: Section-2 -->
+    <section class="section " id="about">
         <div class="container text-center">
             <p class="fs-18 fw-medium mb-1"><span class="landing-section-heading">About</span></p>
             <span class="landing-title"></span>
@@ -97,6 +311,10 @@
         </div>
     </section>
     <!-- End:: Section-2 -->
+
+
+
+
 
 
 
@@ -227,3 +445,5 @@
 
     <!-- END Hero -->
 @endsection
+@push('scripts')
+@endpush

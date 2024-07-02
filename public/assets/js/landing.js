@@ -346,18 +346,18 @@ function reveal() {
   }
 }
 reveal();
-const pageLink = document.querySelectorAll(".side-menu__item");
-pageLink.forEach((elem) => {
-  if (elem != "javascript:void(0);" && elem !== "#") {
-    elem.addEventListener("click", (e) => {
-      e.preventDefault();
-      document.querySelector(elem.getAttribute("href"))?.scrollIntoView({
-        behavior: "smooth",
-        offsetTop: 1 - 60,
-      });
-    });
-  }
-});
+// const pageLink = document.querySelectorAll(".side-menu__item");
+// pageLink.forEach((elem) => {
+//   if (elem != "javascript:void(0);" && elem !== "#") {
+//     elem.addEventListener("click", (e) => {
+//       e.preventDefault();
+//       document.querySelector(elem.getAttribute("href"))?.scrollIntoView({
+//         behavior: "smooth",
+//         offsetTop: 1 - 60,
+//       });
+//     });
+//   }
+// });
 // section menu active
 function onScroll(event) {
   const sections = document.querySelectorAll(".side-menu__item");
@@ -391,7 +391,7 @@ function onScroll(event) {
     }
   });
 }
-window.document.addEventListener("scroll", onScroll);
+// window.document.addEventListener("scroll", onScroll);
 // for menu target scroll on click
 
 // for testimonials

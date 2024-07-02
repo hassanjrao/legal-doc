@@ -35,8 +35,10 @@
     <link rel="stylesheet" href="{{ asset('assets/libs/@simonwep/pickr/themes/nano.min.css') }}">
 
     <!-- Choices Css -->
-    <link rel="stylesheet" href="{{ asset('assets/libs/choices.js') }}/public/assets/styles/choices.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/libs/choices.js') }}">
 
+    @yield('css')
+{{--
     <script>
         if (localStorage.sashlandingdarktheme) {
             document.querySelector("html").setAttribute("data-theme-mode", "dark")
@@ -46,7 +48,7 @@
             document.querySelector("#style")?.setAttribute("href",
                 "{{ asset('assets/libs/bootstrap/css/bootstrap.rtl.min.css') }}");
         }
-    </script>
+    </script> --}}
 
 
 </head>
@@ -54,7 +56,7 @@
 <body class="landing-body">
 
     <!-- Start Switcher -->
-    {{-- <div class="offcanvas offcanvas-end" tabindex="-1" id="switcher-canvas" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="switcher-canvas" aria-labelledby="offcanvasRightLabel">
         <div class="offcanvas-header border-bottom">
             <h5 class="offcanvas-title" id="offcanvasRightLabel">Switcher</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -136,7 +138,7 @@
                 <a href="javascript:void(0);" id="reset-all" class="btn btn-danger m-1">Reset</a>
             </div>
         </div>
-    </div> --}}
+    </div>
     <!-- End Switcher -->
 
     <div class="landing-page-wrapper">
@@ -238,12 +240,12 @@
                         <ul class="main-menu">
                             <!-- Start::slide -->
                             <li class="slide">
-                                <a class="side-menu__item" href="#home">
+                                <a class="side-menu__item" href="{{ route('home') }}">
                                     <span class="side-menu__label">Home</span>
                                 </a>
                             </li>
                             <li class="slide">
-                                <a href="#about" class="side-menu__item">
+                                <a href="{{ route('documents.index') }}" class="side-menu__item">
                                     <span class="side-menu__label">Documents</span>
                                 </a>
                             </li>
@@ -256,7 +258,7 @@
                             </li>
                             <li class="slide">
                                 <a href="#contact" class="side-menu__item">
-                                    <span class="side-menu__label">Contact US</span>
+                                    <span class="side-menu__label">Contact Us</span>
                                 </a>
                             </li>
                             <!-- End::slide -->
@@ -328,16 +330,16 @@
                                 <h6 class="fw-semibold">INFO</h6>
                                 <ul class="list-unstyled op-6 fw-medium landing-footer-list mb-0">
                                     <li>
-                                        <a href="javascript:void(0);" class="">Contact US</a>
+                                        <a href="#contact" class="">Contact Us</a>
                                     </li>
                                     <li>
-                                        <a href="javascript:void(0);" class="">About</a>
+                                        <a href="#about" class="">About</a>
                                     </li>
                                     <li>
-                                        <a href="javascript:void(0);" class="">Documents</a>
+                                        <a href="{{ route('documents.index') }}" class="">Documents</a>
                                     </li>
                                     <li>
-                                        <a href="javascript:void(0);" class="">Blog</a>
+                                        <a href="{{ route('blogs.index') }}" class="">Blog</a>
                                     </li>
                                 </ul>
                             </div>
@@ -395,7 +397,7 @@
     <script src="{{ asset('assets/libs/@simonwep/pickr/pickr.es5.min.js') }}"></script>
 
     <!-- Choices JS -->
-    <script src="{{ asset('assets/libs/choices.js') }}/public/assets/scripts/choices.min.js')}}"></script>
+    <script src="{{ asset('assets/libs/choices.js') }}"></script>
 
     <!-- Swiper JS -->
     <script src="{{ asset('assets/libs/swiper/swiper-bundle.min.js') }}"></script>
@@ -411,6 +413,8 @@
 
     <!-- Sticky JS -->
     <script src="{{ asset('assets/js/sticky.js') }}"></script>
+
+    @stack('scripts')
 
 </body>
 
