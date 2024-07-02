@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Document;
+use App\Models\DocumentCategory;
 use Illuminate\Http\Request;
 
 class DocumentController extends Controller
@@ -11,9 +13,28 @@ class DocumentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $request->validate([
+            'category' => 'nullable|exists:document_categories,id',
+            'search' => 'nullable|string'
+        ]);
+
+        $category = $request->category;
+        $search = $request->search;
+
+        $documents = Document::latest()
+            ->when($category, function ($query) use ($category) {
+                return $query->where('document_category_id', $category);
+            })
+            ->when($search, function ($query) use ($search) {
+                return $query->where('title', 'like', "%$search%");
+            })
+            ->paginate(40);
+
+        $documentCategories = DocumentCategory::all();
+
+        return view('documents.index', compact('documents', 'documentCategories'));
     }
 
     /**
