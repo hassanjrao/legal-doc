@@ -37,18 +37,22 @@ Route::prefix("admin")->name("admin.")->group(function () {
     Route::get("", [AdminDashboardController::class, "index"])->name("dashboard.index");
 
     Route::get('documents/{id}/fill', [AdminDocumentController::class, 'showFillForm'])->name('documents.showFillForm');
+
     Route::post('documents/fill', [AdminDocumentController::class, 'fill'])->name('documents.fill');
-    Route::get('documents/complete', function () {
-        return 'Document filled successfully!';
-    })->name('documents.complete');
+
+
+    Route::get('documents/{id}/download', [AdminDocumentController::class, 'download'])->name('documents.download');
+
+    Route::get('documents/{id}/download/user', [AdminDocumentController::class, 'downloadUserDocument'])->name('documents.download.user');
+
 
     Route::resource('documents', AdminDocumentController::class);
 
-    Route::resource('blogs', AdminBlogController::class);
+    Route::resource('blogs', AdminBlogController::class)->middleware('role:admin');
 
-    Route::resource('users', AdminUserController::class);
+    Route::resource('users', AdminUserController::class)->middleware('role:admin');
 
-    Route::resource('contact-us-users', AdminContactUsUserController::class);
+    Route::resource('contact-us-users', AdminContactUsUserController::class)->middleware('role:admin');
 });
 
 });

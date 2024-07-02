@@ -44,7 +44,6 @@
                                     @csrf
                                     <input type="hidden" name="id" value="{{ $document->id }}">
                                     <div class="form-group">
-                                        <label for="document_content">Document Content</label>
                                         <textarea id="document_content" name="document_content" class="form-control summernote">{{ $htmlContent }}</textarea>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Submit</button>
@@ -67,6 +66,10 @@
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <script>
+        var documentPlaceholdersIds = @json($documentPlaceholdersIds);
+
+        var userDocumentResponses = @json($userDocumentResponses);
+
         $(document).ready(function() {
             $('.summernote').summernote({
                 height: 1300,
@@ -76,17 +79,93 @@
                     onInit: function() {
                         // Ensure lists are displayed correctly in the editor
                         $('.note-editable').css('list-style-type', 'disc');
-                        $('.note-editable').find(':not([contenteditable])').attr('contenteditable', 'false');
+                        $('.note-editable').find(':not([contenteditable])').attr('contenteditable',
+                            'false');
 
                         // convert .editable class span to input type text
                         $('.note-editable').find('.editable').each(function() {
                             var $this = $(this);
-                            var input = $('<input type="text"  value="">');
+                            var input = $('<input  type="text"  name="placeholders[]" >');
                             $this.replaceWith(input);
+                        });
+
+                        // fill the placeholders with the user responses
+                        $('input[name="placeholders[]"]').each(function(index) {
+                            $(this).val(userDocumentResponses[index]);
                         });
                     }
                 }
             });
+
+            // form submit
+            $('form').on('submit', function() {
+
+                // disable submit button
+                $('button[type="submit"]').attr('disabled', 'disabled');
+                // change submit button text
+                $('button[type="submit"]').text('Saving...');
+
+                // prevent form submission
+                event.preventDefault();
+
+                // get the values of the placeholders in sequence and align them with the document placeholders
+                var placeholders = [];
+                $('input[name="placeholders[]"]').each(function(index) {
+
+                    placeholders.push({
+                        id: documentPlaceholdersIds[index],
+                        value: $(this).val()
+                    });
+                });
+
+
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: 'POST',
+                    data: {
+                        _token: $('input[name="_token"]').val(),
+                        id: $('input[name="id"]').val(),
+                        placeholders: placeholders
+                    },
+                    success: function(response) {
+                        console.log('succ', response);
+
+                        Toast.fire({
+                            icon: "success",
+                            title: response.message
+                        });
+
+                        // delay before redirecting
+                        setTimeout(function() {
+                            // redirect to the documents page
+                            window.location.href = "{{ route('admin.documents.index') }}";
+                        }, 1500);
+
+
+                        // enable submit button
+                        $('button[type="submit"]').removeAttr('disabled');
+                        // change submit button text
+                        $('button[type="submit"]').text('Submit');
+                    },
+                    error: function(error) {
+                        console.log('erro', error);
+
+                        Toast.fire({
+                            icon: "error",
+                            title: error.responseJSON.message
+                        });
+
+                        // enable submit button
+                        $('button[type="submit"]').removeAttr('disabled');
+                        // change submit button text
+                        $('button[type="submit"]').text('Submit');
+
+                    }
+
+                });
+
+            });
+
         });
     </script>
 @endpush

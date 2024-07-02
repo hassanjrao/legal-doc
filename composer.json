@@ -7,6 +7,7 @@
     "require": {
         "php": "^7.4",
         "doctrine/dbal": "^3.0",
+        "ezyang/htmlpurifier": "^4.17",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/cashier": "^13.17",
@@ -16,7 +17,7 @@
         "laravel/ui": "^3.4",
         "paypal/rest-api-sdk-php": "^1.14",
         "phpoffice/phpword": "^1.2",
-        "realrashid/sweet-alert": "^7.1",
+        "realrashid/sweet-alert": "^7.2",
         "spatie/laravel-permission": "^5.11",
         "srmklive/paypal": "~3.0",
         "twilio/sdk": "^7.13"

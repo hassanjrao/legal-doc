@@ -54,7 +54,6 @@
     {{-- <link rel="stylesheet" href="{{ asset('assets/libs/quill/quill.snow.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/libs/quill/quill.bubble.css') }}"> --}}
 
-
     @yield('css')
 
 
@@ -214,7 +213,8 @@
 
 
                             <li class="dropdown-item">
-                                <a class="d-flex w-100" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                <a class="d-flex w-100" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">
                                     <i class="fe fe-power fs-18 me-2 text-danger"></i>Logout
                                 </a>
@@ -264,7 +264,8 @@
 
                         <!-- Start::slide -->
                         <li class="slide">
-                            <a href="{{ route('admin.dashboard.index') }}" class="side-menu__item">
+                            <a href="{{ route('admin.dashboard.index') }}"
+                                class="side-menu__item {{ request()->is('admin/dashboard/*') || request()->is('admin/dashboard') ? ' active' : '' }}">
                                 <i class="fe fe-home side-menu__icon"></i>
                                 <span class="side-menu__label">Dashboard</span>
                             </a>
@@ -274,7 +275,8 @@
 
                         <!-- Start::slide -->
                         <li class="slide">
-                            <a href="{{ route('admin.documents.index') }}" class="side-menu__item">
+                            <a href="{{ route('admin.documents.index') }}"
+                                class="side-menu__item {{ request()->is('admin/documents/*') || request()->is('admin/documents') ? ' active' : '' }}">
                                 <i class="fe fe-file-text
                                 side-menu__icon"></i>
                                 <span class="side-menu__label">Documents</span>
@@ -283,34 +285,39 @@
                         <!-- End::slide -->
 
 
-                        <!-- Start::slide -->
-                        <li class="slide">
-                            <a href="{{ route('admin.blogs.index') }}" class="side-menu__item">
-                                <i class="fe fe-clipboard side-menu__icon"></i>
-                                <span class="side-menu__label">Blogs</span>
-                            </a>
-                        </li>
-                        <!-- End::slide -->
+                        @hasrole('admin')
+                            <!-- Start::slide -->
+                            <li class="slide">
+                                <a href="{{ route('admin.blogs.index') }}"
+                                    class="side-menu__item {{ request()->is('admin/blogs/*') || request()->is('admin/blogs') ? ' active' : '' }}">
+                                    <i class="fe fe-clipboard side-menu__icon"></i>
+                                    <span class="side-menu__label">Blogs</span>
+                                </a>
+                            </li>
+                            <!-- End::slide -->
 
 
-                        <!-- Start::slide -->
-                        <li class="slide">
-                            <a href="{{ route('admin.users.index') }}" class="side-menu__item">
-                                <i class="fe fe-users side-menu__icon"></i>
-                                <span class="side-menu__label">Users</span>
-                            </a>
-                        </li>
-                        <!-- End::slide -->
+                            <!-- Start::slide -->
+                            <li class="slide">
+                                <a href="{{ route('admin.users.index') }}"
+                                    class="side-menu__item {{ request()->is('admin/users/*') || request()->is('admin/users') ? ' active' : '' }}">
+                                    <i class="fe fe-users side-menu__icon"></i>
+                                    <span class="side-menu__label">Users</span>
+                                </a>
+                            </li>
+                            <!-- End::slide -->
 
 
-                        <!-- Start::slide -->
-                        <li class="slide">
-                            <a href="{{ route('admin.contact-us-users.index') }}" class="side-menu__item">
-                                <i class="fe fe-bell side-menu__icon"></i>
-                                <span class="side-menu__label">Contact Us</span>
-                            </a>
-                        </li>
-                        <!-- End::slide -->
+                            <!-- Start::slide -->
+                            <li class="slide">
+                                <a href="{{ route('admin.contact-us-users.index') }}"
+                                    class="side-menu__item {{ request()->is('admin/contact-us-users/*') || request()->is('admin/contact-us-users') ? ' active' : '' }}">
+                                    <i class="fe fe-bell side-menu__icon"></i>
+                                    <span class="side-menu__label">Contact Us</span>
+                                </a>
+                            </li>
+                            <!-- End::slide -->
+                        @endhasrole
 
                     </ul>
                     <div class="slide-right" id="slide-right"><svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191"
@@ -967,7 +974,45 @@
     <script src="{{ asset('assets/js/custom.js') }}"></script>
 
 
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @include('sweetalert::alert')
 
+
+
+    <script>
+        function confirmDelete(id) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $("#form-" + id).submit();
+                    // Swal.fire(
+                    //     'Deleted!',
+                    //     'Your file has been deleted.',
+                    //     'success'
+                    // )
+                }
+            })
+        }
+
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+    </script>
 
     @stack('scripts')
 

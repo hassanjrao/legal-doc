@@ -80,7 +80,13 @@
                             $value = old('file', $document ? $document->file : null);
                             ?>
 
-                            <label class="form-label">File</label>
+                            @if ($document)
+                            <a href="{{ $document->file_url }}" target="_blank">
+                                <img src="{{ asset('assets/images/media/files/documents/8.png') }}"
+                                    alt="img">
+                            </a>
+                            @endif
+
                             <input type="file" class="form-control" name="file" value="{{ $value }}">
                             @error('file')
                                 <span class="text-danger" role="alert">

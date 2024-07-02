@@ -24,7 +24,6 @@
                                     <th>Category</th>
                                     <th>Title</th>
                                     <th>Document</th>
-                                    <th>Created By</th>
                                     <th>Created At</th>
                                     <th>Action</th>
                                 </tr>
@@ -36,24 +35,47 @@
                                         <td>{{ $document->documentCategory->name }}</td>
                                         <td>{{ $document->title }}</td>
                                         <td>
-                                            <a href="{{ asset('storage/' . $document->document) }}" target="_blank">
-                                                <img src="{{ asset('assets/images/media/files/documents/8.png') }}" alt="img">
+                                            <a href="{{ $document->file_url }}" target="_blank">
+                                                <img src="{{ asset('assets/images/media/files/documents/8.png') }}"
+                                                    alt="img">
                                             </a>
                                         </td>
-                                        <td>{{ $document->createdBy->name }}</td>
-                                        <td>{{ $document->created_at->format('d M Y') }}</td>
+                                        <td>{{ $document->created_at }}</td>
                                         <td>
 
-                                            <a href="{{ route('admin.documents.showFillForm', $document->id) }}" type="button"
-                                                class="btn btn-sm btn-primary-gradient btn-wave waves-effect waves-light">Edit</a>
 
-                                            <form action="{{ route('admin.documents.destroy', $document->id) }}"
-                                                method="POST" style="display: inline-block">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger-gradient btn-wave waves-effect waves-light"
-                                                    onclick="return confirm('Are you sure?')">Delete</button>
-                                            </form>
+
+
+                                            @hasrole('admin')
+                                                <a href="{{ route('admin.documents.edit', $document->id) }}" type="button"
+                                                    class="btn btn-sm btn-primary-gradient btn-wave waves-effect waves-light">Edit</a>
+                                                <a href="{{ route('admin.documents.show', $document->id) }}" type="button"
+                                                    class="btn btn-sm btn-primary-gradient btn-wave waves-effect waves-light">View</a>
+                                                <a href="{{ route('admin.documents.download', $document->id) }}" type="button"
+                                                    class="btn btn-sm btn-warning-gradient btn-wave waves-effect waves-light">Download</a>
+                                                <form id="form-{{ $document->id }}"
+                                                    action="{{ route('admin.documents.destroy', $document->id) }}"
+                                                    method="POST">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <input type="button" onclick="confirmDelete({{ $document->id }})"
+                                                        class="btn btn-sm btn-danger-gradient btn-wave waves-effect waves-light"
+                                                        value="Delete">
+
+                                                </form>
+                                            @endhasrole
+
+
+                                            @hasanyrole('user|company')
+                                                <a href="{{ route('admin.documents.showFillForm', $document->id) }}"
+                                                    type="button"
+                                                    class="btn btn-sm btn-primary-gradient btn-wave waves-effect waves-light">Edit</a>
+                                                <a href="{{ route('admin.documents.download.user', $document->id) }}"
+                                                    type="button"
+                                                    class="btn btn-sm btn-warning-gradient btn-wave waves-effect waves-light">Download</a>
+                                            @endhasanyrole
+
+
                                         </td>
                                     </tr>
                                 @endforeach

@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Document;
 use App\Models\DocumentCategory;
+use App\Models\DocumentPlaceHolder;
+use App\Models\UserDocumentResponse;
+use HTMLPurifier;
+use HTMLPurifier_Config;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\FacadesLog;
@@ -61,8 +65,26 @@ class AdminDocumentController extends Controller
             'title' => $request->title,
             'document_category_id' => $request->category,
             'file_path' => $path,
-            'created_by_user_id' => 1,
+            'created_by_user_id' => auth()->user()->id,
         ]);
+
+        $htmlContent = $this->convertDocToHtml(storage_path('app/public/' . $doc->file_path));
+
+        $htmlContent = $this->replacePlaceholdersWithEditableSpans($htmlContent);
+
+        // count tags which have contenteditable="true"
+
+        $count = preg_match_all('/contenteditable="true"/', $htmlContent);
+
+
+        // add the entries to DocumentPlaceholder table
+        for ($i = 0; $i < $count; $i++) {
+            DocumentPlaceHolder::create([
+                'document_id' => $doc->id,
+            ]);
+        }
+
+
 
         return redirect()->route('admin.documents.index')->withToastSuccess('Document uploaded successfully');
     }
@@ -74,35 +96,53 @@ class AdminDocumentController extends Controller
         $document = Document::findOrFail($id);
         $htmlContent = $this->convertDocToHtml(storage_path('app/public/' . $document->file_path));
 
+        $htmlContent = $this->replacePlaceholdersWithEditableSpans($htmlContent);
 
-        return view('admin.documents.fill', compact('document', 'htmlContent'));
+        $documentPlaceholders = DocumentPlaceHolder::where('document_id', $document->id)->get();
+
+
+        $documentPlaceholdersIds= $documentPlaceholders->pluck('id')->toArray();
+
+
+        $userDocumentResponses = UserDocumentResponse::where('document_id', $document->id)
+            ->where('user_id', auth()->user()->id)
+            ->get();
+
+        $userDocumentResponses = $userDocumentResponses->pluck('response')->toArray();
+
+
+
+
+        return view('admin.documents.fill', compact('document', 'htmlContent','documentPlaceholdersIds','userDocumentResponses'));
     }
 
     // Fill placeholders in the document and save the filled document
     public function fill(Request $request)
     {
-        $data = $request->input('document_content', '');
 
-        dd($data);
+        $placeholders = $request->placeholders;
 
-        $editedHtml = $data;
-
-        // Initialize PHPWord
-        $phpWord = new PhpWord();
-
-        // Load HTML reader plugin
-        $htmlWriter = IOFactory::createWriter($phpWord, 'HTML');
-
-        // Write edited HTML content to PHPWord
-        // $section = $phpWord->addSection();
+        $document = Document::findOrFail($request->id);
 
 
-        // Save PHPWord object as .docx file
-        $docxFilePath = storage_path('app/public/edited_document.docx');
-        $htmlWriter->save($docxFilePath, 'Word2007');
+        foreach ($placeholders as $placeholder) {
+
+            UserDocumentResponse::updateOrCreate([
+                'user_id' => auth()->user()->id,
+                'document_id' => $document->id,
+                'document_place_holder_id' => $placeholder['id'],
+            ],[
+                'user_id' => auth()->user()->id,
+                'document_id' => $document->id,
+                'document_place_holder_id' => $placeholder['id'],
+                'response' => $placeholder['value'],
+            ]);
+
+        }
 
 
-        return redirect()->route('admin.documents.complete');
+        return response()->json(['message' => 'Document filled successfully!'], 200);
+
     }
 
     // Convert the document to HTML
@@ -131,35 +171,21 @@ class AdminDocumentController extends Controller
 
         $htmlContent = file_get_contents($htmlFilePath);
 
+        return $htmlContent;
+    }
+
+
+    public function replacePlaceholdersWithEditableSpans($htmlContent)
+    {
+
         // Replace placeholders with editable spans
         // Replace placeholders with editable spans
         $htmlContent = preg_replace('/__+/', '<span class="editable" contenteditable="true">$0</span>', $htmlContent);
 
         return $htmlContent;
+
     }
 
-
-    // Fill placeholders in the HTML content
-    private function fillPlaceholdersInHtml(String $htmlContent)
-    {
-        $index = 0; // To track the current input to replace
-        return preg_replace_callback('/_{2,}/', function ($matches) use (&$index, $htmlContent) {
-            $index++;
-            return $htmlContent;
-        }, $htmlContent);
-    }
-
-
-    // Save the filled HTML content back to a Word document
-    private function saveHtmlToWord($htmlContent)
-    {
-        $phpWord = new \PhpOffice\PhpWord\PhpWord();
-        $section = $phpWord->addSection();
-        \PhpOffice\PhpWord\Shared\Html::addHtml($section, $htmlContent, false, false);
-
-        $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
-        $objWriter->save(storage_path('app/public/filled_document.docx'));
-    }
 
 
 
@@ -171,7 +197,11 @@ class AdminDocumentController extends Controller
      */
     public function show($id)
     {
-        //
+
+        $document = Document::findOrFail($id);
+        $htmlContent = $this->convertDocToHtml(storage_path('app/public/' . $document->file_path));
+
+        return view('admin.documents.show', compact('document', 'htmlContent'));
     }
 
     /**
@@ -182,7 +212,11 @@ class AdminDocumentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $document = Document::findOrFail($id);
+
+        $categories = DocumentCategory::all();
+
+        return view('admin.documents.add_edit', compact('document', 'categories'));
     }
 
     /**
@@ -210,5 +244,74 @@ class AdminDocumentController extends Controller
         $document->delete();
 
         return redirect()->route('admin.documents.index')->withToastSuccess('Document deleted successfully');
+    }
+
+
+    public function download($id)
+    {
+        $document = Document::findOrFail($id);
+
+        return response()->download(storage_path('app/public/' . $document->file_path));
+    }
+
+    public function downloadUserDocument($id)
+    {
+        $document = Document::findOrFail($id);
+
+        $htmlContent = $this->convertDocToHtml(storage_path('app/public/' . $document->file_path));
+
+         // Sanitize the HTML content
+
+        $htmlContent = $this->replacePlaceholdersWithEditableSpans($htmlContent);
+
+
+        $userDocumentResponses = UserDocumentResponse::where('document_id', $document->id)
+            ->where('user_id', auth()->user()->id)
+            ->get();
+
+        $userDocumentResponses = $userDocumentResponses->pluck('response')->toArray();
+
+        foreach ($userDocumentResponses as $response) {
+            // MAKE response bold
+            $response = '<b>'.' ' . $response .' '. '</b>';
+            $htmlContent = preg_replace('/<span class="editable" contenteditable="true">__+<\/span>/', $response, $htmlContent, 1);
+        }
+
+
+        $htmlContent = $this->sanitizeHtml($htmlContent);
+
+        // dd($htmlContent);
+
+        $phpWord = new PhpWord();
+        $section = $phpWord->addSection();
+
+        // Add HTML content to the section
+        \PhpOffice\PhpWord\Shared\Html::addHtml($section, $htmlContent, false, false);
+
+
+        $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
+        $objWriter->save(storage_path('app/public/' . basename($document->file_path, '.docx') . '_filled.docx'));
+
+        return response()->download(storage_path('app/public/' . basename($document->file_path, '.docx') . '_filled.docx'));
+    }
+
+    private function sanitizeHtml($html)
+    {
+        // Create a new configuration object
+        $config = HTMLPurifier_Config::createDefault();
+
+        // Configure HTMLPurifier
+        $config->set('HTML.Doctype', 'XHTML 1.0 Transitional');
+        $config->set('HTML.Allowed', 'p,b,a[href],i,em,strong,ul,ol,li,br,span');
+        $config->set('CSS.AllowedProperties', []);
+        $config->set('AutoFormat.RemoveEmpty', true);
+
+        // Create a new HTMLPurifier object
+        $purifier = new HTMLPurifier($config);
+
+        // Purify the HTML
+        $cleanHtml = $purifier->purify($html);
+
+        return $cleanHtml;
     }
 }
