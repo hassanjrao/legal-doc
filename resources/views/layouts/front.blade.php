@@ -252,12 +252,14 @@
                             <!-- End::slide -->
                             <!-- Start::slide -->
                             <li class="slide">
-                                <a href="#about" class="side-menu__item">
+                                <a href="{{ request()->is('/') ? '#about' : route('home').'#about' }}"
+                                 class="side-menu__item">
                                     <span class="side-menu__label">About</span>
                                 </a>
                             </li>
                             <li class="slide">
-                                <a href="#contact" class="side-menu__item">
+                                <a href="{{ request()->is('/') ? '#contact' : route('home').'#contact' }}"
+                                class="side-menu__item">
                                     <span class="side-menu__label">Contact Us</span>
                                 </a>
                             </li>
@@ -330,10 +332,12 @@
                                 <h6 class="fw-semibold">INFO</h6>
                                 <ul class="list-unstyled op-6 fw-medium landing-footer-list mb-0">
                                     <li>
-                                        <a href="#contact" class="">Contact Us</a>
+                                        <a href="{{ request()->is('/') ? '#contact' : route('home').'#contact' }}"
+                                        class="">Contact Us</a>
                                     </li>
                                     <li>
-                                        <a href="#about" class="">About</a>
+                                        <a href="{{ request()->is('/') ? '#about' : route('home').'#about' }}"
+                                        class="">About</a>
                                     </li>
                                     <li>
                                         <a href="{{ route('documents.index') }}" class="">Documents</a>
