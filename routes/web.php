@@ -37,7 +37,7 @@ Route::resource('blogs', BlogController::class);
 Route::get('symlink', function () {
 
 
-    symlink('/home/j8ajiqs84wOi/laravel/storage/app/public', '/home/j8ajiqs84wOi/public_html/storage');
+    symlink('/home/j8ajiqs84w0i/laravel/storage/app/public', '/home/j8ajiqs84w0i/public_html/storage');
 
     return 'Symlink process successfully completed';
 });
