@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use App\Models\ContactUsUser;
 use App\Models\Document;
 use Illuminate\Http\Request;
 
@@ -36,5 +37,25 @@ class HomeController extends Controller
         $document = Document::findOrFail($id);
 
         return response()->download(storage_path('app/public/' . $document->file_path));
+    }
+
+    public function contactSubmit(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'type' => 'required|in:complaint,request',
+            'message' => 'required',
+        ]);
+
+        ContactUsUser::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'type' => $request->type,
+            'message' => $request->message,
+        ]);
+
+
+        return redirect()->back()->withToastSuccess('Your message has been submitted successfully!');
     }
 }

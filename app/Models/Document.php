@@ -22,7 +22,12 @@ class Document extends Model
 
     public function documentCategory()
     {
-        return $this->belongsTo(DocumentCategory::class);
+        return $this->belongsTo(DocumentCategory::class)->withTrashed();
+    }
+
+    public function lawArea()
+    {
+        return $this->belongsTo(LawArea::class)->withTrashed();
     }
 
     public function createdBy()

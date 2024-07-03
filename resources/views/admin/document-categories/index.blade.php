@@ -1,6 +1,6 @@
 @extends('layouts.backend')
 
-@section('page-name', 'Blogs')
+@section('page-name', 'Document Categories')
 
 @section('content')
     <!-- Start::app-content -->
@@ -11,9 +11,9 @@
                 <div class="card custom-card">
                     <div class="card-header ">
                         <div class="card-title d-flex justify-content-between w-100">
-                            <span>Blogs</span>
+                            <span>Document Categories</span>
 
-                            <a href="{{ route('admin.blogs.create') }}" class="btn btn-primary">Add</a>
+                            <a href="{{ route('admin.document-categories.create') }}" class="btn btn-primary">Add</a>
                         </div>
                     </div>
                     <div class="card-body">
@@ -21,33 +21,35 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Title</th>
-                                    <th>Content</th>
+                                    <th>Name</th>
                                     <th>Created At</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($blogs as $blog)
+                                @foreach ($documentCategories as $category)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $blog->title }}</td>
-                                        <td>{{ $blog->short_content }}</td>
+                                        <td>{{ $category->name }}</td>
 
-                                        <td>{{ $blog->created_at}}</td>
-                                        <td >
+                                        <td>{{ $category->created_at}}</td>
+                                        <td class="d-flex">
 
-                                            <a href="{{ route('admin.blogs.edit', $blog->id) }}" type="button"
+                                            <a href="{{ route('admin.document-categories.edit', $category->id) }}" type="button"
                                                 class="btn btn-sm btn-primary-gradient btn-wave waves-effect waves-light">Edit</a>
 
-                                            <form action="{{ route('admin.blogs.destroy', $blog->id) }}"
-                                                style="display: inline-block"
-                                                method="POST" style="display: inline-block">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger-gradient btn-wave waves-effect waves-light"
-                                                    onclick="return confirm('Are you sure?')">Delete</button>
-                                            </form>
+                                                <form id="form-{{ $category->id }}"
+                                                    action="{{ route('admin.document-categories.destroy', $category->id) }}"
+                                                    method="POST">
+                                                    @method('DELETE')
+                                                    @csrf
+
+
+                                                    <button type="button"
+                                                        class="btn btn-sm btn-danger-gradient btn-wave waves-effect waves-light"
+                                                        onclick="confirmDelete({{ $category->id }})">Delete</button>
+
+                                                </form>
                                         </td>
                                     </tr>
                                 @endforeach

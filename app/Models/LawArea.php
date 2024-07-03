@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ContactUsUser extends Model
+class LawArea extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $guarded=[];
+    protected $guarded = [];
 }

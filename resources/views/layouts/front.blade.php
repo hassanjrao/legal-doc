@@ -418,6 +418,10 @@
     <!-- Sticky JS -->
     <script src="{{ asset('assets/js/sticky.js') }}"></script>
 
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @include('sweetalert::alert')
+
     @stack('scripts')
 
 </body>

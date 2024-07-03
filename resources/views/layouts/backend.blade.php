@@ -137,11 +137,11 @@
                     <!-- Start::header-element -->
                     <div class="header-element country-selector">
                         <!-- Start::header-link|dropdown-toggle -->
-                        <a href="javascript:void(0);" class="header-link dropdown-toggle" data-bs-auto-close="outside"
+                        {{-- <a href="javascript:void(0);" class="header-link dropdown-toggle" data-bs-auto-close="outside"
                             data-bs-toggle="dropdown">
                             <img src="{{ asset('assets/images/flags/us_flag.jpg') }}" alt="img"
                                 class="rounded-circle">
-                        </a>
+                        </a> --}}
                         <!-- End::header-link|dropdown-toggle -->
                         <ul class="main-header-dropdown dropdown-menu dropdown-menu-end" data-popper-placement="none">
                             <li>
@@ -208,7 +208,8 @@
 
                                 </div>
                             </li>
-                            <li class="dropdown-item"><a class="d-flex w-100" href="{{ route('admin.profile.index') }}"><i
+                            <li class="dropdown-item"><a class="d-flex w-100"
+                                    href="{{ route('admin.profile.index') }}"><i
                                         class="fe fe-user fs-18 me-2 text-primary"></i>Profile</a></li>
 
 
@@ -273,6 +274,7 @@
                         <!-- End::slide -->
 
 
+
                         <!-- Start::slide -->
                         <li class="slide">
                             <a href="{{ route('admin.documents.index') }}"
@@ -286,6 +288,24 @@
 
 
                         @hasrole('admin')
+                            <li class="slide">
+                                <a href="{{ route('admin.document-categories.index') }}"
+                                    class="side-menu__item {{ request()->is('admin/document-categories/*') || request()->is('admin/document-categories') ? ' active' : '' }}">
+                                    <i class="fe fe-folder
+                                side-menu__icon"></i>
+                                    <span class="side-menu__label">Document Categories</span>
+                                </a>
+                            </li>
+
+                            <li class="slide">
+                                <a href="{{ route('admin.law-areas.index') }}"
+                                    class="side-menu__item {{ request()->is('admin/law-areas/*') || request()->is('admin/law-areas') ? ' active' : '' }}">
+                                    <i class="fe fe-book
+                                side-menu__icon"></i>
+                                    <span class="side-menu__label">Law Areas</span>
+                                </a>
+                            </li>
+
                             <!-- Start::slide -->
                             <li class="slide">
                                 <a href="{{ route('admin.blogs.index') }}"

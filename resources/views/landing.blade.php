@@ -330,7 +330,7 @@
                 </div>
                 <div class="card-body text-dark">
                     <div class="row justify-content-center p-5 pt-0">
-                        <div class="col-lg-9">
+                        {{-- <div class="col-lg-9">
                             <div class="row text-center services-statistics">
                                 <div class="col-xl-3 col-md-6 col-lg-6">
                                     <div class="card bg-transparent border-0 shadow-none">
@@ -384,22 +384,54 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-xl-9">
-                            <form class="form-horizontal text-start" action="index.html">
+                            <form class="form-horizontal text-start" action="{{ route('home.contact-us') }}" method="POST">
+                                @csrf
                                 <div class="form-group mb-3">
                                     <div class="col-xs-12">
-                                        <input class="form-control" type="text" required placeholder="Username*">
+                                        <input class="form-control" type="text" required placeholder="Name*" name="name">
+                                        @error('name')
+                                            <span class="text-danger" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group mb-3">
                                     <div class="col-xs-12">
-                                        <input class="form-control" type="email" required placeholder="Email*">
+                                        <input class="form-control" type="email" required placeholder="Email*" name="email">
+                                        @error('email')
+                                            <span class="text-danger" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group mb-3">
                                     <div class="col-xs-12">
-                                        <textarea class="form-control" rows="5">Your Comment*</textarea>
+                                        <select name="type" class="form-select" required>
+                                            <option value="" disabled>Complaint/Request*</option>
+                                            <option value="complaint">Complaint</option>
+                                            <option value="request">Request</option>
+                                        </select>
+                                        @error('type')
+                                            <span class="text-danger" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+
+                                        @enderror
+                                    </div>
+
+                                </div>
+                                <div class="form-group mb-3">
+                                    <div class="col-xs-12">
+                                        <textarea class="form-control" rows="5" required name="message">Your Message*</textarea>
+                                        @error('message')
+                                            <span class="text-danger" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <button type="submit"
@@ -413,34 +445,7 @@
     </section>
     <!-- End:: Section-10 -->
 
-    <!-- Start:: Section-11 -->
-    <div class="container">
-        <div class="buynow-landing reveal">
-            <div class="card bg-transparent border-0 shadow-none mb-0">
-                <div class="card-body p-5">
-                    <div class="row">
-                        <div class="col-lg-9 my-auto">
-                            <h2 class="fw-semibold text-fixed-white">Start Your Project
-                                with Sash.</h2>
-                            <p class="text-fixed-white mb-0">Sed ut perspiciatis unde omnis
-                                iste natus error sit voluptatem accusantium
-                                doloremque laudantium, totam rem aperiam, eaque ipsa
-                                quae ab illo inventore veritatis et quasi architecto
-                                beatae vitae dicta sunt
-                                explicabo.
-                            </p>
-                        </div>
-                        <div class="col-lg-3 text-end my-auto">
-                            <a href="https://themeforest.net/item/sash-bootstrap-5-admin-dashboard-template/35183671"
-                                target="_blank" class="btn btn-pink w-lg pt-2 pb-2 d-inline-flex align-items-center"><i
-                                    class="fe fe-shopping-cart me-2"></i>Buy Now
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+  
     <!-- End:: Section-11 -->
 
     <!-- END Hero -->

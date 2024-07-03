@@ -3,7 +3,9 @@
 use App\Http\Controllers\AdminBlogController;
 use App\Http\Controllers\AdminContactUsUserController;
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminDocumentCategoryController;
 use App\Http\Controllers\AdminDocumentController;
+use App\Http\Controllers\AdminLawAreaController;
 use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\BlogController;
@@ -31,6 +33,8 @@ Auth::routes([
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('documents/{id}/download', [HomeController::class, 'download'])->name('documents.download');
+Route::post('contact-us', [HomeController::class, 'contactSubmit'])->name('home.contact-us');
+
 Route::resource('documents', DocumentController::class);
 
 Route::resource('blogs', BlogController::class);
@@ -65,6 +69,11 @@ Route::middleware(["auth"])->group(function () {
         Route::resource('users', AdminUserController::class)->middleware('role:admin');
 
         Route::resource('contact-us-users', AdminContactUsUserController::class)->middleware('role:admin');
+
+        Route::resource('document-categories', AdminDocumentCategoryController::class)->middleware('role:admin');
+
+        Route::resource('law-areas', AdminLawAreaController::class)->middleware('role:admin');
+
 
         Route::resource('profile', AdminProfileController::class)->only(['index', 'update']);
     });

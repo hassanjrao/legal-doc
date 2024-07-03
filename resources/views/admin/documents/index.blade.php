@@ -41,7 +41,7 @@
                                             </a>
                                         </td>
                                         <td>{{ $document->created_at }}</td>
-                                        <td>
+                                        <td class="">
 
 
 
@@ -58,9 +58,11 @@
                                                     method="POST">
                                                     @method('DELETE')
                                                     @csrf
-                                                    <input type="button" onclick="confirmDelete({{ $document->id }})"
+
+
+                                                    <button type="button"
                                                         class="btn btn-sm btn-danger-gradient btn-wave waves-effect waves-light"
-                                                        value="Delete">
+                                                        onclick="confirmDelete({{ $document->id }})">Delete</button>
 
                                                 </form>
                                             @endhasrole
