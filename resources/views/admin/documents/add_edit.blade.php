@@ -43,12 +43,15 @@
 
                                     @csrf
                         @endif
+
+
                         <div class="col-md-6">
                             <?php
                             $value = old('category', $document ? $document->documentCategory->id : null);
                             ?>
                             <label class="form-label">Category</label>
-                            <select name="category" class="form-select">
+                            <select name="category" class="form-select" required>
+                                <option value="" disabled>Select Category</option>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}" @if ($category->id == $value) selected @endif>
                                         {{ $category->name }}
@@ -61,6 +64,27 @@
                                 </span>
                             @enderror
                         </div>
+
+                        <div class="col-md-6">
+                            <?php
+                            $value = old('law_area', $document ? $document->law_area_id : null);
+                            ?>
+                            <label class="form-label">Law Area</label>
+                            <select name="law_area" class="form-select" required>
+                                <option value="" disabled>Select Law Area</option>
+                                @foreach ($lawAreas as $law_area)
+                                    <option value="{{ $law_area->id }}" @if ($law_area->id == $value) selected @endif>
+                                        {{ $law_area->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('law_area')
+                                <span class="text-danger" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+
                         <div class="col-md-6">
                             <?php
                             $value = old('title', $document ? $document->title : null);
@@ -86,8 +110,11 @@
                                     alt="img">
                             </a>
                             @endif
-
-                            <input type="file" class="form-control" name="file" value="{{ $value }}">
+                            <label class="form-label">Upload Document</label>
+                            <input type="file" class="form-control" name="file"
+                            {{-- accept doc --}}
+                            accept=".doc,.docx"
+                            value="{{ $value }}">
                             @error('file')
                                 <span class="text-danger" role="alert">
                                     <strong>{{ $message }}</strong>

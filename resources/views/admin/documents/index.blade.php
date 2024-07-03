@@ -22,6 +22,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Category</th>
+                                    <th>Law Area</th>
                                     <th>Title</th>
                                     <th>Document</th>
                                     <th>Created At</th>
@@ -33,6 +34,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $document->documentCategory->name }}</td>
+                                        <td>{{ $document->lawArea ? $document->lawArea->name : '' }}</td>
                                         <td>{{ $document->title }}</td>
                                         <td>
                                             <a href="{{ $document->file_url }}" target="_blank">

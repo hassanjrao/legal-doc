@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Document;
 use App\Models\DocumentCategory;
 use App\Models\DocumentPlaceHolder;
+use App\Models\LawArea;
 use App\Models\UserDocumentResponse;
 use HTMLPurifier;
 use HTMLPurifier_Config;
@@ -25,7 +26,7 @@ class AdminDocumentController extends Controller
     {
 
         $documents = Document::latest()
-            ->with(['documentCategory', 'createdBy'])
+            ->with(['documentCategory', 'lawArea'])
             ->get();
         return view('admin.documents.index', compact('documents'));
     }
@@ -41,7 +42,9 @@ class AdminDocumentController extends Controller
 
         $categories = DocumentCategory::all();
 
-        return view('admin.documents.add_edit', compact('document', 'categories'));
+        $lawAreas = LawArea::all();
+
+        return view('admin.documents.add_edit', compact('document', 'categories', 'lawAreas'));
     }
 
     /**
@@ -55,6 +58,7 @@ class AdminDocumentController extends Controller
         $request->validate([
             'title' => 'required',
             'category' => 'required|exists:document_categories,id',
+            'law_area' => 'required|exists:law_areas,id',
             'file' => 'required|mimes:doc,docx|max:2048',
         ]);
 
@@ -64,6 +68,7 @@ class AdminDocumentController extends Controller
         $doc = Document::create([
             'title' => $request->title,
             'document_category_id' => $request->category,
+            'law_area_id' => $request->law_area,
             'file_path' => $path,
             'created_by_user_id' => auth()->user()->id,
         ]);
@@ -216,7 +221,9 @@ class AdminDocumentController extends Controller
 
         $categories = DocumentCategory::all();
 
-        return view('admin.documents.add_edit', compact('document', 'categories'));
+        $lawAreas=LawArea::all();
+
+        return view('admin.documents.add_edit', compact('document', 'categories','lawAreas'));
     }
 
     /**
@@ -228,7 +235,21 @@ class AdminDocumentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $document = Document::findOrFail($id);
+
+        $request->validate([
+            'title' => 'required',
+            'category' => 'required|exists:document_categories,id',
+            'law_area' => 'required|exists:law_areas,id',
+        ]);
+
+        $document->update([
+            'title' => $request->title,
+            'document_category_id' => $request->category,
+            'law_area_id' => $request->law_area,
+        ]);
+
+        return redirect()->route('admin.documents.index')->withToastSuccess('Document updated successfully');
     }
 
     /**
