@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminBlogController;
 use App\Http\Controllers\AdminContactUsUserController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminDocumentController;
+use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\DocumentController;
@@ -64,5 +65,7 @@ Route::middleware(["auth"])->group(function () {
         Route::resource('users', AdminUserController::class)->middleware('role:admin');
 
         Route::resource('contact-us-users', AdminContactUsUserController::class)->middleware('role:admin');
+
+        Route::resource('profile', AdminProfileController::class)->only(['index', 'update']);
     });
 });

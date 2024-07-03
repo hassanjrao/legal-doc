@@ -208,7 +208,7 @@
 
                                 </div>
                             </li>
-                            <li class="dropdown-item"><a class="d-flex w-100" href="profile.html"><i
+                            <li class="dropdown-item"><a class="d-flex w-100" href="{{ route('admin.profile.index') }}"><i
                                         class="fe fe-user fs-18 me-2 text-primary"></i>Profile</a></li>
 
 
