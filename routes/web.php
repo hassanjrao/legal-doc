@@ -30,32 +30,39 @@ Auth::routes([
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('documents/{id}/download', [HomeController::class, 'download'])->name('documents.download');
-Route::resource('documents',DocumentController::class);
+Route::resource('documents', DocumentController::class);
 
-Route::resource('blogs',BlogController::class);
+Route::resource('blogs', BlogController::class);
+
+Route::get('symlink', function () {
+
+
+    symlink('/home/j8ajiqs84wOi/laravel/storage/app/public', '/home/j8ajiqs84wOi/public_html/storage');
+
+    return 'Symlink process successfully completed';
+});
 
 Route::middleware(["auth"])->group(function () {
 
-Route::prefix("admin")->name("admin.")->group(function () {
-    Route::get("", [AdminDashboardController::class, "index"])->name("dashboard.index");
+    Route::prefix("admin")->name("admin.")->group(function () {
+        Route::get("", [AdminDashboardController::class, "index"])->name("dashboard.index");
 
-    Route::get('documents/{id}/fill', [AdminDocumentController::class, 'showFillForm'])->name('documents.showFillForm');
+        Route::get('documents/{id}/fill', [AdminDocumentController::class, 'showFillForm'])->name('documents.showFillForm');
 
-    Route::post('documents/fill', [AdminDocumentController::class, 'fill'])->name('documents.fill');
-
-
-    Route::get('documents/{id}/download', [AdminDocumentController::class, 'download'])->name('documents.download');
-
-    Route::get('documents/{id}/download/user', [AdminDocumentController::class, 'downloadUserDocument'])->name('documents.download.user');
+        Route::post('documents/fill', [AdminDocumentController::class, 'fill'])->name('documents.fill');
 
 
-    Route::resource('documents', AdminDocumentController::class);
+        Route::get('documents/{id}/download', [AdminDocumentController::class, 'download'])->name('documents.download');
 
-    Route::resource('blogs', AdminBlogController::class)->middleware('role:admin');
+        Route::get('documents/{id}/download/user', [AdminDocumentController::class, 'downloadUserDocument'])->name('documents.download.user');
 
-    Route::resource('users', AdminUserController::class)->middleware('role:admin');
 
-    Route::resource('contact-us-users', AdminContactUsUserController::class)->middleware('role:admin');
-});
+        Route::resource('documents', AdminDocumentController::class);
 
+        Route::resource('blogs', AdminBlogController::class)->middleware('role:admin');
+
+        Route::resource('users', AdminUserController::class)->middleware('role:admin');
+
+        Route::resource('contact-us-users', AdminContactUsUserController::class)->middleware('role:admin');
+    });
 });
