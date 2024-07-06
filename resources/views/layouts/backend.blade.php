@@ -335,6 +335,14 @@
                                     <span class="side-menu__label">Contact Us</span>
                                 </a>
                             </li>
+
+                            <li class="slide">
+                                <a href="{{ route('admin.donors.index') }}"
+                                    class="side-menu__item {{ request()->is('admin/donors/*') || request()->is('admin/donors') ? ' active' : '' }}">
+                                    <i class="fe fe-award side-menu__icon"></i>
+                                    <span class="side-menu__label">Donors</span>
+                                </a>
+                            </li>
                             <!-- End::slide -->
                         @endhasrole
 

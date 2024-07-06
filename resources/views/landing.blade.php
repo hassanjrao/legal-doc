@@ -34,7 +34,8 @@
 
                     </div>
                     <div class="col-xl-6 col-lg-6 my-auto text-end">
-                        <img src="{{ asset('assets/images/landing/dokumente ligjore homepage.svg') }}" alt="" class="w-100">
+                        <img src="{{ asset('assets/images/landing/dokumente ligjore homepage.svg') }}" alt=""
+                            class="w-100">
                     </div>
                 </div>
             </div>
@@ -148,62 +149,20 @@
             <div class="feature-logos mt-sm-5 flex-wrap">
                 <div class="swiper features-slide text-start">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <div class="ms-sm-5 ms-2 text-center">
-                                <img src="{{ asset('assets/images/landing/web/1.png') }}" alt="image"
-                                    class="featur-icon">
-                                <h5 class="mt-3 text-fixed-white ">Bootstrap5</h5>
+
+                        @foreach ($donors as $donor)
+                            <div class="swiper-slide">
+                                <div class="ms-sm-5 ms-2 text-center">
+                                    <img src="{{ $donor->image_url }}" alt="image"
+                                        class="featur-icon">
+                                    <h5 class="mt-3 text-fixed-white ">
+                                        {{ $donor->name }}
+                                    </h5>
+                                </div>
                             </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="ms-sm-5 ms-2 text-center">
-                                <img src="{{ asset('assets/images/landing/web/2.png') }}" alt="image"
-                                    class="featur-icon">
-                                <h5 class="mt-3 text-fixed-white ">HTML5</h5>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="ms-sm-5 ms-2 text-center">
-                                <img src="{{ asset('assets/images/landing/web/3.png') }}" alt="image"
-                                    class="featur-icon">
-                                <h5 class="mt-3 text-fixed-white ">Sass</h5>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="ms-sm-5 ms-2 text-center">
-                                <img src="{{ asset('assets/images/landing/web/4.png') }}" alt="image"
-                                    class="featur-icon">
-                                <h5 class="mt-3 text-fixed-white ">Gulp</h5>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="ms-sm-5 ms-2 text-center">
-                                <img src="{{ asset('assets/images/landing/web/5.png') }}" alt="image"
-                                    class="featur-icon">
-                                <h5 class="mt-3 text-fixed-white ">NPM</h5>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="ms-sm-5 ms-2 text-center">
-                                <img src="{{ asset('assets/images/landing/web/3.png') }}" alt="image"
-                                    class="featur-icon">
-                                <h5 class="mt-3 text-fixed-white ">Sass</h5>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="ms-sm-5 ms-2 text-center">
-                                <img src="{{ asset('assets/images/landing/web/4.png') }}" alt="image"
-                                    class="featur-icon">
-                                <h5 class="mt-3 text-fixed-white ">Gulp</h5>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="ms-sm-5 ms-2 text-center">
-                                <img src="{{ asset('assets/images/landing/web/5.png') }}" alt="image"
-                                    class="featur-icon">
-                                <h5 class="mt-3 text-fixed-white ">NPM</h5>
-                            </div>
-                        </div>
+                        @endforeach
+
+
                     </div>
                 </div>
             </div>

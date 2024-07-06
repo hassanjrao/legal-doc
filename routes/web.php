@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminContactUsUserController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminDocumentCategoryController;
 use App\Http\Controllers\AdminDocumentController;
+use App\Http\Controllers\AdminDonorController;
 use App\Http\Controllers\AdminLawAreaController;
 use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\AdminUserController;
@@ -73,6 +74,9 @@ Route::middleware(["auth"])->group(function () {
         Route::resource('document-categories', AdminDocumentCategoryController::class)->middleware('role:admin');
 
         Route::resource('law-areas', AdminLawAreaController::class)->middleware('role:admin');
+
+
+        Route::resource('donors', AdminDonorController::class)->middleware('role:admin');
 
 
         Route::resource('profile', AdminProfileController::class)->only(['index', 'update']);

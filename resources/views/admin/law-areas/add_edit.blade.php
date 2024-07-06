@@ -44,7 +44,7 @@
                             ?>
 
                             <label class="form-label">Name</label>
-                            <input type="text" class="form-control" name="name" value="{{ $value }}">
+                            <input type="text" class="form-control" name="name" required value="{{ $value }}">
                             @error('name')
                                 <span class="text-danger" role="alert">
                                     <strong>{{ $message }}</strong>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Blog;
 use App\Models\ContactUsUser;
 use App\Models\Document;
+use App\Models\Donor;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -29,7 +30,9 @@ class HomeController extends Controller
 
         $blogs=Blog::latest()->take(4)->get();
 
-        return view('landing',compact('documents','blogs'));
+        $donors=Donor::latest()->get();
+
+        return view('landing',compact('documents','blogs','donors'));
     }
 
     public function download($id){

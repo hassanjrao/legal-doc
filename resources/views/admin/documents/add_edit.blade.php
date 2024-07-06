@@ -91,7 +91,7 @@
                             ?>
 
                             <label class="form-label">Title</label>
-                            <input type="text" class="form-control" name="title" value="{{ $value }}">
+                            <input type="text" class="form-control" name="title" required value="{{ $value }}">
                             @error('title')
                                 <span class="text-danger" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -112,6 +112,7 @@
                             @endif
                             <label class="form-label">Upload Document</label>
                             <input type="file" class="form-control" name="file"
+                            {{ isset($document) ? '' : 'required' }}
                             {{-- accept doc --}}
                             accept=".doc,.docx"
                             value="{{ $value }}">

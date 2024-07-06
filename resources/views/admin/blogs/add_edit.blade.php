@@ -59,7 +59,7 @@
                             ?>
 
                             <label class="form-label">Title</label>
-                            <input type="text" class="form-control" name="title" value="{{ $value }}">
+                            <input type="text" class="form-control" name="title" value="{{ $value }}" required>
                             @error('title')
                                 <span class="text-danger" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -72,8 +72,15 @@
                             $value = old('image', $blog ? $blog->image : null);
                             ?>
 
+                            @if ($blog)
+                                <img src="{{ $blog->image_url }}" alt="{{ $blog->title }}"
+                                    style="width: 100px; height: 100px; object-fit: cover;">
+                            @endif
+
                             <label class="form-label">Image</label>
-                            <input type="file" class="form-control" name="image" value="{{ $value }}">
+                            <input type="file" class="form-control" name="image" value="{{ $value }}"
+                            {{ $addEdit == 'Add' ? 'required' : '' }}
+                            >
                             @error('image')
                                 <span class="text-danger" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -87,7 +94,7 @@
                             ?>
 
                             <label class="form-label">Content</label>
-                            <textarea id="content" name="content" class="form-control summernote">{!! $value !!}</textarea>
+                            <textarea id="content" name="content" required class="form-control summernote">{!! $value !!}</textarea>
 
                             @error('content')
                                 <span class="text-danger" role="alert">
