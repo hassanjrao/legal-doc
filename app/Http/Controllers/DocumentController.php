@@ -18,7 +18,8 @@ class DocumentController extends Controller
     {
         $request->validate([
             'category' => 'nullable|exists:document_categories,id',
-            'search' => 'nullable|string'
+            'search' => 'nullable|string',
+            'law_area' => 'nullable|exists:law_areas,id',
         ]);
 
         $category = $request->category;
@@ -30,6 +31,9 @@ class DocumentController extends Controller
             })
             ->when($search, function ($query) use ($search) {
                 return $query->where('title', 'like', "%$search%");
+            })
+            ->when($request->law_area, function ($query) use ($request) {
+                return $query->where('law_area_id', $request->law_area);
             })
             ->paginate(40);
 
