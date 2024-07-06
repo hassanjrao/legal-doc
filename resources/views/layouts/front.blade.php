@@ -304,7 +304,6 @@
             </div>
 
         </aside>
-        <!-- End::app-sidebar -->
 
         <!-- Start::app-content -->
         <div class="main-content landing-main">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Document;
 use App\Models\DocumentCategory;
+use App\Models\LawArea;
 use Illuminate\Http\Request;
 
 class DocumentController extends Controller
@@ -34,7 +35,9 @@ class DocumentController extends Controller
 
         $documentCategories = DocumentCategory::all();
 
-        return view('documents.index', compact('documents', 'documentCategories'));
+        $lawAreas=LawArea::all();
+
+        return view('documents.index', compact('documents', 'documentCategories','lawAreas'));
     }
 
     /**

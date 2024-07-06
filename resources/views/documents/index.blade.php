@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <section class="section section-bg">
+    <section class="section">
 
         <div class="container mt-5">
 
@@ -38,6 +38,16 @@
                                                     <option value="{{ $documentCategory->id }}"
                                                         {{ request()->category == $documentCategory->id ? 'selected' : '' }}>
                                                         {{ $documentCategory->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+
+                                            <select name="law_area" class="form-select w-50 mr-2" onchange="this.form.submit()">
+                                                <option value="">Law Area</option>
+                                                @foreach ($lawAreas as $lawArea)
+                                                    <option value="{{ $lawArea->id }}"
+                                                        {{ request()->law_area == $lawArea->id ? 'selected' : '' }}>
+                                                        {{ $lawArea->name }}
                                                     </option>
                                                 @endforeach
                                             </select>
