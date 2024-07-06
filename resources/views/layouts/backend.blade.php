@@ -16,7 +16,7 @@
         content="admin dashboard,dashboard design htmlbootstrap admin template,html admin panel,admin dashboard html,admin panel html template,bootstrap dashboard,html admin template,html dashboard,html admin dashboard template,bootstrap dashboard template,dashboard html template,bootstrap admin panel,dashboard admin bootstrap,bootstrap admin dashboard">
 
     <!-- Favicon -->
-    <link rel="icon" href="{{ asset('assets/images/brand-logos/favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('assets/images/brand-logos/bluelogo.png') }}" type="image/x-icon">
 
     <!-- Choices JS -->
     <script src="{{ asset('assets/libs/choices.js/public/assets/scripts/choices.min.js') }}"></script>
@@ -86,7 +86,7 @@
                             <a href="{{ route('admin.dashboard.index') }}" class="header-logo">
                                 <img src="{{ asset('assets/images/brand-logos/desktop-logo.png') }}" alt="logo"
                                     class="desktop-logo">
-                                <img src="{{ asset('assets/images/brand-logos/toggle-logo.png') }}" alt="logo"
+                                <img src="{{ asset('assets/images/brand-logos/bluelogo.png') }}" alt="logo"
                                     class="toggle-logo">
                                 <img src="{{ asset('assets/images/brand-logos/desktop-dark.png') }}" alt="logo"
                                     class="desktop-dark">
@@ -191,8 +191,7 @@
                             data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                             <div class="d-flex align-items-center">
                                 <div class="me-xxl-2 me-0">
-                                    <img src="{{ asset('assets/images/faces/9.jpg') }}" alt="img"
-                                        width="32" height="32" class="rounded-circle">
+                                    <i class="fe fe-user fs-29 text-primary"></i>
                                 </div>
                                 <div class="d-xxl-block d-none my-auto">
                                     <h6 class="fw-semibold mb-0 lh-1 fs-14">{{ auth()->user()->name }}</h6>
@@ -245,13 +244,13 @@
             <div class="main-sidebar-header">
                 <a href="{{ route('admin.dashboard.index') }}" class="header-logo">
                     <img src="{{ asset('assets/images/brand-logos/bluelogo.png') }}" alt="logo"
-                        class="desktop-logo img-fluid">
+                        class="desktop-logo img-fluid" style="height: 35px">
                 </a>
             </div>
             <!-- End::main-sidebar-header -->
 
             <!-- Start::main-sidebar -->
-            <div class="main-sidebar" id="sidebar-scroll">
+            <div class="main-sidebar mt-4" id="sidebar-scroll">
 
                 <!-- Start::nav -->
                 <nav class="main-menu-container nav nav-pills flex-column sub-open">

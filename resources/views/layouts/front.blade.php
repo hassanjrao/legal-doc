@@ -13,7 +13,8 @@
     <meta name="Author" content="Spruko Technologies Private Limited">
 
     <!-- Favicon -->
-    <link rel="icon" href="{{ asset('assets/images/brand-logos/favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('assets/images/brand-logos/bluelogo.png') }}" style='height:45px'
+        type="image/x-icon">
 
     <!-- Bootstrap Css -->
     <link id="style" href="{{ asset('assets/libs/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -38,7 +39,7 @@
     <link rel="stylesheet" href="{{ asset('assets/libs/choices.js') }}">
 
     @yield('css')
-{{--
+    {{--
     <script>
         if (localStorage.sashlandingdarktheme) {
             document.querySelector("html").setAttribute("data-theme-mode", "dark")
@@ -156,12 +157,12 @@
                     <div class="header-element">
                         <div class="horizontal-logo">
                             <a href="{{ route('home') }}" class="header-logo">
-                                <img src="{{ asset('assets/images/brand-logos/bluelogo.png') }}" alt="logo"
-                                    class="toggle-logo">
-                                <img src="{{ asset('assets/images/brand-logos/bluelogo.png') }}" alt="logo"
-                                    class="toggle-white">
-                                <img src="{{ asset('assets/images/brand-logos/bluelogo.png') }}" alt="logo"
-                                    class="toggle-dark">
+                                <img src="{{ asset('assets/images/brand-logos/bluelogo.png') }}" style='height:45px'
+                                    alt="logo" class="toggle-logo">
+                                <img src="{{ asset('assets/images/brand-logos/bluelogo.png') }}" style='height:45px'
+                                    alt="logo" class="toggle-white">
+                                <img src="{{ asset('assets/images/brand-logos/bluelogo.png') }}" style='height:45px'
+                                    alt="logo" class="toggle-dark">
                             </a>
                         </div>
                     </div>
@@ -228,13 +229,13 @@
                                 <a href="{{ route('home') }}" class="header-logo">
                                     <img src="{{ asset('assets/images/brand-logos/bluelogo.png') }}" alt="logo"
                                         class="desktop-logo">
-                                    <img src="{{ asset('assets/images/brand-logos/bluelogo.png') }}"
-                                        alt="logo" class="desktop-white">
+                                    <img src="{{ asset('assets/images/brand-logos/bluelogo.png') }}" alt="logo"
+                                        class="desktop-white">
                                 </a>
                             </div>
                         </div>
-                        <div class="slide-left" id="slide-left"><svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191"
-                                width="24" height="24" viewBox="0 0 24 24">
+                        <div class="slide-left" id="slide-left"><svg xmlns="http://www.w3.org/2000/svg"
+                                fill="#7b8191" width="24" height="24" viewBox="0 0 24 24">
                                 <path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"></path>
                             </svg></div>
                         <ul class="main-menu">
@@ -252,14 +253,14 @@
                             <!-- End::slide -->
                             <!-- Start::slide -->
                             <li class="slide">
-                                <a href="{{ request()->is('/') ? '#about' : route('home').'#about' }}"
-                                 class="side-menu__item">
+                                <a href="{{ request()->is('/') ? '#about' : route('home') . '#about' }}"
+                                    class="side-menu__item">
                                     <span class="side-menu__label">About</span>
                                 </a>
                             </li>
                             <li class="slide">
-                                <a href="{{ request()->is('/') ? '#contact' : route('home').'#contact' }}"
-                                class="side-menu__item">
+                                <a href="{{ request()->is('/') ? '#contact' : route('home') . '#contact' }}"
+                                    class="side-menu__item">
                                     <span class="side-menu__label">Contact Us</span>
                                 </a>
                             </li>
@@ -267,7 +268,7 @@
                             <!-- Start::slide -->
                             <li class="slide">
                                 <a href="{{ route('blogs.index') }}" class="side-menu__item">
-                                    <span class="side-menu__label">Blogs</span>
+                                    <span class="side-menu__label">Information</span>
                                 </a>
                             </li>
                             <!-- End::slide -->
@@ -312,63 +313,52 @@
             <!-- Start:: Section-12 -->
             <section class="section landing-footer">
                 <div class="container">
-                    <div class="row">
-                        <div class="col-xl-4">
-                            <div class="px-4">
-                                <h6 class="fw-semibold mb-3">ABOUT</h6>
-                                <p class="text-muted">Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                                    accusantium
-                                    doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
-                                    veritatis et quasi architecto beatae vitae dicta sunt
-                                    explicabo.
-                                </p>
-                                <p class="mb-5 mb-lg-2 text-muted">Duis aute irure dolor in reprehenderit in voluptate
-                                    velit esse cillum dolore eu fugiat nulla pariatur Excepteur sint occaecat .
-                                </p>
-                            </div>
+                    <div class="row justify-content-between align-items-center">
+                        <div class="col-xl-4 col-lg-4 col-md-4">
+                            <a href="{{ route('home') }}">
+                                <img loading="lazy" alt="" class="logo-2 mb-3 img-fluid"
+                                    src="{{ asset('assets/images/brand-logos/pen_logo.png') }}"></a>
+
+
                         </div>
-                        <div class="col-xl-2">
-                            <div class="px-4 mb-5 mb-lg-0">
+
+                        <div class="col-xl-4 col-lg-4 col-md-4">
+
+                            <a href="{{ route('home') }}"><img loading="lazy" alt=""
+                                    class="logo-2 mb-3 img-fluid"
+                                    src="{{ asset('assets/images/brand-logos/usaid_logo.png') }}"></a>
+
+
+                        </div>
+
+                        <div class="col-xl-2 col-lg-2 col-md-2 ">
+
+                            <div>
                                 <h6 class="fw-semibold">INFO</h6>
                                 <ul class="list-unstyled op-6 fw-medium landing-footer-list mb-0">
                                     <li>
-                                        <a href="{{ request()->is('/') ? '#contact' : route('home').'#contact' }}"
-                                        class="">Contact Us</a>
+                                        <a href="{{ request()->is('/') ? '#contact' : route('home') . '#contact' }}"
+                                            class="">Contact Us</a>
                                     </li>
                                     <li>
-                                        <a href="{{ request()->is('/') ? '#about' : route('home').'#about' }}"
-                                        class="">About</a>
+                                        <a href="{{ request()->is('/') ? '#about' : route('home') . '#about' }}"
+                                            class="">About</a>
                                     </li>
                                     <li>
                                         <a href="{{ route('documents.index') }}" class="">Documents</a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('blogs.index') }}" class="">Blog</a>
+                                        <a href="{{ route('blogs.index') }}" class="">Information</a>
                                     </li>
                                 </ul>
                             </div>
-                        </div>
-                        <div class="col-xl-4">
-                            <div class="px-4">
-                                <a href="{{ route('home') }}"><img loading="lazy" alt="" class="logo-2 mb-3 img-fluid"
-                                        src="{{ asset('assets/images/brand-logos/bluelogo.png') }}"></a>
-                                <a href="{{ route('home') }}"><img
-                                        src="{{ asset('assets/images/brand-logos/bluelogo.png') }}"
-                                        class="logo-3 mb-3 img-fluid" alt="logo"></a>
-                                <p class="text-muted">Duis aute irure dolor in reprehenderit in voluptate velit esse
-                                    cillum dolore eu fugiat nulla pariatur Excepteur sint occaecat.</p>
 
-                                <div class="btn-list mt-4">
-                                    <button type="button" class="btn btn-icon rounded-pill"><i
-                                            class="ri-facebook-line"></i></button>
-                                    <button type="button" class="btn btn-icon rounded-pill"><i
-                                            class="ri-youtube-line"></i></button>
-                                    <button type="button" class="btn btn-icon rounded-pill"><i
-                                            class="ri-twitter-line"></i></button>
-                                    <button type="button" class="btn btn-icon rounded-pill"><i
-                                            class="ri-instagram-line"></i></button>
-                                </div>
-                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-xl-12">
+                            <p>Implemented by PEN and Supported by USAID Justice Activity</p>
                         </div>
                     </div>
                 </div>
@@ -378,7 +368,7 @@
             <div class="text-center landing-main-footer py-3">
                 <span class="text-muted fs-15"> Copyright ©
                     <span id="year"></span>
-                     All rights reserved
+                    All rights reserved
                 </span>
             </div>
         </div>

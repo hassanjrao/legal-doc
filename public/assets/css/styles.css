@@ -2,13 +2,13 @@
 [Master Stylesheet]
 
 Project                            :   sash - HTML5 Bootstrap Admin Template
-Create Date                        :   
-Author & Copyright Ownership       :   Spruko Technologies Private Limited 
+Create Date                        :
+Author & Copyright Ownership       :   Spruko Technologies Private Limited
 Author URL                         :   https://themeforest.net/user/spruko
 Support	                           :   https://support.spruko.com/
 License Details                    :   https://spruko.com/licenses-details
 ------------------------------------------------------------------*/
-/* Table Of Content 
+/* Table Of Content
 variables
 switcher
 accordion
@@ -16007,7 +16007,7 @@ code[class*=language-] {
 }
 @media (min-width: 992px) and (min-width: 992px) {
   [data-nav-layout=horizontal] .horizontal-logo .header-logo img {
-    height: 2rem;
+    height: 4.5rem;
     line-height: 2rem;
   }
   [data-nav-layout=horizontal] .horizontal-logo .header-logo .desktop-logo {

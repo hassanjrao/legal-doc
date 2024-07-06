@@ -16,27 +16,25 @@
             <div class="container px-sm-0 main-banner-container pb-0">
                 <div class="row">
                     <div class="col-xl-6 col-lg-6 animation-zidex pos-relative my-auto">
-                        <h1 class="fw-semibold">Dokumente Ligjore Falas</h1>
-                        <h5 class="text-start fw-bold mb-3 lh-base">Qëllimi ynë është të thjeshtojmë qasjen në drejtësi duke
-                            ofruar dokumente ligjore falas dhe lehtësisht të përdorshme për të gjithë qytetarët e Kosovës.
+                        <h1 class="fw-semibold">Free Legal Documents</h1>
+                        <h5 class="text-start fw-bold mb-3 lh-base">Our goal is to simplify access to justice by providing
+                            free and easy-to-use legal documents for all citizens of Kosovo.
                         </h5>
                         <ul class="pb-3 mb-3">
-                            <li>300+ Dokumente Ligjore Falas
+                            <li>300+ Free Legal Documents
                             </li>
                             <li>
-                                Modifikoni dhe Shkarkoni Dokumentet që ju Nevojiten
+                                Edit and Download the Documents You Need
                             </li>
                             <li>
-                                Udhëzues Ligjorë Falas"</li>
+                                Free Legal Information & Guides
+                            </li>
                         </ul>
 
-                        <a href="https://themeforest.net/item/sash-bootstrap-5-admin-dashboard-template/35183671"
-                            target="_blank" class="btn ripple btn-min w-lg me-2 btn-primary"><i class="fe fe-play me-2"></i>
-                            Get Started
-                        </a>
+
                     </div>
                     <div class="col-xl-6 col-lg-6 my-auto text-end">
-                        <img src="{{ asset('assets/images/landing/2.png') }}" alt="" class="w-100">
+                        <img src="{{ asset('assets/images/landing/dokumente ligjore homepage.svg') }}" alt="" class="w-100">
                     </div>
                 </div>
             </div>
@@ -235,8 +233,7 @@
                                 <div class="text-muted">{{ $blog->short_content }}</div>
 
                                 <div class="mt-2">
-                                    <a href="{{ route('blogs.show', $blog->id) }}"
-                                        class="btn btn-light">Read More</a>
+                                    <a href="{{ route('blogs.show', $blog->id) }}" class="btn btn-light">Read More</a>
                                 </div>
 
                             </div>
@@ -386,11 +383,13 @@
                             </div>
                         </div> --}}
                         <div class="col-xl-9">
-                            <form class="form-horizontal text-start" action="{{ route('home.contact-us') }}" method="POST">
+                            <form class="form-horizontal text-start" action="{{ route('home.contact-us') }}"
+                                method="POST">
                                 @csrf
                                 <div class="form-group mb-3">
                                     <div class="col-xs-12">
-                                        <input class="form-control" type="text" required placeholder="Name*" name="name">
+                                        <input class="form-control" type="text" required placeholder="Name*"
+                                            name="name">
                                         @error('name')
                                             <span class="text-danger" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -400,7 +399,8 @@
                                 </div>
                                 <div class="form-group mb-3">
                                     <div class="col-xs-12">
-                                        <input class="form-control" type="email" required placeholder="Email*" name="email">
+                                        <input class="form-control" type="email" required placeholder="Email*"
+                                            name="email">
                                         @error('email')
                                             <span class="text-danger" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -419,7 +419,6 @@
                                             <span class="text-danger" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
-
                                         @enderror
                                     </div>
 
@@ -445,7 +444,7 @@
     </section>
     <!-- End:: Section-10 -->
 
-  
+
     <!-- End:: Section-11 -->
 
     <!-- END Hero -->
