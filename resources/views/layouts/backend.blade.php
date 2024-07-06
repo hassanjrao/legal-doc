@@ -83,7 +83,7 @@
                     <!-- Start::header-element -->
                     <div class="header-element">
                         <div class="horizontal-logo">
-                            <a href="{{ route('admin.dashboard.index') }}" class="header-logo">
+                            <a href="{{ route('home') }}" class="header-logo">
                                 <img src="{{ asset('assets/images/brand-logos/desktop-logo.png') }}" alt="logo"
                                     class="desktop-logo">
                                 <img src="{{ asset('assets/images/brand-logos/bluelogo.png') }}" alt="logo"
@@ -242,7 +242,7 @@
 
             <!-- Start::main-sidebar-header -->
             <div class="main-sidebar-header">
-                <a href="{{ route('admin.dashboard.index') }}" class="header-logo">
+                <a href="{{ route('home') }}" class="header-logo">
                     <img src="{{ asset('assets/images/brand-logos/bluelogo.png') }}" alt="logo"
                         class="desktop-logo img-fluid" style="height: 35px">
                 </a>
