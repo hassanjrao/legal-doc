@@ -8,7 +8,7 @@
 
         <section class="section " id="about">
             <div class="container text-center">
-                <p class="fs-18 fw-medium mb-1"><span class="landing-section-heading">Blogs</span></p>
+                <p class="fs-18 fw-medium mb-1"><span class="landing-section-heading">Information</span></p>
                 <span class="landing-title"></span>
 
             </div>
