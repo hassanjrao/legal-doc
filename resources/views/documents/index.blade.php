@@ -6,7 +6,7 @@
 
     <section class="section">
 
-        <div class="container mt-5">
+        <div class="container">
 
             <div class="row mt-2">
                 <div class="col-lg-12 text-center w-100">
