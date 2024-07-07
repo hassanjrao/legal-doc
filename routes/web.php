@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes([
-    'verify' => false,
+    'verify' => true,
     'reset' => false,
 ]);
 
@@ -48,7 +48,7 @@ Route::get('symlink', function () {
     return 'Symlink process successfully completed';
 });
 
-Route::middleware(["auth"])->group(function () {
+Route::middleware(["auth",'verified'])->group(function () {
 
     Route::prefix("admin")->name("admin.")->group(function () {
         Route::get("", [AdminDashboardController::class, "index"])->name("dashboard.index");
