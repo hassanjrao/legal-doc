@@ -60,7 +60,11 @@ class AdminUserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user=User::findOrFail($id);
+
+        $roles=\Spatie\Permission\Models\Role::all();
+
+        return view('admin.users.add_edit',compact('user','roles'));
     }
 
     /**
@@ -72,7 +76,38 @@ class AdminUserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user=User::findOrFail($id);
+
+
+
+        $request->validate([
+            'name'=>'required',
+            'email'=>'required|email|unique:users,email,'.$user->id,
+            'role'=>'required|exists:roles,name',
+            'verified'=>'nullable'
+        ]);
+
+
+
+        $user->update([
+            'name'=>$request->name,
+            'email'=>$request->email,
+        ]);
+
+        if($request->verified && !$user->email_verified_at){
+            $user->email_verified_at=now();
+            $user->save();
+        }
+
+        if(!$request->verified && $user->email_verified_at){
+            $user->email_verified_at=null;
+            $user->save();
+        }
+
+        $user->syncRoles([$request->role]);
+
+        return redirect()->route('admin.users.index')->withToastSuccess('User updated successfully');
+
     }
 
     /**

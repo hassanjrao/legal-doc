@@ -13,7 +13,7 @@
                         <div class="card-title d-flex justify-content-between w-100">
                             <span>Users</span>
 
-                            <a href="{{ route('admin.users.create') }}" class="btn btn-primary">Add</a>
+                            {{-- <a href="{{ route('admin.users.create') }}" class="btn btn-primary">Add</a> --}}
                         </div>
                     </div>
                     <div class="card-body">
@@ -36,7 +36,7 @@
                                         <td>{{ $user->email }}</td>
                                         <td>{{
                                             $user->roles->pluck('name')->implode(', ')
-                                            
+
                                          }}</td>
 
                                         <td>{{ $user->created_at}}</td>
