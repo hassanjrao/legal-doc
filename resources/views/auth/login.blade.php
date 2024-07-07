@@ -28,11 +28,14 @@
                                     @enderror
                                 </div>
                                 <div class="col-xl-12 mb-2">
+                                    @if (Route::has('password.request'))
                                     <label for="password" class="form-label text-default d-block">{{ __('Password') }}
-                                        {{-- <a href="reset-password.html" class="float-end text-danger">
+                                        <a href="{{ route('password.request') }}"
+                                         class="float-end text-danger">
                                             Forget password?
-                                        </a> --}}
+                                        </a>
                                     </label>
+                                    @endif
                                     <div class="input-group">
                                         <input type="password" name="password" class="form-control form-control-lg" id="password"
                                             placeholder="password" required>

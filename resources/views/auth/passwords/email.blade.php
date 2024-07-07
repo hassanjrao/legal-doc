@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.front')
 
 @section('content')
 <div class="container">
@@ -10,7 +10,7 @@
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+                            {{ session('status') }} {{ __('Make sure to check your spam folder as well') }}
                         </div>
                     @endif
 
