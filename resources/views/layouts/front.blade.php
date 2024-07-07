@@ -191,12 +191,23 @@
                     <div class="header-element align-items-center">
                         <!-- Start::header-link|switcher-icon -->
                         <div class="btn-list d-lg-none d-flex">
-                            <a href="{{ route('register') }}" class="btn btn-sm-w-sm btn-wave btn-outline-primary">
-                                New User
-                            </a>
-                            <a href="{{ route('login') }}" class="btn btn-sm-w-sm btn-wave btn-primary">
-                                Log In
-                            </a>
+                            @auth
+                                <a href="{{ route('admin.dashboard.index') }}"
+                                    class="btn btn-sm-w-sm btn-wave btn-outline-primary">Dashboard</a>
+                                    <form action="{{ route('logout') }}" method="post">
+                                        @csrf
+                                        <button type="submit" class="btn btn-w-sm btn-wave btn-outline-primary">Logout</button>
+                                    </form>
+                            @endauth
+                            @guest
+                                <a href="{{ route('register') }}" class="btn btn-sm-w-sm btn-wave btn-outline-primary">
+                                    New User
+                                </a>
+                                <a href="{{ route('login') }}" class="btn btn-sm-w-sm btn-wave btn-primary">
+                                    Log In
+                                </a>
+                            @endguest
+
                             {{-- <div class="switcher-icon nav-link icon" data-bs-toggle="offcanvas"
                                 data-bs-target="#switcher-canvas">
                                 <i class="fe fe-settings fa-spin  text_primary"></i>
@@ -284,12 +295,25 @@
                             </svg></div>
                         <div class="d-lg-flex d-none">
                             <div class="btn-list d-lg-flex d-none mt-lg-2 mt-xl-0 mt-0">
-                                <a href="{{ route('register') }}" class="btn btn-w-sm btn-wave btn-outline-primary">
-                                    New User
-                                </a>
-                                <a href="{{ route('login') }}" class="btn btn-w-sm btn-wave btn-primary">
-                                    Log In
-                                </a>
+                                @auth
+                                    <a href="{{ route('admin.dashboard.index') }}"
+                                        class="btn btn-w-sm btn-wave btn-outline-primary">Dashboard</a>
+                                        {{-- logout --}}
+                                    <form action="{{ route('logout') }}" method="post">
+                                        @csrf
+                                        <button type="submit" class="btn btn-w-sm btn-wave btn-outline-primary">Logout</button>
+                                    </form>
+                                @endauth
+                                @guest
+
+                                    <a href="{{ route('register') }}" class="btn btn-w-sm btn-wave btn-outline-primary">
+                                        New User
+                                    </a>
+                                    <a href="{{ route('login') }}" class="btn btn-w-sm btn-wave btn-primary">
+                                        Log In
+                                    </a>
+                                @endguest
+
                                 {{-- <div class="switcher-icon nav-link icon" data-bs-toggle="offcanvas"
                                     data-bs-target="#switcher-canvas">
                                     <i class="fe fe-settings fa-spin  text_primary"></i>
