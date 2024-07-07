@@ -15,7 +15,7 @@
         <section class="section">
             <div class="container px-sm-0 main-banner-container pb-0">
                 <div class="row">
-                    <div class="col-xl-6 col-lg-6 animation-zidex pos-relative my-auto">
+                    <div class="col-xl-4 col-lg-4 animation-zidex pos-relative my-auto">
                         <h1 class="fw-semibold">Free Legal Documents</h1>
                         <h5 class="text-start fw-bold mb-3 lh-base">Our goal is to simplify access to justice by providing
                             free and easy-to-use legal documents for all citizens of Kosovo.
@@ -33,7 +33,7 @@
 
 
                     </div>
-                    <div class="col-xl-6 col-lg-6 my-auto text-end">
+                    <div class="col-xl-8 col-lg-8 my-auto text-end">
                         <img src="{{ asset('assets/images/landing/dokumente ligjore homepage.svg') }}" alt=""
                             class="w-100">
                     </div>
@@ -49,7 +49,13 @@
         <div class="container text-center">
             <p class="fs-18 fw-medium mb-1"><span class="landing-section-heading">How it works?</span></p>
             <span class="landing-title"></span>
-            <h3 class="fw-semibold mb-5">Designed with precision and well documented</h3>
+            <h3 class="fw-semibold mb-5">Welcome to Dokumente Ligjore</h3>
+            <div class="d-flex justify-content-center"> <p class="w-75">At Dokumente Ligjore, our goal is to simplify your access to justice by providing
+                free, user-friendly legal document templates. Our process is designed to be straightforward and
+                accessible, ensuring you can find, customize, and use the legal documents you need with ease.
+                <b>Here’s how
+                it works:</b></p></div>
+
         </div>
         <div class="row justify-content-center align-items-center g-0">
             <div class="col-xxl-5 col-xl-5 col-lg-5 customize-image text-center">
@@ -58,9 +64,7 @@
                 </div>
             </div>
             <div class="col-xxl-5 col-xl-5 col-lg-5 my-auto text-start pt-5 pb-0 px-lg-2 px-5">
-                <h5 class="text-lg-start fw-semibold mb-0">Present your awesome product</h5>
-                <p class=" text-muted">lorem ipsum, dolor sit var ameto condesetrat aiatel varen or damsenlel verman code
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit</p>
+
                 <div class="row">
                     <div class="col-12 col-md-12">
                         <div class="d-flex">
@@ -68,9 +72,9 @@
                                 <i class="bx bxs-badge-check text-primary fs-18"></i>
                             </span>
                             <div class="ms-2">
-                                <h6 class="fw-semibold mb-0">Can Switch Easily From Vertical to HorizontalMenu.</h6>
-                                <p class=" text-muted">lorem ipsum, dolor sit var ameto condesetrat aiatel varen or
-                                    damsenlel verman code Lorem ipsum, dolor sit amet consectetur </p>
+                                <h6 class="fw-semibold mb-0">Browse Our Library</h6>
+                                <p class=" text-muted">Explore our extensive collection of legal document templates. Our templates are categorized for easy navigation.
+                                    Use our search bar or browse through the categories to find the specific template you need.</p>
                             </div>
                         </div>
                     </div>
@@ -80,9 +84,8 @@
                                 <i class="bx bxs-badge-check text-primary fs-18"></i>
                             </span>
                             <div class="ms-2">
-                                <h6 class="fw-semibold mb-0">Switch Easily From One Color to Another Color style</h6>
-                                <p class=" text-muted">lorem ipsum, dolor sit var ameto condesetrat aiatel varen or
-                                    damsenlel verman code Lorem ipsum, dolor sit amet consectetur </p>
+                                <h6 class="fw-semibold mb-0">Select and Download</h6>
+                                <p class=" text-muted">Once you find the document template that suits your needs, simply click on it to view more details. You can then download the template in a format that is convenient for you, such as Word.</p>
                             </div>
                         </div>
                     </div>
@@ -92,9 +95,19 @@
                                 <i class="bx bxs-badge-check text-primary fs-18"></i>
                             </span>
                             <div class="ms-2">
-                                <h6 class="fw-semibold mb-0">Switch Easily From Fixed to Scrollable Layout.</h6>
-                                <p class=" text-muted">lorem ipsum, dolor sit var ameto condesetrat aiatel varen or
-                                    damsenlel verman code Lorem ipsum, dolor sit amet consectetur </p>
+                                <h6 class="fw-semibold mb-0">Customize the Document</h6>
+                                <p class=" text-muted">Open the downloaded template and fill in the necessary details. Our templates are designed to be easily customizable, with clear instructions and placeholders indicating where you need to insert your specific information. This ensures that you can tailor the document to fit your unique situation accurately.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-12">
+                        <div class="d-flex">
+                            <span>
+                                <i class="bx bxs-badge-check text-primary fs-18"></i>
+                            </span>
+                            <div class="ms-2">
+                                <h6 class="fw-semibold mb-0">Use the Document</h6>
+                                <p class=" text-muted">After customizing the template, carefully review the document to ensure all details are correct and complete. You can now download or save the finalized document for your legal needs.</p>
                             </div>
                         </div>
                     </div>
@@ -153,8 +166,7 @@
                         @foreach ($donors as $donor)
                             <div class="swiper-slide">
                                 <div class="ms-sm-5 ms-2 text-center">
-                                    <img src="{{ $donor->image_url }}" alt="image"
-                                        class="featur-icon">
+                                    <img src="{{ $donor->image_url }}" alt="image" class="featur-icon">
                                     <h5 class="mt-3 text-fixed-white ">
                                         {{ $donor->name }}
                                     </h5>
@@ -213,18 +225,16 @@
         <div class="container text-center">
             <p class="fs-18 fw-medium mb-1"><span class="landing-section-heading">About</span></p>
             <span class="landing-title"></span>
-            <h3 class="fw-semibold mb-5">Designed with precision and well documented</h3>
         </div>
+
         <div class="row justify-content-center align-items-center g-0">
+
             <div class="col-xxl-5 col-xl-5 col-lg-5 customize-image text-center">
                 <div class="text-lg-end">
                     <img src="{{ asset('assets/images/landing/1.png') }}" alt="" class="img-fluid">
                 </div>
             </div>
             <div class="col-xxl-5 col-xl-5 col-lg-5 my-auto text-start pt-5 pb-0 px-lg-2 px-5">
-                <h5 class="text-lg-start fw-semibold mb-0">Present your awesome product</h5>
-                <p class=" text-muted">lorem ipsum, dolor sit var ameto condesetrat aiatel varen or damsenlel verman code
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit</p>
                 <div class="row">
                     <div class="col-12 col-md-12">
                         <div class="d-flex">
@@ -232,9 +242,12 @@
                                 <i class="bx bxs-badge-check text-primary fs-18"></i>
                             </span>
                             <div class="ms-2">
-                                <h6 class="fw-semibold mb-0">Can Switch Easily From Vertical to HorizontalMenu.</h6>
-                                <p class=" text-muted">lorem ipsum, dolor sit var ameto condesetrat aiatel varen or
-                                    damsenlel verman code Lorem ipsum, dolor sit amet consectetur </p>
+                                <h6 class="fw-semibold mb-0">Who We Are</h6>
+                                <p class=" text-muted">Dokumente Ligjore is a pioneering initiative dedicated to enhancing
+                                    access to justice through the provision of free, user-friendly legal document templates.
+                                    We are committed to simplifying legal processes and making legal resources accessible to
+                                    everyone, especially those who cannot afford legal representation. Our mission is rooted
+                                    in the belief that justice should be within reach for all.</p>
                             </div>
                         </div>
                     </div>
@@ -244,9 +257,11 @@
                                 <i class="bx bxs-badge-check text-primary fs-18"></i>
                             </span>
                             <div class="ms-2">
-                                <h6 class="fw-semibold mb-0">Switch Easily From One Color to Another Color style</h6>
-                                <p class=" text-muted">lorem ipsum, dolor sit var ameto condesetrat aiatel varen or
-                                    damsenlel verman code Lorem ipsum, dolor sit amet consectetur </p>
+                                <h6 class="fw-semibold mb-0">Our Mission</h6>
+                                <p class=" text-muted">Our mission at Dokumente Ligjore is to democratize access to legal
+                                    resources. We strive to break down barriers to justice by offering comprehensive,
+                                    accessible, and understandable legal templates that cover a wide range of legal needs.
+                                    We aim to empower individuals to navigate legal processes with confidence and ease.</p>
                             </div>
                         </div>
                     </div>
@@ -256,12 +271,14 @@
                                 <i class="bx bxs-badge-check text-primary fs-18"></i>
                             </span>
                             <div class="ms-2">
-                                <h6 class="fw-semibold mb-0">Switch Easily From Fixed to Scrollable Layout.</h6>
-                                <p class=" text-muted">lorem ipsum, dolor sit var ameto condesetrat aiatel varen or
-                                    damsenlel verman code Lorem ipsum, dolor sit amet consectetur </p>
+                                <h6 class="fw-semibold mb-0">Our Vision</h6>
+                                <p class=" text-muted">Our vision is a world where everyone has the tools and knowledge to
+                                    access justice. We envision a society where legal processes are transparent,
+                                    understandable, and accessible to all, regardless of their financial situation.</p>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

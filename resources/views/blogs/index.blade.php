@@ -8,11 +8,28 @@
 
         <section class="section " id="about">
             <div class="container text-center">
-                <p class="fs-18 fw-medium mb-1"><span class="landing-section-heading">Information</span></p>
+                <p class="fs-18 fw-medium mb-1"><span class="landing-section-heading">Information Center</span></p>
                 <span class="landing-title"></span>
 
+
             </div>
-            <div class="row mt-2">
+
+            <div class="row mt-4">
+                <div class="col-lg-12">
+                    <h4>Stay Informed with Our Resources</h4>
+                    <p>
+                        At Dokumente Ligjore, we offer a wealth of information to help you understand and navigate legal processes. Our resources are designed to provide you with the knowledge and tools you need to make informed decisions.
+                    </p>
+                    <ul>
+                        <li><b>Blogs:</b> Read our latest articles on legal topics and stay updated with current legal trends.</li>
+                        <li><b>Fact Sheets:</b> Access concise and informative fact sheets that break down complex legal issues.</li>
+                        <li><b>FAQs:</b> Find answers to common questions about using our templates and understanding legal procedures.</li>
+                    </ul>
+                    <p>Explore our information section to empower yourself with the knowledge you need for your legal matters.</p>
+                </div>
+            </div>
+
+            <div class="row mt-4">
                 @foreach ($blogs as $blog)
                     <!-- COL-END -->
                     <div class="col-sm-3 col-md-12 col-lg-3 col-xl-3">

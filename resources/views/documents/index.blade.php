@@ -10,14 +10,20 @@
 
             <div class="row mt-2">
                 <div class="col-lg-12 text-center w-100">
-                    <p class="fs-18 fw-medium mb-1"><span class="landing-section-heading">Documents</span></p>
+                    <p class="fs-18 fw-medium mb-1"><span class="landing-section-heading">Explore Our Legal Document
+                            Templates</span></p>
                     <span class="landing-title">
 
                     </span>
 
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed, adipisci nesciunt. Distinctio ducimus
-                        quisquam nobis quod eaque nesciunt dolorem facilis corrupti eveniet! Quod alias fugit dolor repellat
-                        laudantium eos aperiam.</p>
+                </div>
+                <div class="col-lg-12 mt-5">
+                    <p>At Dokumente Ligjore, we provide a comprehensive library of free, user-friendly legal document
+                        templates designed to meet a wide range of needs. Whether you're dealing with personal, criminal,
+                        administrative, or commercial legal matters, our templates offer a reliable starting point to help
+                        you navigate the legal process with confidence and ease. Access, customize, and use our
+                        professionally crafted documents to simplify your legal journey.</p>
+
                 </div>
 
 
@@ -32,7 +38,8 @@
                                     <div class="col-lg-10 d-flex">
 
                                         <div class="d-flex justify-content-between w-75">
-                                            <select name="type" class="form-select w-50 mr-2" onchange="this.form.submit()">
+                                            <select name="type" class="form-select w-50 mr-2"
+                                                onchange="this.form.submit()">
                                                 <option value="">Select Type</option>
                                                 @foreach ($documentCategories as $documentCategory)
                                                     <option value="{{ $documentCategory->id }}"
@@ -42,7 +49,8 @@
                                                 @endforeach
                                             </select>
 
-                                            <select name="law_area" class="form-select w-50 mr-2" onchange="this.form.submit()">
+                                            <select name="law_area" class="form-select w-50 mr-2"
+                                                onchange="this.form.submit()">
                                                 <option value="">Law Area</option>
                                                 @foreach ($lawAreas as $lawArea)
                                                     <option value="{{ $lawArea->id }}"
@@ -52,8 +60,8 @@
                                                 @endforeach
                                             </select>
 
-                                            <input class="form-control w-75" type="search" name="search" placeholder="Search"
-                                                value="{{ request()->search }}" aria-label="Search">
+                                            <input class="form-control w-75" type="search" name="search"
+                                                placeholder="Search" value="{{ request()->search }}" aria-label="Search">
                                         </div>
                                         <button class="btn btn-md btn-light mx-1 my-0" type="submit">Search</button>
 
@@ -63,7 +71,8 @@
 
                                     <div class="col-lg-2 d-flex justify-content-end">
 
-                                        <button class="btn btn-sm btn-light mx-1 my-0" type="button" onclick="clearFilters()">Clear Filters</button>
+                                        <button class="btn btn-sm btn-light mx-1 my-0" type="button"
+                                            onclick="clearFilters()">Clear Filters</button>
                                     </div>
                                 </div>
                             </form>
@@ -112,9 +121,9 @@
 @endsection
 
 @push('scripts')
-   <script>
+    <script>
         function clearFilters() {
             window.location.href = "{{ route('documents.index') }}";
         }
-   </script>
+    </script>
 @endpush

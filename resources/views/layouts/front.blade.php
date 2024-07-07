@@ -193,18 +193,25 @@
                         <div class="btn-list d-lg-none d-flex">
                             @auth
                                 <a href="{{ route('admin.dashboard.index') }}"
-                                    class="btn btn-sm-w-sm btn-wave btn-outline-primary">Dashboard</a>
-                                    <form action="{{ route('logout') }}" method="post">
-                                        @csrf
-                                        <button type="submit" class="btn btn-w-sm btn-wave btn-outline-primary">Logout</button>
-                                    </form>
+                                    class="btn btn-sm-w-sm btn-wave btn-outline-primary">
+                                    <i class="ri-dashboard-line me-0"></i>
+                                </a>
+                                <form action="{{ route('logout') }}" method="post">
+                                    @csrf
+
+                                    <a onclick="event.preventDefault(); this.closest('form').submit();"
+
+                                    class="btn btn-sm-w-sm btn-wave btn-outline-primary">
+                                    <i class="ri-logout-box-line me-0"></i>
+                                </a>
+                                </form>
                             @endauth
                             @guest
                                 <a href="{{ route('register') }}" class="btn btn-sm-w-sm btn-wave btn-outline-primary">
-                                    New User
+                                    <i class="ri-user-add-line me-0"></i>
                                 </a>
                                 <a href="{{ route('login') }}" class="btn btn-sm-w-sm btn-wave btn-primary">
-                                    Log In
+                                    <i class="ri-login-box-line me-0"></i>
                                 </a>
                             @endguest
 
@@ -298,10 +305,11 @@
                                 @auth
                                     <a href="{{ route('admin.dashboard.index') }}"
                                         class="btn btn-w-sm btn-wave btn-outline-primary">Dashboard</a>
-                                        {{-- logout --}}
+                                    {{-- logout --}}
                                     <form action="{{ route('logout') }}" method="post">
                                         @csrf
-                                        <button type="submit" class="btn btn-w-sm btn-wave btn-outline-primary">Logout</button>
+                                        <button type="submit"
+                                            class="btn btn-w-sm btn-wave btn-outline-primary">Logout</button>
                                     </form>
                                 @endauth
                                 @guest
