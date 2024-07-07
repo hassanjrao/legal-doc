@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
 
         // assign role to user
         $user = User::find(1);
-        $user->update('email_verified_at', now());
+        $user->update(['email_verified_at', now()]);
         // $user->assignRole('admin');
 
         // $user = User::find(2);
