@@ -253,7 +253,7 @@
             <div class="main-sidebar mt-4" id="sidebar-scroll">
 
                 <!-- Start::nav -->
-                <nav class="main-menu-container nav nav-pills flex-column sub-open">
+                <nav class="main-menu-container nav nav-pills flex-column sub-open" style="position: relative; top:45px">
                     <div class="slide-left" id="slide-left">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24"
                             viewBox="0 0 24 24">
@@ -265,7 +265,7 @@
                         <!-- Start::slide -->
                         <li class="slide">
                             <a href="{{ route('admin.dashboard.index') }}"
-                                class="side-menu__item {{ request()->is('admin/dashboard/*') || request()->is('admin/dashboard') ? ' active' : '' }}">
+                                class="side-menu__item {{ request()->is('admin/dashboard/*') || request()->is('admin') || request()->is('admin/dashboard') ? ' active' : '' }}">
                                 <i class="fe fe-home side-menu__icon"></i>
                                 <span class="side-menu__label">Dashboard</span>
                             </a>
@@ -284,6 +284,13 @@
                             </a>
                         </li>
                         <!-- End::slide -->
+                        <li class="slide">
+                            <a href="{{ route('admin.blogs.index') }}"
+                                class="side-menu__item {{ request()->is('admin/blogs/*') || request()->is('admin/blogs') ? ' active' : '' }}">
+                                <i class="fe fe-clipboard side-menu__icon"></i>
+                                <span class="side-menu__label">Blogs</span>
+                            </a>
+                        </li>
 
 
                         @hasrole('admin')
@@ -292,7 +299,7 @@
                                     class="side-menu__item {{ request()->is('admin/document-categories/*') || request()->is('admin/document-categories') ? ' active' : '' }}">
                                     <i class="fe fe-folder
                                 side-menu__icon"></i>
-                                    <span class="side-menu__label">Document Categories</span>
+                                    <span class="side-menu__label">Document Types</span>
                                 </a>
                             </li>
 
@@ -306,13 +313,7 @@
                             </li>
 
                             <!-- Start::slide -->
-                            <li class="slide">
-                                <a href="{{ route('admin.blogs.index') }}"
-                                    class="side-menu__item {{ request()->is('admin/blogs/*') || request()->is('admin/blogs') ? ' active' : '' }}">
-                                    <i class="fe fe-clipboard side-menu__icon"></i>
-                                    <span class="side-menu__label">Blogs</span>
-                                </a>
-                            </li>
+
                             <!-- End::slide -->
 
 

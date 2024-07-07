@@ -1,6 +1,6 @@
 @extends('layouts.backend')
 
-@section('page-name', 'Document Categories')
+@section('page-name', 'Document Types')
 
 @section('content')
     <!-- Start::app-content -->
@@ -11,7 +11,7 @@
                 <div class="card custom-card">
                     <div class="card-header ">
                         <div class="card-title d-flex justify-content-between w-100">
-                            <span>Document Categories</span>
+                            <span>Document Types</span>
 
                             <a href="{{ route('admin.document-categories.create') }}" class="btn btn-primary">Add</a>
                         </div>

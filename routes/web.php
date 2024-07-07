@@ -65,7 +65,7 @@ Route::middleware(["auth",'verified'])->group(function () {
 
         Route::resource('documents', AdminDocumentController::class);
 
-        Route::resource('blogs', AdminBlogController::class)->middleware('role:admin');
+        Route::resource('blogs', AdminBlogController::class);
 
         Route::resource('users', AdminUserController::class)->middleware('role:admin');
 

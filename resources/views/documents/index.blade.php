@@ -32,11 +32,11 @@
                                     <div class="col-lg-10 d-flex">
 
                                         <div class="d-flex justify-content-between w-75">
-                                            <select name="category" class="form-select w-50 mr-2" onchange="this.form.submit()">
-                                                <option value="">Select Category</option>
+                                            <select name="type" class="form-select w-50 mr-2" onchange="this.form.submit()">
+                                                <option value="">Select Type</option>
                                                 @foreach ($documentCategories as $documentCategory)
                                                     <option value="{{ $documentCategory->id }}"
-                                                        {{ request()->category == $documentCategory->id ? 'selected' : '' }}>
+                                                        {{ request()->type == $documentCategory->id ? 'selected' : '' }}>
                                                         {{ $documentCategory->name }}
                                                     </option>
                                                 @endforeach

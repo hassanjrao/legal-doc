@@ -47,18 +47,18 @@
 
                         <div class="col-md-6">
                             <?php
-                            $value = old('category', $document ? $document->documentCategory->id : null);
+                            $value = old('type', $document ? $document->documentCategory->id : null);
                             ?>
-                            <label class="form-label">Category</label>
-                            <select name="category" class="form-select" required>
-                                <option value="" disabled>Select Category</option>
+                            <label class="form-label">Type</label>
+                            <select name="type" class="form-select" required>
+                                <option value="" disabled>Select Type</option>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}" @if ($category->id == $value) selected @endif>
                                         {{ $category->name }}
                                     </option>
                                 @endforeach
                             </select>
-                            @error('category')
+                            @error('type')
                                 <span class="text-danger" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

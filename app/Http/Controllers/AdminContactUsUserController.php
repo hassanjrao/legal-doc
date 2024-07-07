@@ -12,9 +12,19 @@ class AdminContactUsUserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $contactUsUsers=ContactUsUser::latest()->get();
+        $request->validate([
+            'type'=>'nullable|in:complaint,request,all',
+        ]);
+
+
+
+        $contactUsUsers=ContactUsUser::latest()
+            ->when($request->type && $request->type!='all',function ($query) use ($request){
+                $query->where('type',$request->type);
+            })
+        ->get();
 
         return view('admin.contact-us-users.index',compact('contactUsUsers'));
     }
@@ -82,6 +92,7 @@ class AdminContactUsUserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        ContactUsUser::findorfail($id)->delete();
+        return redirect()->back()->with('success','Contact Us User Deleted Successfully');
     }
 }

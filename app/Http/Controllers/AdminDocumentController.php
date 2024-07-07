@@ -57,7 +57,7 @@ class AdminDocumentController extends Controller
     {
         $request->validate([
             'title' => 'required',
-            'category' => 'required|exists:document_categories,id',
+            'type' => 'required|exists:document_categories,id',
             'law_area' => 'required|exists:law_areas,id',
             'file' => 'required|mimes:doc,docx|max:2048',
         ]);
@@ -67,7 +67,7 @@ class AdminDocumentController extends Controller
 
         $doc = Document::create([
             'title' => $request->title,
-            'document_category_id' => $request->category,
+            'document_category_id' => $request->type,
             'law_area_id' => $request->law_area,
             'file_path' => $path,
             'created_by_user_id' => auth()->user()->id,
@@ -239,13 +239,13 @@ class AdminDocumentController extends Controller
 
         $request->validate([
             'title' => 'required',
-            'category' => 'required|exists:document_categories,id',
+            'type' => 'required|exists:document_categories,id',
             'law_area' => 'required|exists:law_areas,id',
         ]);
 
         $document->update([
             'title' => $request->title,
-            'document_category_id' => $request->category,
+            'document_category_id' => $request->type,
             'law_area_id' => $request->law_area,
         ]);
 
@@ -271,8 +271,10 @@ class AdminDocumentController extends Controller
     public function download($id)
     {
         $document = Document::findOrFail($id);
+        // download the document with the file name= document title
 
-        return response()->download(storage_path('app/public/' . $document->file_path));
+
+        return response()->download(storage_path('app/public/' . $document->file_path), $document->title . '.docx');
     }
 
     public function downloadUserDocument($id)
@@ -313,7 +315,7 @@ class AdminDocumentController extends Controller
         $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
         $objWriter->save(storage_path('app/public/' . basename($document->file_path, '.docx') . '_filled.docx'));
 
-        return response()->download(storage_path('app/public/' . basename($document->file_path, '.docx') . '_filled.docx'));
+        return response()->download(storage_path('app/public/' . basename($document->file_path, '.docx') . '_filled.docx'), $document->title . '.docx');
     }
 
     private function sanitizeHtml($html)

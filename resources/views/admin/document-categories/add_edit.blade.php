@@ -6,7 +6,7 @@
     $addUpdate = isset($documentCategory) ? 'Update' : 'Add';
 @endphp
 
-@section('page-name', 'Add Document Category')
+@section('page-name', $addEdit . ' Document Type')
 
 @section('content')
     <!-- Start::app-content -->
@@ -18,7 +18,7 @@
                 <div class="card custom-card">
                     <div class="card-header ">
                         <div class="card-title d-flex justify-content-between w-100">
-                            <span>{{ $addEdit }} Document Category</span>
+                            <span>{{ $addEdit }} Document Type</span>
 
                             <a href="{{ route('admin.document-categories.index') }}" class="btn btn-primary">All</a>
                         </div>

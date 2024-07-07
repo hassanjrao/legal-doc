@@ -37,6 +37,8 @@
                                         <td>{{ $blog->created_at}}</td>
                                         <td >
 
+                                            @hasrole('admin')
+
                                             <a href="{{ route('admin.blogs.edit', $blog->id) }}" type="button"
                                                 class="btn btn-sm btn-primary-gradient btn-wave waves-effect waves-light">Edit</a>
 
@@ -48,6 +50,12 @@
                                                 <button type="submit" class="btn btn-sm btn-danger-gradient btn-wave waves-effect waves-light"
                                                     onclick="return confirm('Are you sure?')">Delete</button>
                                             </form>
+                                            @endhasrole
+
+                                            @hasanyrole('user|company')
+                                            <a href="{{ route('blogs.show', $blog->id) }}" type="button"
+                                                class="btn btn-sm btn-primary-gradient btn-wave waves-effect waves-light">View</a>
+                                            @endhasanyrole
                                         </td>
                                     </tr>
                                 @endforeach

@@ -21,7 +21,7 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Category</th>
+                                    <th>Type</th>
                                     <th>Law Area</th>
                                     <th>Title</th>
                                     <th>Document</th>

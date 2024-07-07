@@ -17,17 +17,17 @@ class DocumentController extends Controller
     public function index(Request $request)
     {
         $request->validate([
-            'category' => 'nullable|exists:document_categories,id',
+            'type' => 'nullable|exists:document_categories,id',
             'search' => 'nullable|string',
             'law_area' => 'nullable|exists:law_areas,id',
         ]);
 
-        $category = $request->category;
+        $type = $request->type;
         $search = $request->search;
 
         $documents = Document::latest()
-            ->when($category, function ($query) use ($category) {
-                return $query->where('document_category_id', $category);
+            ->when($type, function ($query) use ($type) {
+                return $query->where('document_category_id', $type);
             })
             ->when($search, function ($query) use ($search) {
                 return $query->where('title', 'like', "%$search%");
