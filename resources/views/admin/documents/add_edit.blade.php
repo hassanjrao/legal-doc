@@ -105,22 +105,24 @@
                             ?>
 
                             @if ($document)
-                            <a href="{{ $document->file_url }}" target="_blank">
+                            <a href="{{ route('admin.documents.download',$document->id) }}" target="_blank" style="text-decoration: underline">
                                 <img src="{{ asset('assets/images/media/files/documents/8.png') }}"
                                     alt="img">
+                                    <span>
+                                        {{ $document->title}}
+                                    </span>
                             </a>
                             @endif
-                            <label class="form-label">Upload Document</label>
+                            {{-- <label class="form-label">Upload Document</label>
                             <input type="file" class="form-control" name="file"
                             {{ isset($document) ? '' : 'required' }}
-                            {{-- accept doc --}}
                             accept=".doc,.docx"
                             value="{{ $value }}">
                             @error('file')
                                 <span class="text-danger" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
-                            @enderror
+                            @enderror --}}
                         </div>
 
                         <div class="col-12 d-flex justify-content-end">

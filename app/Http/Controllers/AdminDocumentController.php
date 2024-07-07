@@ -106,7 +106,7 @@ class AdminDocumentController extends Controller
         $documentPlaceholders = DocumentPlaceHolder::where('document_id', $document->id)->get();
 
 
-        $documentPlaceholdersIds= $documentPlaceholders->pluck('id')->toArray();
+        $documentPlaceholdersIds = $documentPlaceholders->pluck('id')->toArray();
 
 
         $userDocumentResponses = UserDocumentResponse::where('document_id', $document->id)
@@ -118,7 +118,7 @@ class AdminDocumentController extends Controller
 
 
 
-        return view('admin.documents.fill', compact('document', 'htmlContent','documentPlaceholdersIds','userDocumentResponses'));
+        return view('admin.documents.fill', compact('document', 'htmlContent', 'documentPlaceholdersIds', 'userDocumentResponses'));
     }
 
     // Fill placeholders in the document and save the filled document
@@ -136,18 +136,16 @@ class AdminDocumentController extends Controller
                 'user_id' => auth()->user()->id,
                 'document_id' => $document->id,
                 'document_place_holder_id' => $placeholder['id'],
-            ],[
+            ], [
                 'user_id' => auth()->user()->id,
                 'document_id' => $document->id,
                 'document_place_holder_id' => $placeholder['id'],
                 'response' => $placeholder['value'],
             ]);
-
         }
 
 
         return response()->json(['message' => 'Document filled successfully!'], 200);
-
     }
 
     // Convert the document to HTML
@@ -188,7 +186,6 @@ class AdminDocumentController extends Controller
         $htmlContent = preg_replace('/__+/', '<span class="editable" contenteditable="true">$0</span>', $htmlContent);
 
         return $htmlContent;
-
     }
 
 
@@ -221,9 +218,9 @@ class AdminDocumentController extends Controller
 
         $categories = DocumentCategory::all();
 
-        $lawAreas=LawArea::all();
+        $lawAreas = LawArea::all();
 
-        return view('admin.documents.add_edit', compact('document', 'categories','lawAreas'));
+        return view('admin.documents.add_edit', compact('document', 'categories', 'lawAreas'));
     }
 
     /**
@@ -241,6 +238,7 @@ class AdminDocumentController extends Controller
             'title' => 'required',
             'type' => 'required|exists:document_categories,id',
             'law_area' => 'required|exists:law_areas,id',
+            // 'file' => 'nullable|mimes:doc,docx|max:2048',
         ]);
 
         $document->update([
@@ -248,6 +246,7 @@ class AdminDocumentController extends Controller
             'document_category_id' => $request->type,
             'law_area_id' => $request->law_area,
         ]);
+
 
         return redirect()->route('admin.documents.index')->withToastSuccess('Document updated successfully');
     }
@@ -283,7 +282,7 @@ class AdminDocumentController extends Controller
 
         $htmlContent = $this->convertDocToHtml(storage_path('app/public/' . $document->file_path));
 
-         // Sanitize the HTML content
+        // Sanitize the HTML content
 
         $htmlContent = $this->replacePlaceholdersWithEditableSpans($htmlContent);
 
@@ -296,7 +295,7 @@ class AdminDocumentController extends Controller
 
         foreach ($userDocumentResponses as $response) {
             // MAKE response bold
-            $response = '<b>'.' ' . $response .' '. '</b>';
+            $response = '<b>' . ' ' . $response . ' ' . '</b>';
             $htmlContent = preg_replace('/<span class="editable" contenteditable="true">__+<\/span>/', $response, $htmlContent, 1);
         }
 
