@@ -13,11 +13,11 @@
     <!-- Start:: Section-1 -->
     <div class="landing-banner" id="home">
         <section class="section">
-            <div class="container px-sm-0 main-banner-container pb-0">
+            <div class="container">
                 <div class="row">
-                    <div class="col-xl-4 col-lg-4 animation-zidex pos-relative my-auto">
+                    <div class="col-xl-8 col-lg-8 animation-zidex pos-relative my-auto">
                         <h1 class="fw-semibold">Free Legal Documents</h1>
-                        <h5 class="text-start fw-bold mb-3 lh-base">Our goal is to simplify access to justice by providing
+                        <h5 class="text-start fw-bold mb-3 lh-base w-75">Our goal is to simplify access to justice by providing
                             free and easy-to-use legal documents for all citizens of Kosovo.
                         </h5>
                         <ul class="pb-3 mb-3">
@@ -33,8 +33,8 @@
 
 
                     </div>
-                    <div class="col-xl-8 col-lg-8 my-auto text-end">
-                        <img src="{{ asset('assets/images/landing/dokumente ligjore homepage.svg') }}" alt=""
+                    <div class="col-xl-4 col-lg-4 my-auto text-end">
+                        <img src="{{ asset('assets/images/landing/13338131_5217023.svg') }}" alt=""
                             class="w-100">
                     </div>
                 </div>

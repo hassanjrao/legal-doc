@@ -18374,7 +18374,7 @@ code[class*=language-] {
 }
 .landing-body .landing-footer {
   background-color: rgb(var(--light-rgb));
-  padding-block-start: 150px;
+  padding-block-start: 50px;
   border-bottom: 1px solid var(--default-border);
 }
 .landing-body .landing-footer .landing-footer-list li {

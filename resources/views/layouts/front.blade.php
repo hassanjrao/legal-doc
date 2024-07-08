@@ -51,6 +51,24 @@
         }
     </script> --}}
 
+    <style>
+        /* for mobile  .footer-pen-logo*/
+        @media (max-width: 767px) {
+            .footer-pen-logo {
+                width: 19.7rem;
+            }
+
+
+        }
+
+        /* for 375px */
+        @media (max-width: 375px) {
+            .footer-pen-logo {
+                width: 15.7rem;
+            }
+        }
+    </style>
+
 
 </head>
 
@@ -200,10 +218,9 @@
                                     @csrf
 
                                     <a onclick="event.preventDefault(); this.closest('form').submit();"
-
-                                    class="btn btn-sm-w-sm btn-wave btn-outline-primary">
-                                    <i class="ri-logout-box-line me-0"></i>
-                                </a>
+                                        class="btn btn-sm-w-sm btn-wave btn-outline-primary">
+                                        <i class="ri-logout-box-line me-0"></i>
+                                    </a>
                                 </form>
                             @endauth
                             @guest
@@ -345,26 +362,33 @@
             <section class="section landing-footer">
                 <div class="container">
                     <div class="row justify-content-between align-items-center">
-                        <div class="col-xl-4 col-lg-4 col-md-4">
-                            <a href="{{ route('home') }}">
-                                <img loading="lazy" alt="" class="logo-2 mb-3 img-fluid"
-                                    src="{{ asset('assets/images/brand-logos/pen_logo.png') }}"></a>
 
+                        <div class="col-lg-10 col-md-10">
+                            <div class="row">
+                                <div class="col-xl-4 col-lg-4 col-md-4 d-flex justify-content-center align-items-center">
+                                    <a href="{{ route('home') }}">
+                                        <img loading="lazy" alt=""
+                                            class="logo-2 mb-3 img-fluid footer-pen-logo"
+                                            src="{{ asset('assets/images/brand-logos/pen_logo.png') }}"></a>
+                                </div>
 
+                                <div class="col-xl-4 col-lg-4 col-md-4">
+                                    <a href="{{ route('home') }}"><img loading="lazy" alt=""
+                                            class="logo-2 mb-3 img-fluid"
+                                            src="{{ asset('assets/images/brand-logos/usaid_logo.png') }}"></a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                <p>Implemented by PEN and Supported by USAID Justice Activity</p>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="col-xl-4 col-lg-4 col-md-4">
-
-                            <a href="{{ route('home') }}"><img loading="lazy" alt=""
-                                    class="logo-2 mb-3 img-fluid"
-                                    src="{{ asset('assets/images/brand-logos/usaid_logo.png') }}"></a>
-
-
-                        </div>
 
                         <div class="col-xl-2 col-lg-2 col-md-2 ">
 
-                            <div>
+                            <div style="margin-left: 20px">
                                 <h6 class="fw-semibold">INFO</h6>
                                 <ul class="list-unstyled op-6 fw-medium landing-footer-list mb-0">
                                     <li>
@@ -387,11 +411,6 @@
                         </div>
                     </div>
 
-                    <div class="row mt-4">
-                        <div class="col-xl-12">
-                            <p>Implemented by PEN and Supported by USAID Justice Activity</p>
-                        </div>
-                    </div>
                 </div>
             </section>
             <!-- End:: Section-12 -->
