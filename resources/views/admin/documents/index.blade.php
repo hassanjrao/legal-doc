@@ -13,7 +13,9 @@
                         <div class="card-title d-flex justify-content-between w-100">
                             <span>Documents</span>
 
-                            <a href="{{ route('admin.documents.create') }}" class="btn btn-primary">Add</a>
+                            @hasrole('admin')
+                                <a href="{{ route('admin.documents.create') }}" class="btn btn-primary">Add</a>
+                            @endhasrole
                         </div>
                     </div>
                     <div class="card-body">

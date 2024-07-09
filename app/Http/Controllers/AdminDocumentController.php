@@ -38,6 +38,10 @@ class AdminDocumentController extends Controller
      */
     public function create()
     {
+        if(!auth()->user()->hasRole('admin')){
+            abort(403, 'Unauthorized action');
+        }
+
         $document = null;
 
         $categories = DocumentCategory::all();
