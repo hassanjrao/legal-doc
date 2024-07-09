@@ -13,7 +13,7 @@
     <meta name="Author" content="Spruko Technologies Private Limited">
 
     <!-- Favicon -->
-    <link rel="icon" href="{{ asset('assets/images/brand-logos/bluelogo.png') }}" style='height:45px'
+    <link rel="icon" href="{{ asset('assets/images/brand-logos/favicon.png') }}" style='height:45px'
         type="image/x-icon">
 
     <!-- Bootstrap Css -->
