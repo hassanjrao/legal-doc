@@ -105,24 +105,24 @@
                             ?>
 
                             @if ($document)
-                            <a href="{{ route('admin.documents.download',$document->id) }}" target="_blank" style="text-decoration: underline">
-                                <img src="{{ asset('assets/images/media/files/documents/8.png') }}"
-                                    alt="img">
+                                <a href="{{ route('admin.documents.download', $document->id) }}" target="_blank"
+                                    style="text-decoration: underline">
+                                    <img src="{{ asset('assets/images/media/files/documents/8.png') }}" alt="img">
                                     <span>
-                                        {{ $document->title}}
+                                        {{ $document->title }}
                                     </span>
-                            </a>
+                                </a>
+                            @else
+                                <label class="form-label">Upload Document</label>
+                                <input type="file" class="form-control" name="file"
+                                    {{ isset($document) ? '' : 'required' }} accept=".doc,.docx"
+                                    value="{{ $value }}">
+                                @error('file')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             @endif
-                            {{-- <label class="form-label">Upload Document</label>
-                            <input type="file" class="form-control" name="file"
-                            {{ isset($document) ? '' : 'required' }}
-                            accept=".doc,.docx"
-                            value="{{ $value }}">
-                            @error('file')
-                                <span class="text-danger" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror --}}
                         </div>
 
                         <div class="col-12 d-flex justify-content-end">
