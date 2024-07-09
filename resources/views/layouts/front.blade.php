@@ -408,6 +408,9 @@
                                     <li>
                                         <a href="#" class="">Privacy Policy</a>
                                     </li>
+                                    <li>
+                                        <a href="#" class="">Terms & Conditions</a>
+                                    </li>
                                 </ul>
                             </div>
 
