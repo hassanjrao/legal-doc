@@ -15,26 +15,28 @@
 
         <div class="container-fluid">
 
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xxl-3">
-                    <div class="card overflow-hidden">
-                        <div class="card-body">
-                            <div class="d-flex">
-                                <div class="mt-2">
-                                    <h6 class="fw-normal">Total Documents</h6>
-                                    <h2 class="mb-0 text-dark fw-semibold">{{ $totalDocuments }}</h2>
-                                </div>
-                                <div class="ms-auto">
-                                    <div class="chart-wrapper mt-1">
-                                        <canvas id="saleschart" class="chart-dropshadow" width="120" height="80"
-                                            style="display: block; box-sizing: border-box; height: 64px; width: 96px;"></canvas>
+            @hasrole('admin')
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xxl-3">
+                        <div class="card overflow-hidden">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <div class="mt-2">
+                                        <h6 class="fw-normal">Total Documents</h6>
+                                        <h2 class="mb-0 text-dark fw-semibold">{{ $totalDocuments }}</h2>
+                                    </div>
+                                    <div class="ms-auto">
+                                        <div class="chart-wrapper mt-1">
+                                            <canvas id="saleschart" class="chart-dropshadow" width="120" height="80"
+                                                style="display: block; box-sizing: border-box; height: 64px; width: 96px;"></canvas>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endhasrole
 
             <div class="row">
 
@@ -69,13 +71,14 @@
                                                 </h6>
                                                 <h6 class="fw-semibold mb-1">
                                                     {{ $document->downloaded_by_count }}
-                                                    <span class="text-success fs-11">(<i class="fe fe-arrow-up"></i>{{ $document->downloaded_by_percentage }}%)</span>
+                                                    <span class="text-success fs-11">(<i
+                                                            class="fe fe-arrow-up"></i>{{ $document->downloaded_by_percentage }}%)</span>
 
                                                 </h6>
                                             </div>
                                             <div class="progress progress-sm mb-3">
-                                                <div class="progress-bar bg-primary" style="width: {{ $document->downloaded_by_percentage }}%"
-                                                   ></div>
+                                                <div class="progress-bar bg-primary"
+                                                    style="width: {{ $document->downloaded_by_percentage }}%"></div>
                                             </div>
                                         </div>
                                     </div>
