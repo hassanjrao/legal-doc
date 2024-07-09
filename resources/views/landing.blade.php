@@ -17,7 +17,7 @@
                 <div class="row">
                     <div class="col-xl-8 col-lg-8 animation-zidex pos-relative my-auto">
                         <h1 class="fw-semibold">Free Legal Documents</h1>
-                        <h5 class="text-start fw-bold mb-3 lh-base w-75">Our goal is to simplify access to justice by providing
+                    <h5 class="text-start fw-bold mb-3 lh-base w-75">Our goal is to simplify access to justice by providing
                             free and easy-to-use legal documents for all citizens of Kosovo.
                         </h5>
                         <ul class="pb-3 mb-3">

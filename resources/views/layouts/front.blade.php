@@ -405,6 +405,9 @@
                                     <li>
                                         <a href="{{ route('blogs.index') }}" class="">Information</a>
                                     </li>
+                                    <li>
+                                        <a href="#" class="">Privacy Policy</a>
+                                    </li>
                                 </ul>
                             </div>
 
