@@ -314,6 +314,9 @@ class AdminDocumentController extends Controller
         $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
         $objWriter->save(storage_path('app/public/' . basename($document->file_path, '.docx') . '_filled.docx'));
 
+        $user=auth()->user();
+        $user->downloadedDocuments()->attach($document->id);
+
         return response()->download(storage_path('app/public/' . basename($document->file_path, '.docx') . '_filled.docx'), $document->title . '.docx');
     }
 

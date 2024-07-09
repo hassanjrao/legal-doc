@@ -43,4 +43,10 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function downloadedDocuments()
+    {
+        return $this->belongsToMany(Document::class, 'document_user', 'user_id', 'document_id')->withTimestamps();
+    }
 }

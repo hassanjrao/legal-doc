@@ -34,4 +34,9 @@ class Document extends Model
     {
         return $this->belongsTo(User::class, 'created_by_user_id');
     }
+
+    public function downloadedBy()
+    {
+        return $this->belongsToMany(User::class, 'document_user', 'document_id', 'user_id')->withTimestamps();
+    }
 }
