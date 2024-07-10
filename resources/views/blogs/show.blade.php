@@ -8,10 +8,10 @@
 
         <section class="section " id="about">
             <div class="container text-center">
-                <p class="fs-18 fw-medium mb-1"><span class="landing-section-heading">
+                <h1 class=" mb-1"><span class="">
                         {{ $blog->title }}
                     </span>
-                </p>
+                </h1>
                 <span class="landing-title"></span>
 
             </div>

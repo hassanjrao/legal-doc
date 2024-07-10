@@ -10,8 +10,8 @@
 
             <div class="row mt-2">
                 <div class="col-lg-12 text-center w-100">
-                    <p class="fs-18 fw-medium mb-1"><span class="landing-section-heading">Explore Our Legal Document
-                            Templates</span></p>
+                    <h1 class=" mb-1"><span class="">Explore Our Legal Document
+                            Templates</span></h1>
                     <span class="landing-title">
 
                     </span>
