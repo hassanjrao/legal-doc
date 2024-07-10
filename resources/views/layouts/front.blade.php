@@ -365,6 +365,11 @@
 
                         <div class="col-lg-10 col-md-10">
                             <div class="row">
+                                <div class="col-xl-4 col-lg-4 col-md-4">
+                                    <a href="{{ route('home') }}"><img loading="lazy" alt=""
+                                            class="logo-2 mb-3 img-fluid"
+                                            src="{{ asset('assets/images/brand-logos/usaid_logo.png') }}"></a>
+                                </div>
                                 <div class="col-xl-4 col-lg-4 col-md-4 d-flex justify-content-center align-items-center">
                                     <a href="{{ route('home') }}">
                                         <img loading="lazy" alt=""
@@ -372,11 +377,7 @@
                                             src="{{ asset('assets/images/brand-logos/pen_logo.png') }}"></a>
                                 </div>
 
-                                <div class="col-xl-4 col-lg-4 col-md-4">
-                                    <a href="{{ route('home') }}"><img loading="lazy" alt=""
-                                            class="logo-2 mb-3 img-fluid"
-                                            src="{{ asset('assets/images/brand-logos/usaid_logo.png') }}"></a>
-                                </div>
+
                             </div>
                             <div class="row">
                                 <div class="col-lg-12">
@@ -406,10 +407,10 @@
                                         <a href="{{ route('blogs.index') }}" class="">Information</a>
                                     </li>
                                     <li>
-                                        <a href="#" class="">Privacy Policy</a>
+                                        <a href="{{route('privacy-policy')}}" class="">Privacy Policy</a>
                                     </li>
                                     <li>
-                                        <a href="#" class="">Terms & Conditions</a>
+                                        <a href="{{ route('terms-conditions') }}" class="">Terms & Conditions</a>
                                     </li>
                                 </ul>
                             </div>

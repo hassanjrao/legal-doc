@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Document;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -13,7 +14,19 @@ class AdminDashboardController extends Controller
 
         $totalDocuments = Document::count();
 
+        $totalUsers = null;
+        $totalCompanies = null;
+
         if (auth()->user()->hasRole('admin')) {
+
+
+            $totalUsers = User::whereHas('roles', function ($query) {
+                $query->where('name', 'user');
+            })->count();
+
+            $totalCompanies = User::whereHas('roles', function ($query) {
+                $query->where('name', 'company');
+            })->count();
 
 
             $downloadedDocuments = Document::whereHas('downloadedBy')
@@ -45,7 +58,7 @@ class AdminDashboardController extends Controller
 
             $totalDownloads = DB::table('document_user')
                 ->where('user_id', auth()->id())
-            ->count();
+                ->count();
 
             $downloadedDocuments = $downloadedDocuments->map(function ($document) use ($totalDownloads) {
                 $document->downloaded_by_count = $document->downloadedBy->count();
@@ -67,6 +80,6 @@ class AdminDashboardController extends Controller
 
 
 
-        return view('admin.dashboard.index', compact('totalDocuments', 'downloadedDocuments'));
+        return view('admin.dashboard.index', compact('totalDocuments', 'downloadedDocuments', 'totalUsers', 'totalCompanies'));
     }
 }

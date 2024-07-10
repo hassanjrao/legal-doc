@@ -37,6 +37,14 @@ Route::resource('documents', DocumentController::class);
 
 Route::resource('blogs', BlogController::class);
 
+Route::get('privacy-policy', function () {
+    return view('privacy-policy');
+})->name('privacy-policy');
+
+Route::get('terms-and-conditions', function () {
+    return view('terms-conditions');
+})->name('terms-conditions');
+
 Route::get('symlink', function () {
 
 

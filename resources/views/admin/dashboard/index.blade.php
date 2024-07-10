@@ -3,8 +3,6 @@
 @section('page-name', 'Dashboard')
 
 @section('css')
-    <!-- Jsvector Css -->
-    <link rel="stylesheet" href="{{ asset('assets/libs/jsvectormap/css/jsvectormap.min.css') }}">
 
 
 @endsection
@@ -26,9 +24,44 @@
                                         <h2 class="mb-0 text-dark fw-semibold">{{ $totalDocuments }}</h2>
                                     </div>
                                     <div class="ms-auto">
-                                        <div class="chart-wrapper mt-1">
-                                            <canvas id="saleschart" class="chart-dropshadow" width="120" height="80"
-                                                style="display: block; box-sizing: border-box; height: 64px; width: 96px;"></canvas>
+                                        <div class=" mt-1">
+                                            <i class="fe fe-file-text fs-40 text-primary"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xxl-3">
+                        <div class="card overflow-hidden">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <div class="mt-2">
+                                        <h6 class="fw-normal">Total Users</h6>
+                                        <h2 class="mb-0 text-dark fw-semibold">{{ $totalUsers }}</h2>
+                                    </div>
+                                    <div class="ms-auto mt-2">
+                                        {{-- users icons --}}
+                                        <i class="fe fe-users fs-40 text-primary"></i>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xxl-3">
+                        <div class="card overflow-hidden">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <div class="mt-2">
+                                        <h6 class="fw-normal">Total Companies</h6>
+                                        <h2 class="mb-0 text-dark fw-semibold">{{ $totalCompanies }}</h2>
+                                    </div>
+                                    <div class="ms-auto">
+                                        <div class="mt-1">
+                                            <i class="fe fe-briefcase fs-40 text-primary"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -98,14 +131,6 @@
 @endsection
 
 @push('scripts')
-    <!-- JSVector Maps JS -->
-    <script src="{{ asset('assets/libs/jsvectormap/js/jsvectormap.min.js') }}"></script>
-
-    <!-- JSVector Maps MapsJS -->
-    <script src="{{ asset('assets/libs/jsvectormap/maps/world-merc.js') }}"></script>
-
-    <!-- Apex Charts JS -->
-    <script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
 
     <!-- Chartjs Chart JS -->
     <script src="{{ asset('assets/libs/chart.js/chart.min.js') }}"></script>
