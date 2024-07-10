@@ -13,7 +13,7 @@
     <meta name="Author" content="Spruko Technologies Private Limited">
 
     <!-- Favicon -->
-    <link rel="icon" href="{{ asset('assets/images/brand-logos/favicon.png') }}" style='height:45px'
+    <link rel="icon" href="{{ asset('assets/images/brand-logos/favicon.png') }}"
         type="image/x-icon">
 
     <!-- Bootstrap Css -->
@@ -175,11 +175,11 @@
                     <div class="header-element">
                         <div class="horizontal-logo">
                             <a href="{{ route('home') }}" class="header-logo">
-                                <img src="{{ asset('assets/images/brand-logos/bluelogo.png') }}" style='height:45px'
+                                <img src="{{ asset('assets/images/brand-logos/favicon.png') }}" style='height:45px'
                                     alt="logo" class="toggle-logo">
-                                <img src="{{ asset('assets/images/brand-logos/bluelogo.png') }}" style='height:45px'
+                                <img src="{{ asset('assets/images/brand-logos/favicon.png') }}" style='height:45px'
                                     alt="logo" class="toggle-white">
-                                <img src="{{ asset('assets/images/brand-logos/bluelogo.png') }}" style='height:45px'
+                                <img src="{{ asset('assets/images/brand-logos/favicon.png') }}" style='height:45px'
                                     alt="logo" class="toggle-dark">
                             </a>
                         </div>
