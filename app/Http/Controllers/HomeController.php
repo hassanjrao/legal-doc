@@ -39,7 +39,8 @@ class HomeController extends Controller
 
         $document = Document::findOrFail($id);
 
-        return response()->download(storage_path('app/public/' . $document->file_path));
+
+        return response()->download(storage_path('app/public/' . $document->file_path), $document->title . '.docx');
     }
 
     public function contactSubmit(Request $request)
