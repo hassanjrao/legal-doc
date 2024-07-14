@@ -60,7 +60,7 @@
         <div class="row justify-content-center align-items-center g-0">
             <div class="col-xxl-5 col-xl-5 col-lg-5 customize-image text-center">
                 <div class="text-lg-end">
-                    <img src="{{ asset('assets/images/landing/1.png') }}" alt="" class="img-fluid">
+                    <img src="{{ asset('assets/images/landing/howitworks.png') }}" alt="" class="img-fluid">
                 </div>
             </div>
             <div class="col-xxl-5 col-xl-5 col-lg-5 my-auto text-start pt-5 pb-0 px-lg-2 px-5">
@@ -231,7 +231,7 @@
 
             <div class="col-xxl-5 col-xl-5 col-lg-5 customize-image text-center">
                 <div class="text-lg-end">
-                    <img src="{{ asset('assets/images/landing/1.png') }}" alt="" class="img-fluid">
+                    <img src="{{ asset('assets/images/landing/about.png') }}" alt="" class="img-fluid">
                 </div>
             </div>
             <div class="col-xxl-5 col-xl-5 col-lg-5 my-auto text-start pt-5 pb-0 px-lg-2 px-5">
