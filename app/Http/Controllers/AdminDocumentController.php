@@ -38,7 +38,7 @@ class AdminDocumentController extends Controller
      */
     public function create()
     {
-        if(!auth()->user()->hasRole('admin')){
+        if (!auth()->user()->hasRole('admin')) {
             abort(403, 'Unauthorized action');
         }
 
@@ -79,6 +79,7 @@ class AdminDocumentController extends Controller
 
         $htmlContent = $this->convertDocToHtml(storage_path('app/public/' . $doc->file_path));
 
+
         $htmlContent = $this->replacePlaceholdersWithEditableSpans($htmlContent);
 
         // count tags which have contenteditable="true"
@@ -104,6 +105,7 @@ class AdminDocumentController extends Controller
     {
         $document = Document::findOrFail($id);
         $htmlContent = $this->convertDocToHtml(storage_path('app/public/' . $document->file_path));
+
 
         $htmlContent = $this->replacePlaceholdersWithEditableSpans($htmlContent);
 
@@ -185,9 +187,100 @@ class AdminDocumentController extends Controller
     public function replacePlaceholdersWithEditableSpans($htmlContent)
     {
 
-        // Replace placeholders with editable spans
+        $text = preg_replace('/<[^>]*>/', '', $htmlContent);
+
+
+        // romove tags
+
+        // Find all content between {MC_ST} and {MC_EN}
+        $mcqs = [];
+        $startTag = '{MC_ST}';
+        $endTag = '{MC_EN}';
+        $start = 0;
+
+        $index = 0;
+
+        while (($start = strpos($text, $startTag, $start)) !== false) {
+            $start += strlen($startTag);
+            $end = strpos($text, $endTag, $start);
+            if ($end !== false) {
+                $content = substr($text, $start, $end - $start);
+
+                $mcqs[] = trim($content);
+                $start = $end + strlen($endTag);
+            } else {
+                break;
+            }
+        }
+
+        // dd($mcqs);
+
+        // Process each content block to extract headings and options
+        $htmlOutput = '';
+        foreach ($mcqs as $index =>  $content) {
+            $headingStartTag = '{MCH_ST}';
+            $headingEndTag = '{MCH_EN}';
+            $optionStartTag = '{MCO_ST}';
+            $optionEndTag = '{MCO_EN}';
+
+            // Extract heading
+            $headingStart = strpos($content, $headingStartTag) + strlen($headingStartTag);
+            $headingEnd = strpos($content, $headingEndTag);
+            $heading = substr($content, $headingStart, $headingEnd - $headingStart);
+
+            // Extract options
+            $options = [];
+            $optionStart = 0;
+            while (($optionStart = strpos($content, $optionStartTag, $optionStart)) !== false) {
+                $optionStart += strlen($optionStartTag);
+                $optionEnd = strpos($content, $optionEndTag, $optionStart);
+                if ($optionEnd !== false) {
+                    $option = substr($content, $optionStart, $optionEnd - $optionStart);
+                    $options[] = trim($option);
+                    $optionStart = $optionEnd + strlen($optionEndTag);
+                } else {
+                    break;
+                }
+            }
+
+
+            // Generate HTML
+            $htmlOutput .= '<div class="content-block">';
+            $htmlOutput .= '<p>' . htmlspecialchars($heading) . '</p>';
+            foreach ($options as $optionIndex => $option) {
+                $htmlOutput .= '<div class="form-check">';
+                $htmlOutput .= '<input class="form-check-input" type="radio" name="option' . $index . '" id="option' . $index . '-' . $optionIndex . '">';
+                $htmlOutput .= '<label class="form-check-label" for="option' . $index . '-' . $optionIndex . '">' . htmlspecialchars($option) . '</label>';
+                $htmlOutput .= '</div>';
+            }
+            $htmlOutput .= '</div>';
+
+
+            // find the first occurence of the {MC_ST} in the htmlContent
+            // $start = strpos($htmlContent, '{MC_ST}');
+            // $end = strpos($htmlContent, '{MC_EN}') + strlen('{MC_EN}');
+
+            // remove the content between {MC_ST} and {MC_EN}
+            // $htmlContent = substr_replace($htmlContent, '', $start, $end - $start);
+
+            // insert the generated HTML in the place of the removed content
+            // $htmlContent = substr_replace($htmlContent, $htmlOutput, $start, 0);
+
+        }
+
+        // dd($htmlOutput, $htmlContent);
+
+
+        // dd($htmlOutput, $htmlContent);
+
+        $htmlContent = preg_replace('/{MC_ST}.*{MC_EN}/s', $htmlOutput, $htmlContent);
+
+        // dd($htmlContent);
+
         // Replace placeholders with editable spans
         $htmlContent = preg_replace('/__+/', '<span class="editable" contenteditable="true">$0</span>', $htmlContent);
+
+
 
         return $htmlContent;
     }
@@ -318,7 +411,7 @@ class AdminDocumentController extends Controller
         $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
         $objWriter->save(storage_path('app/public/' . basename($document->file_path, '.docx') . '_filled.docx'));
 
-        $user=auth()->user();
+        $user = auth()->user();
         $user->downloadedDocuments()->attach($document->id);
 
         return response()->download(storage_path('app/public/' . basename($document->file_path, '.docx') . '_filled.docx'), $document->title . '.docx');

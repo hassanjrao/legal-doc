@@ -89,6 +89,12 @@
                             $this.replaceWith(input);
                         });
 
+
+                        // convert the content which is in {MC_ST} AND {MC_EN} to input radio, each {MC_ST} and {MC_EN} contain heading which starts with {MCH_ST} and ends with {MCH_EN} AND the options starts with {MCO_ST} and ends with {MCO_EN}
+                        
+
+
+
                         // fill the placeholders with the user responses
                         $('input[name="placeholders[]"]').each(function(index) {
                             $(this).val(userDocumentResponses[index]);
