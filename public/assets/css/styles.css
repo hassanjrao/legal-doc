@@ -21500,7 +21500,7 @@ a:hover {
 /* 1024 screen */
 @media screen and (max-width: 1100px) {
     .desktop-logo{
-        width: 200px;
+        width: 13rem !important;
         height: 50px !important;
     }
 }
