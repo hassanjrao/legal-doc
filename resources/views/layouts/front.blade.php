@@ -386,7 +386,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-lg-8">
-                                <p>This platform is made possible with the support of the American people through the United States Agency for International Development (USAID). The contents are the sole responsibility of PEN Strategy Consulting Group and do not necessarily reflect the views of USAID, the United States Government, or the National Center for State Courts.</p>
+                                    <p>This platform is made possible with the support of the American people through the United States Agency for International Development (USAID). The contents are the sole responsibility of PEN Strategy Consulting Group and do not necessarily reflect the views of USAID or the United States Government.</p>
                                 </div>
                             </div>
                         </div>
