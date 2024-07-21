@@ -80,11 +80,14 @@ class AdminDocumentController extends Controller
         $htmlContent = $this->convertDocToHtml(storage_path('app/public/' . $doc->file_path));
 
 
-        $htmlContent = $this->replacePlaceholdersWithEditableSpans($htmlContent);
+        $processedContent = $this->replacePlaceholdersWithEditableSpans($htmlContent);
+
+        $htmlContent = $processedContent['htmlContent'];
 
         // count tags which have contenteditable="true"
-
         $count = preg_match_all('/contenteditable="true"/', $htmlContent);
+
+
 
 
         // add the entries to DocumentPlaceholder table
@@ -107,7 +110,9 @@ class AdminDocumentController extends Controller
         $htmlContent = $this->convertDocToHtml(storage_path('app/public/' . $document->file_path));
 
 
-        $htmlContent = $this->replacePlaceholdersWithEditableSpans($htmlContent);
+        $processedContent = $this->replacePlaceholdersWithEditableSpans($htmlContent);
+
+        $htmlContent = $processedContent['htmlContent'];
 
         $documentPlaceholders = DocumentPlaceHolder::where('document_id', $document->id)->get();
 
@@ -132,6 +137,7 @@ class AdminDocumentController extends Controller
     {
 
         $placeholders = $request->placeholders;
+
 
         $document = Document::findOrFail($request->id);
 
@@ -213,10 +219,10 @@ class AdminDocumentController extends Controller
             }
         }
 
-        // dd($mcqs);
 
         // Process each content block to extract headings and options
         $htmlOutput = '';
+        $totalOptions=[];
         foreach ($mcqs as $index =>  $content) {
             $headingStartTag = '{MCH_ST}';
             $headingEndTag = '{MCH_EN}';
@@ -236,6 +242,7 @@ class AdminDocumentController extends Controller
                 $optionEnd = strpos($content, $optionEndTag, $optionStart);
                 if ($optionEnd !== false) {
                     $option = substr($content, $optionStart, $optionEnd - $optionStart);
+
                     $options[] = trim($option);
                     $optionStart = $optionEnd + strlen($optionEndTag);
                 } else {
@@ -247,42 +254,44 @@ class AdminDocumentController extends Controller
             // Generate HTML
             $htmlOutput .= '<div class="content-block">';
             $htmlOutput .= '<p>' . htmlspecialchars($heading) . '</p>';
+            $totalBlankSpaces = 0;
             foreach ($options as $optionIndex => $option) {
                 $htmlOutput .= '<div class="form-check">';
                 $htmlOutput .= '<input class="form-check-input" type="radio" name="option' . $index . '" id="option' . $index . '-' . $optionIndex . '">';
                 $htmlOutput .= '<label class="form-check-label" for="option' . $index . '-' . $optionIndex . '">' . htmlspecialchars($option) . '</label>';
                 $htmlOutput .= '</div>';
+
+                // Count the number of blank spaces in the option
+                $totalBlankSpaces = substr_count($option, '__');
+
             }
-            $htmlOutput .= '</div>';
+            $htmlOutput .= '</div><br>';
 
 
-            // find the first occurence of the {MC_ST} in the htmlContent
-            // $start = strpos($htmlContent, '{MC_ST}');
-            // $end = strpos($htmlContent, '{MC_EN}') + strlen('{MC_EN}');
 
-            // remove the content between {MC_ST} and {MC_EN}
-            // $htmlContent = substr_replace($htmlContent, '', $start, $end - $start);
 
-            // insert the generated HTML in the place of the removed content
-            // $htmlContent = substr_replace($htmlContent, $htmlOutput, $start, 0);
+            $totalOptions[$index] = $totalBlankSpaces;
 
         }
 
-        // dd($htmlOutput, $htmlContent);
 
-
-        // dd($htmlOutput, $htmlContent);
-
+        // Replace MCQ content with generated HTML
         $htmlContent = preg_replace('/{MC_ST}.*{MC_EN}/s', $htmlOutput, $htmlContent);
 
-        // dd($htmlContent);
+
+        // remove MC_ST and MC_EN tags and their content
+        $htmlContent = preg_replace('/{MC_ST}.*{MC_EN}/s', '', $htmlContent);
 
         // Replace placeholders with editable spans
         $htmlContent = preg_replace('/__+/', '<span class="editable" contenteditable="true">$0</span>', $htmlContent);
 
 
 
-        return $htmlContent;
+        return [
+            'htmlContent' => $htmlContent,
+            'totalMcqs' => count($mcqs),
+            'totalOptions' => $totalOptions
+        ];
     }
 
 
@@ -381,8 +390,10 @@ class AdminDocumentController extends Controller
 
         // Sanitize the HTML content
 
-        $htmlContent = $this->replacePlaceholdersWithEditableSpans($htmlContent);
 
+        $processedContent = $this->replacePlaceholdersWithEditableSpans($htmlContent);
+
+        $htmlContent = $processedContent['htmlContent'];
 
         $userDocumentResponses = UserDocumentResponse::where('document_id', $document->id)
             ->where('user_id', auth()->user()->id)
