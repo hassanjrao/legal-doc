@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Document;
 use App\Models\DocumentCategory;
+use App\Models\DocumentMultiChoice;
+use App\Models\DocumentMultiChoiceOption;
 use App\Models\DocumentPlaceHolder;
 use App\Models\LawArea;
 use App\Models\UserDocumentResponse;
+use App\Models\UserMultiChoiceOption;
 use HTMLPurifier;
 use HTMLPurifier_Config;
 use Illuminate\Http\Request;
@@ -80,15 +83,29 @@ class AdminDocumentController extends Controller
         $htmlContent = $this->convertDocToHtml(storage_path('app/public/' . $doc->file_path));
 
 
-        $processedContent = $this->replacePlaceholdersWithEditableSpans($htmlContent);
+        $processedContent = $this->replacePlaceholdersWithEditableSpans($htmlContent, [], []);
+
+
+        // total multi choice questions
+        $totalMcqs = $processedContent['totalOptions'];
+
+        foreach ($totalMcqs as $index => $mcq) {
+            $documentMultiChoice = DocumentMultiChoice::create([
+                'document_id' => $doc->id,
+            ]);
+
+            foreach ($mcq as $option) {
+                DocumentMultiChoiceOption::create([
+                    'document_multi_choice_id' => $documentMultiChoice->id,
+                ]);
+            }
+        }
+
 
         $htmlContent = $processedContent['htmlContent'];
 
         // count tags which have contenteditable="true"
         $count = preg_match_all('/contenteditable="true"/', $htmlContent);
-
-
-
 
         // add the entries to DocumentPlaceholder table
         for ($i = 0; $i < $count; $i++) {
@@ -96,6 +113,8 @@ class AdminDocumentController extends Controller
                 'document_id' => $doc->id,
             ]);
         }
+
+
 
 
 
@@ -110,9 +129,6 @@ class AdminDocumentController extends Controller
         $htmlContent = $this->convertDocToHtml(storage_path('app/public/' . $document->file_path));
 
 
-        $processedContent = $this->replacePlaceholdersWithEditableSpans($htmlContent);
-
-        $htmlContent = $processedContent['htmlContent'];
 
         $documentPlaceholders = DocumentPlaceHolder::where('document_id', $document->id)->get();
 
@@ -128,6 +144,27 @@ class AdminDocumentController extends Controller
 
 
 
+        $userMultiChoiceOptions = UserMultiChoiceOption::where('document_id', $document->id)
+            ->where('user_id', auth()->user()->id)
+            ->get();
+
+        $documentMultiChoices = DocumentMultiChoice::where('document_id', $document->id)->get();
+
+        $documentMultiChoices = $documentMultiChoices->map(function ($multiChoice) {
+
+            return [
+                'document_multi_choice_id' => $multiChoice->id,
+                'options' => $multiChoice->options->pluck('id')->toArray(),
+            ];
+        });
+
+
+        $processedContent = $this->replacePlaceholdersWithEditableSpans($htmlContent, $documentMultiChoices, $userMultiChoiceOptions);
+
+
+        $htmlContent = $processedContent['htmlContent'];
+
+
 
         return view('admin.documents.fill', compact('document', 'htmlContent', 'documentPlaceholdersIds', 'userDocumentResponses'));
     }
@@ -135,9 +172,15 @@ class AdminDocumentController extends Controller
     // Fill placeholders in the document and save the filled document
     public function fill(Request $request)
     {
+        $request->validate([
+            'id' => 'required|exists:documents,id',
+            'placeholders' => 'nullable|array',
+            'mcqs' => 'nullable|array',
+        ]);
 
         $placeholders = $request->placeholders;
 
+        $mcqs = $request->mcqs ?? [];
 
         $document = Document::findOrFail($request->id);
 
@@ -153,6 +196,22 @@ class AdminDocumentController extends Controller
                 'document_id' => $document->id,
                 'document_place_holder_id' => $placeholder['id'],
                 'response' => $placeholder['value'],
+            ]);
+        }
+
+        foreach ($mcqs as $mcq) {
+
+            $mcqId = explode('-', $mcq['name'])[1];
+
+            UserMultiChoiceOption::updateOrCreate([
+                'user_id' => auth()->user()->id,
+                'document_id' => $document->id,
+                'document_multi_choice_id' => $mcqId,
+            ], [
+                'user_id' => auth()->user()->id,
+                'document_id' => $document->id,
+                'document_multi_choice_id' => $mcqId,
+                'document_multi_choice_option_id' => $mcq['value'],
             ]);
         }
 
@@ -190,8 +249,31 @@ class AdminDocumentController extends Controller
     }
 
 
-    public function replacePlaceholdersWithEditableSpans($htmlContent)
+    public function replacePlaceholdersWithEditableSpans($htmlContent, $documentMultiChoices = [], $userMultiChoiceOptions, $isDownloading = false)
     {
+
+
+
+
+        $multiChoice = $this->processMcqs($htmlContent, $documentMultiChoices, $userMultiChoiceOptions, $isDownloading);
+
+        // Replace placeholders with editable spans
+        $htmlContent = preg_replace('/__+/', '<span class="editable" contenteditable="true">$0</span>', $multiChoice['htmlContent']);
+
+
+
+
+        return [
+            'htmlContent' => $htmlContent,
+            'totalMcqs' => $multiChoice['totalMcqs'],
+            'totalOptions' => $multiChoice['totalOptions']
+        ];
+    }
+
+
+    public function processMcqs($htmlContent, $documentMultiChoices = [], $userMultiChoiceOptions = [], $isDownloading = false)
+    {
+
 
         $text = preg_replace('/<[^>]*>/', '', $htmlContent);
 
@@ -222,12 +304,29 @@ class AdminDocumentController extends Controller
 
         // Process each content block to extract headings and options
         $htmlOutput = '';
-        $totalOptions=[];
+        $totalOptions = [];
         foreach ($mcqs as $index =>  $content) {
+
+
+            $multiChoiceId = $index;
+            $userMultiChoice = null;
+            // get the multi choice id according to the index
+            if (count($documentMultiChoices) > 0) {
+
+                $multiChoice = $documentMultiChoices[$index];
+                $multiChoiceId = $multiChoice['document_multi_choice_id'];
+
+                $userMultiChoice = $userMultiChoiceOptions->where('document_multi_choice_id', $multiChoiceId)->first();
+            }
+
+
+
+
             $headingStartTag = '{MCH_ST}';
             $headingEndTag = '{MCH_EN}';
             $optionStartTag = '{MCO_ST}';
             $optionEndTag = '{MCO_EN}';
+
 
             // Extract heading
             $headingStart = strpos($content, $headingStartTag) + strlen($headingStartTag);
@@ -254,25 +353,42 @@ class AdminDocumentController extends Controller
             // Generate HTML
             $htmlOutput .= '<div class="content-block">';
             $htmlOutput .= '<p>' . htmlspecialchars($heading) . '</p>';
-            $totalBlankSpaces = 0;
             foreach ($options as $optionIndex => $option) {
-                $htmlOutput .= '<div class="form-check">';
-                $htmlOutput .= '<input class="form-check-input" type="radio" name="option' . $index . '" id="option' . $index . '-' . $optionIndex . '">';
-                $htmlOutput .= '<label class="form-check-label" for="option' . $index . '-' . $optionIndex . '">' . htmlspecialchars($option) . '</label>';
-                $htmlOutput .= '</div>';
 
-                // Count the number of blank spaces in the option
-                $totalBlankSpaces = substr_count($option, '__');
+                $multiChoiceOptionId = $optionIndex;
 
+                if (count($documentMultiChoices) > 0) {
+                    $multiChoiceOptionId = $multiChoice['options'][$optionIndex];
+                }
+
+                $isChecked = false;
+
+                if ($userMultiChoice) {
+                    $isChecked = $userMultiChoice->document_multi_choice_option_id == $multiChoiceOptionId;
+                }
+
+                if (!$isDownloading) {
+
+                    $htmlOutput .= '<div class="form-check">';
+                    $htmlOutput .= '<input class="form-check-input" type="radio" name="option-' . $multiChoiceId . '" id="option-' . $multiChoiceId . '-' . $multiChoiceOptionId . '" value="' . $multiChoiceOptionId . '" ' . ($isChecked ? 'checked' : '') . '>';
+                    $htmlOutput .= '<label class="form-check-label" for="option-' . $multiChoiceId . '-' . $multiChoiceOptionId . '">' . htmlspecialchars($option) . '</label>';
+                    $htmlOutput .= '</div>';
+                } else if ($isChecked && $isDownloading) {
+
+
+                    $htmlOutput .= '' . htmlspecialchars($option) . '';
+                    break;
+                }
             }
             $htmlOutput .= '</div><br>';
 
 
 
 
-            $totalOptions[$index] = $totalBlankSpaces;
-
+            $totalOptions[$index] = $options;
         }
+
+
 
 
         // Replace MCQ content with generated HTML
@@ -281,10 +397,6 @@ class AdminDocumentController extends Controller
 
         // remove MC_ST and MC_EN tags and their content
         $htmlContent = preg_replace('/{MC_ST}.*{MC_EN}/s', '', $htmlContent);
-
-        // Replace placeholders with editable spans
-        $htmlContent = preg_replace('/__+/', '<span class="editable" contenteditable="true">$0</span>', $htmlContent);
-
 
 
         return [
@@ -390,8 +502,23 @@ class AdminDocumentController extends Controller
 
         // Sanitize the HTML content
 
+        $userMultiChoiceOptions = UserMultiChoiceOption::where('document_id', $document->id)
+            ->where('user_id', auth()->user()->id)
+            ->get();
 
-        $processedContent = $this->replacePlaceholdersWithEditableSpans($htmlContent);
+        $documentMultiChoices = DocumentMultiChoice::where('document_id', $document->id)->get();
+
+        $documentMultiChoices = $documentMultiChoices->map(function ($multiChoice) {
+
+            return [
+                'document_multi_choice_id' => $multiChoice->id,
+                'options' => $multiChoice->options->pluck('id')->toArray(),
+            ];
+        });
+
+
+
+        $processedContent = $this->replacePlaceholdersWithEditableSpans($htmlContent, $documentMultiChoices, $userMultiChoiceOptions, true);
 
         $htmlContent = $processedContent['htmlContent'];
 
