@@ -1,5 +1,7 @@
 @extends('layouts.backend')
 
+@section('page-name','Fill Document')
+
 @section('css')
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 
@@ -68,7 +70,11 @@
     <script>
         var documentPlaceholdersIds = @json($documentPlaceholdersIds);
 
+        console.log('documentPlaceholdersIds',documentPlaceholdersIds);
+
         var userDocumentResponses = @json($userDocumentResponses);
+
+        console.log('userDocumentResponses',userDocumentResponses);
 
         $(document).ready(function() {
             $('.summernote').summernote({
@@ -88,6 +94,12 @@
                             var input = $('<input  type="text"  name="placeholders[]" >');
                             $this.replaceWith(input);
                         });
+
+
+                        // convert the content which is in {MC_ST} AND {MC_EN} to input radio, each {MC_ST} and {MC_EN} contain heading which starts with {MCH_ST} and ends with {MCH_EN} AND the options starts with {MCO_ST} and ends with {MCO_EN}
+
+
+
 
                         // fill the placeholders with the user responses
                         $('input[name="placeholders[]"]').each(function(index) {
@@ -118,6 +130,23 @@
                     });
                 });
 
+                var radioPlaceholders = [];
+
+                // get the values of the type=radio
+                $('input[type="radio"]').each(function(index) {
+
+                    radioPlaceholders.push({
+                        name: $(this).attr('name'),
+                        value: $(this).is(':checked') ? $(this).val() : ''
+                    });
+                });
+
+                // remove those which have empty values
+                radioPlaceholders = radioPlaceholders.filter(function(radioPlaceholder) {
+                    return radioPlaceholder.value !== '';
+                });
+
+
 
                 $.ajax({
                     url: $(this).attr('action'),
@@ -125,7 +154,8 @@
                     data: {
                         _token: $('input[name="_token"]').val(),
                         id: $('input[name="id"]').val(),
-                        placeholders: placeholders
+                        placeholders: placeholders,
+                        mcqs: radioPlaceholders
                     },
                     success: function(response) {
                         console.log('succ', response);
