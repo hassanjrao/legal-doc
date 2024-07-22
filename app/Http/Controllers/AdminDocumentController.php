@@ -15,6 +15,7 @@ use HTMLPurifier_Config;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\FacadesLog;
+use PhpOffice\PhpWord\Element\TextRun;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
 
@@ -164,6 +165,10 @@ class AdminDocumentController extends Controller
 
         $htmlContent = $processedContent['htmlContent'];
 
+        // remove {D_ST} AND {D_EN} signs
+        $htmlContent = $this->deleteSigns($htmlContent);
+
+
 
 
         return view('admin.documents.fill', compact('document', 'htmlContent', 'documentPlaceholdersIds', 'userDocumentResponses'));
@@ -263,12 +268,74 @@ class AdminDocumentController extends Controller
 
 
 
+
         return [
             'htmlContent' => $htmlContent,
             'totalMcqs' => $multiChoice['totalMcqs'],
             'totalOptions' => $multiChoice['totalOptions']
         ];
     }
+
+    public function deleteSigns($htmlContent)
+    {
+        $htmlContent = preg_replace('/{D_ST}/', '', $htmlContent);
+        $htmlContent = preg_replace('/{D_EN}/', '', $htmlContent);
+
+        return $htmlContent;
+    }
+
+    public function removeContentBetweenTags($html, $startTag, $endTag)
+    {
+        while (strpos($html, $startTag) !== false && strpos($html, $endTag) !== false) {
+            $startPos = strpos($html, $startTag);
+            $endPos = strpos($html, $endTag) + strlen($endTag);
+            $html = substr_replace($html, '', $startPos, $endPos - $startPos);
+        }
+        return $html;
+    }
+
+    public function removeLinesFromWordFile($filePath)
+    {
+        // Load the Word file
+        $phpWord = IOFactory::load($filePath);
+
+        // Iterate through all sections and remove text between {D_ST} and {D_EN}
+        foreach ($phpWord->getSections() as $section) {
+            $elements = $section->getElements();
+
+
+            $insideDeleteBlock = false;
+            foreach ($elements as $key => $element) {
+                if ($element instanceof TextRun) {
+                    foreach ($element->getElements() as $textElement) {
+                        $text = $textElement->getText();
+                        if (strpos($text, '{D_ST}') !== false) {
+                            $insideDeleteBlock = true;
+                        }
+
+                        if ($insideDeleteBlock) {
+                            unset($elements[$key]);
+                        }
+
+                        if (strpos($text, '{D_EN}') !== false) {
+                            $insideDeleteBlock = false;
+                        }
+
+                        dump('TEXXXXTT', $text, strpos($text, '{D_ST}'), $insideDeleteBlock);
+                    }
+                }
+            }
+            $section->setElements(array_values($elements));
+        }
+
+        // Save the modified document
+        $modifiedFilePath = storage_path('app/public/modified_document.docx');
+        $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
+        $objWriter->save($modifiedFilePath);
+
+        return $modifiedFilePath;
+    }
+
 
 
     public function processMcqs($htmlContent, $documentMultiChoices = [], $userMultiChoiceOptions = [], $isDownloading = false)
@@ -367,17 +434,23 @@ class AdminDocumentController extends Controller
                     $isChecked = $userMultiChoice->document_multi_choice_option_id == $multiChoiceOptionId;
                 }
 
-                if (!$isDownloading) {
+
+
+                if ($isDownloading) {
+                // if not isChecked, then add between {D_ST} and {D_EN} tags
+                    if ($isChecked) {
+                        $htmlOutput .= '<span class="editable" contenteditable="true">' . htmlspecialchars($option) . '</span>';
+                    } else {
+                        $htmlOutput .= '{D_ST}' . htmlspecialchars($option) . '{D_EN}';
+                    }
+
+
+                } else {
 
                     $htmlOutput .= '<div class="form-check">';
                     $htmlOutput .= '<input class="form-check-input" type="radio" name="option-' . $multiChoiceId . '" id="option-' . $multiChoiceId . '-' . $multiChoiceOptionId . '" value="' . $multiChoiceOptionId . '" ' . ($isChecked ? 'checked' : '') . '>';
                     $htmlOutput .= '<label class="form-check-label" for="option-' . $multiChoiceId . '-' . $multiChoiceOptionId . '">' . htmlspecialchars($option) . '</label>';
                     $htmlOutput .= '</div>';
-                } else if ($isChecked && $isDownloading) {
-
-
-                    $htmlOutput .= '' . htmlspecialchars($option) . '';
-                    break;
                 }
             }
             $htmlOutput .= '</div><br>';
@@ -506,6 +579,7 @@ class AdminDocumentController extends Controller
             ->where('user_id', auth()->user()->id)
             ->get();
 
+
         $documentMultiChoices = DocumentMultiChoice::where('document_id', $document->id)->get();
 
         $documentMultiChoices = $documentMultiChoices->map(function ($multiChoice) {
@@ -537,13 +611,17 @@ class AdminDocumentController extends Controller
 
         $htmlContent = $this->sanitizeHtml($htmlContent);
 
+
+        $htmlContent = $this->removeContentBetweenTags($htmlContent, '{D_ST}', '{D_EN}');
+
+
         // dd($htmlContent);
 
         $phpWord = new PhpWord();
         $section = $phpWord->addSection();
 
         // Add HTML content to the section
-        \PhpOffice\PhpWord\Shared\Html::addHtml($section, $htmlContent, false, false);
+        \PhpOffice\PhpWord\Shared\Html::addHtml($section, $htmlContent);
 
 
         $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
@@ -552,19 +630,19 @@ class AdminDocumentController extends Controller
         $user = auth()->user();
         $user->downloadedDocuments()->attach($document->id);
 
-        return response()->download(storage_path('app/public/' . basename($document->file_path, '.docx') . '_filled.docx'), $document->title . '.docx');
+        return response()->download(storage_path('app/public/' . basename($document->file_path, '.docx') . '_filled.docx'), $document->title . '_filled.docx')->deleteFileAfterSend(true);
     }
 
     private function sanitizeHtml($html)
     {
-        // Create a new configuration object
         $config = HTMLPurifier_Config::createDefault();
 
-        // Configure HTMLPurifier
-        $config->set('HTML.Doctype', 'XHTML 1.0 Transitional');
-        $config->set('HTML.Allowed', 'p,b,a[href],i,em,strong,ul,ol,li,br,span');
-        $config->set('CSS.AllowedProperties', []);
-        $config->set('AutoFormat.RemoveEmpty', true);
+        // Keep styles and other elements
+        $config->set('HTML.Allowed', 'div,span,b,strong,i,em,u,ul,ol,li,p,br,table,thead,tbody,tr,td,th,h1,h2,h3,h4,h5,h6,img,a[style|href|title|alt|src|width|height],span[style]');
+        $config->set('CSS.AllowedProperties', 'color, font-size, font-family, background-color, text-align, text-decoration, font-weight, font-style, border,  padding, margin, width, height');
+
+        $config->set('HTML.AllowedAttributes', 'style,href,src,width,height,alt');
+
 
         // Create a new HTMLPurifier object
         $purifier = new HTMLPurifier($config);
