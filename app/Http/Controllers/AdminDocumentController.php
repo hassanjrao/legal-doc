@@ -225,7 +225,7 @@ class AdminDocumentController extends Controller
     }
 
     // Convert the document to HTML
-    private function convertDocToHtml($filePath)
+    public function convertDocToHtml($filePath)
     {
         Log::info('Converting document to HTML: ' . $filePath);
 
@@ -633,7 +633,7 @@ class AdminDocumentController extends Controller
         return response()->download(storage_path('app/public/' . basename($document->file_path, '.docx') . '_filled.docx'), $document->title . '_filled.docx')->deleteFileAfterSend(true);
     }
 
-    private function sanitizeHtml($html)
+    public function sanitizeHtml($html)
     {
         $config = HTMLPurifier_Config::createDefault();
 
