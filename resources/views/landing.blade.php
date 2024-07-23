@@ -17,7 +17,8 @@
                 <div class="row">
                     <div class="col-xl-8 col-lg-8 animation-zidex pos-relative my-auto">
                         <h1 class="fw-semibold">Free Legal Documents</h1>
-                    <h5 class="text-start fw-bold mb-3 lh-base w-75">Our goal is to simplify access to justice by providing
+                        <h5 class="text-start fw-bold mb-3 lh-base w-75">Our goal is to simplify access to justice by
+                            providing
                             free and easy-to-use legal documents for all citizens of Kosovo.
                         </h5>
                         <ul class="pb-3 mb-3">
@@ -34,8 +35,7 @@
 
                     </div>
                     <div class="col-xl-4 col-lg-4 my-auto text-end">
-                        <img src="{{ asset('assets/images/landing/13338131_5217023.svg') }}" alt=""
-                            class="w-100">
+                        <img src="{{ asset('assets/images/landing/13338131_5217023.svg') }}" alt="" class="w-100">
                     </div>
                 </div>
             </div>
@@ -50,11 +50,14 @@
             <p class="fs-18 fw-medium mb-1"><span class="landing-section-heading">How it works?</span></p>
             <span class="landing-title"></span>
             <h3 class="fw-semibold mb-5">Welcome to Dokumente Ligjore</h3>
-            <div class="d-flex justify-content-center"> <p class="w-75">At Dokumente Ligjore, our goal is to simplify your access to justice by providing
-                free, user-friendly legal document templates. Our process is designed to be straightforward and
-                accessible, ensuring you can find, customize, and use the legal documents you need with ease.
-                <b>Here’s how
-                it works:</b></p></div>
+            <div class="d-flex justify-content-center">
+                <p class="w-75">At Dokumente Ligjore, our goal is to simplify your access to justice by providing
+                    free, user-friendly legal document templates. Our process is designed to be straightforward and
+                    accessible, ensuring you can find, customize, and use the legal documents you need with ease.
+                    <b>Here’s how
+                        it works:</b>
+                </p>
+            </div>
 
         </div>
         <div class="row justify-content-center align-items-center g-0">
@@ -73,8 +76,10 @@
                             </span>
                             <div class="ms-2">
                                 <h6 class="fw-semibold mb-0">Browse Our Library</h6>
-                                <p class=" text-muted">Explore our extensive collection of legal document templates. Our templates are categorized for easy navigation.
-                                    Use our search bar or browse through the categories to find the specific template you need.</p>
+                                <p class=" text-muted">Explore our extensive collection of legal document templates. Our
+                                    templates are categorized for easy navigation.
+                                    Use our search bar or browse through the categories to find the specific template you
+                                    need.</p>
                             </div>
                         </div>
                     </div>
@@ -85,7 +90,9 @@
                             </span>
                             <div class="ms-2">
                                 <h6 class="fw-semibold mb-0">Select and Download</h6>
-                                <p class=" text-muted">Once you find the document template that suits your needs, simply click on it to view more details. You can then download the template in a format that is convenient for you, such as Word.</p>
+                                <p class=" text-muted">Once you find the document template that suits your needs, simply
+                                    click on it to view more details. You can then download the template in a format that is
+                                    convenient for you, such as Word.</p>
                             </div>
                         </div>
                     </div>
@@ -96,7 +103,10 @@
                             </span>
                             <div class="ms-2">
                                 <h6 class="fw-semibold mb-0">Customize the Document</h6>
-                                <p class=" text-muted">Open the downloaded template and fill in the necessary details. Our templates are designed to be easily customizable, with clear instructions and placeholders indicating where you need to insert your specific information. This ensures that you can tailor the document to fit your unique situation accurately.</p>
+                                <p class=" text-muted">Open the downloaded template and fill in the necessary details. Our
+                                    templates are designed to be easily customizable, with clear instructions and
+                                    placeholders indicating where you need to insert your specific information. This ensures
+                                    that you can tailor the document to fit your unique situation accurately.</p>
                             </div>
                         </div>
                     </div>
@@ -107,7 +117,9 @@
                             </span>
                             <div class="ms-2">
                                 <h6 class="fw-semibold mb-0">Use the Document</h6>
-                                <p class=" text-muted">After customizing the template, carefully review the document to ensure all details are correct and complete. You can now download or save the finalized document for your legal needs.</p>
+                                <p class=" text-muted">After customizing the template, carefully review the document to
+                                    ensure all details are correct and complete. You can now download or save the finalized
+                                    document for your legal needs.</p>
                             </div>
                         </div>
                     </div>
@@ -303,61 +315,7 @@
                 </div>
                 <div class="card-body text-dark">
                     <div class="row justify-content-center p-5 pt-0">
-                        {{-- <div class="col-lg-9">
-                            <div class="row text-center services-statistics">
-                                <div class="col-xl-3 col-md-6 col-lg-6">
-                                    <div class="card bg-transparent border-0 shadow-none">
-                                        <div class="card-body p-0">
-                                            <div class="counter-icon icon-1">
-                                                <i class="fe fe-map-pin text-primary fs-23"></i>
-                                            </div>
-                                            <h5 class="mb-2 fw-medium">Main Branch</h5>
-                                            <p>San Francisco, CA </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-3 col-md-6 col-lg-6">
-                                    <div class="card bg-transparent border-0 shadow-none">
-                                        <div class="card-body p-0">
-                                            <div class="counter-icon icon-2">
-                                                <i class="fe fe-headphones text-secondary fs-23"></i>
-                                            </div>
-                                            <h5 class="mb-2 fw-medium">Phone &amp; Email</h5>
-                                            <p class="mb-0">+125 254 3562 </p>
-                                            <p>georgeme@abc.com</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-3 col-md-6 col-lg-6">
-                                    <div class="card bg-transparent border-0 shadow-none">
-                                        <div class="card-body p-0">
-                                            <div class="counter-statuss">
-                                                <div class="counter-icon icon-3">
-                                                    <i class="fe fe-mail text-success fs-23"></i>
-                                                </div>
-                                                <h5 class="mb-2 fw-medium">Contact</h5>
-                                                <p class="mb-0"> www.example.com</p>
-                                                <p>example@dev.com</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-3 col-md-6 col-lg-6">
-                                    <div class="card bg-transparent border-0 shadow-none">
-                                        <div class="card-body p-0">
-                                            <div class="counter-status">
-                                                <div class="counter-icon icon-4">
-                                                    <i class="fe fe-airplay text-danger fs-23"></i>
-                                                </div>
-                                                <h5 class="mb-2 fw-medium">Working Hours</h5>
-                                                <p class="mb-0">Monday - Friday: 9am - 6pm</p>
-                                                <p>Satday - Sunday: Holiday</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
+
                         <div class="col-xl-9">
                             <form class="form-horizontal text-start" action="{{ route('home.contact-us') }}"
                                 method="POST">
@@ -421,9 +379,60 @@
     <!-- End:: Section-10 -->
 
 
-    <!-- End:: Section-11 -->
+    <section class="section section-bg" id="feedback">
+        <div class="container text-center">
+            <div class="card mb-0">
+                <div class="mt-5">
+                    <p class="fs-18 fw-medium mb-1"><span class="landing-section-heading text-dark">Leave Feedback</span>
+                    </p>
+                    <span class="landing-title"></span>
+                    @if (!Auth::check())
+                    <h5 class="fw-semibold">Please Login To Leave a feedback</span></h3>
+                    @endif
+                </div>
+                <div class="card-body text-dark">
+                    <div class="row justify-content-center p-5 pt-0">
 
-    <!-- END Hero -->
+                        <div class="col-xl-9">
+                            <form class="form-horizontal text-start" action="{{ route('home.feedback-submit') }}"
+                                method="POST">
+                                @csrf
+
+                                @foreach ($feedbackQuestions as $feedbackQuestion)
+                                    <div class="form-group mb-4">
+                                        <h4 >{{ $feedbackQuestion->question }}</h4>
+                                        <div class="col-xs-12">
+                                            @foreach ($feedbackQuestion->choices as $choice)
+
+                                                <div class="form-check form-check-md form-check-inline">
+                                                    <input class="form-check-input" type="radio"
+                                                    name="questions[{{ $feedbackQuestion->id }}]"
+                                                    id="question_{{ $feedbackQuestion->id }}_{{ $choice->id }}"
+                                                    value="{{ $choice->id }}" required>
+                                                    <label class="form-check-label" for="question_{{ $feedbackQuestion->id }}_{{ $choice->id }}">
+                                                        {{ $choice->choice }}
+                                                    </label>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        <div class="col-xs-12 mt-2">
+                                            <textarea class="form-control" name="comments[{{ $feedbackQuestion->id }}]"
+                                            >Your Comment</textarea>
+                                        </div>
+                                    </div>
+                                @endforeach
+
+                                <button type="submit"
+                                    class="btn btn-primary btn-rounded  waves-effect waves-light mt-3">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
 @endsection
 @push('scripts')
 @endpush

@@ -6,6 +6,8 @@ use App\Models\Blog;
 use App\Models\ContactUsUser;
 use App\Models\Document;
 use App\Models\Donor;
+use App\Models\FeedbackQuestion;
+use App\Models\UserFeedback;
 use Illuminate\Http\Request;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
@@ -34,7 +36,9 @@ class HomeController extends Controller
 
         $donors = Donor::latest()->get();
 
-        return view('landing', compact('documents', 'blogs', 'donors'));
+        $feedbackQuestions=FeedbackQuestion::with('choices')->get();
+
+        return view('landing', compact('documents', 'blogs', 'donors','feedbackQuestions'));
     }
 
     public function download($id)
@@ -80,7 +84,7 @@ class HomeController extends Controller
         $htmlContent = preg_replace('/EN\}/', 'EN}', $htmlContent);
         $htmlContent = preg_replace('/\{D_/', '{D_', $htmlContent);
         $htmlContent = preg_replace('/EN\}/', 'EN}', $htmlContent);
-        
+
 
 
 
@@ -120,4 +124,24 @@ class HomeController extends Controller
 
         return redirect()->back()->withToastSuccess('Your message has been submitted successfully!');
     }
+
+    public function feedbackSubmit(Request $request)
+    {
+
+        $questions=$request->questions;
+        $comments=$request->comments;
+
+        foreach ($questions as $questionId=>$selectedChoice){
+
+            UserFeedback::create([
+                'user_id'=>auth()->id(),
+                'feedback_question_id'=>$questionId,
+                'feedback_question_choice_id'=>$selectedChoice,
+                'comment'=>$comments[$questionId]??null,
+            ]);
+        }
+
+        return redirect()->back()->withToastSuccess('Your feedback has been submitted successfully!');
+    }
 }
+

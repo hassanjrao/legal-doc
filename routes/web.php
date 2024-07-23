@@ -10,6 +10,7 @@ use App\Http\Controllers\AdminFeedbackQuestionController;
 use App\Http\Controllers\AdminLawAreaController;
 use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\AdminUserFeedbackController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\HomeController;
@@ -56,6 +57,8 @@ Route::get('symlink', function () {
 
 Route::middleware(["auth",'verified'])->group(function () {
 
+    Route::post('feedback-submit', [HomeController::class, 'feedbackSubmit'])->name('home.feedback-submit');
+
     Route::prefix("admin")->name("admin.")->group(function () {
         Route::get("", [AdminDashboardController::class, "index"])->name("dashboard.index");
 
@@ -86,6 +89,9 @@ Route::middleware(["auth",'verified'])->group(function () {
 
 
         Route::resource('feedback-questions', AdminFeedbackQuestionController::class)->middleware('role:admin');
+
+
+        Route::resource('user-feedbacks', AdminUserFeedbackController::class)->middleware('role:admin');
 
 
         Route::resource('profile', AdminProfileController::class)->only(['index', 'update']);

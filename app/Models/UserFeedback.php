@@ -12,6 +12,8 @@ class UserFeedback extends Model
 
     protected $guarded=[];
 
+    protected $table = 'user_feedbacks';
+
     public function choice()
     {
         return $this->belongsTo(FeedbackQuestionChoice::class);

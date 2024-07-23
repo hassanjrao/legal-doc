@@ -352,6 +352,15 @@
                                     <span class="side-menu__label">Feedback Questions</span>
                                 </a>
                             </li>
+
+
+                            <li class="slide">
+                                <a href="{{ route('admin.user-feedbacks.index') }}"
+                                    class="side-menu__item {{ request()->is('admin/user-feedbacks/*') || request()->is('admin/user-feedbacks') ? ' active' : '' }}">
+                                    <i class="fe fe-user-check side-menu__icon"></i>
+                                    <span class="side-menu__label">User Feedbacks</span>
+                                </a>
+                            </li>
                             <!-- End::slide -->
                         @endhasrole
 
