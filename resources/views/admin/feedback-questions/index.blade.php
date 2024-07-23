@@ -42,7 +42,7 @@
                                         </td>
 
                                         <td>{{ $feedbackQuestion->created_at }}</td>
-                                        <td>
+                                        <td class="d-flex">
 
                                             <a href="{{ route('admin.feedback-questions.edit', $feedbackQuestion->id) }}"
                                                 type="button"
@@ -53,8 +53,6 @@
                                                 method="POST">
                                                 @method('DELETE')
                                                 @csrf
-
-
                                                 <button type="button"
                                                     class="btn btn-sm btn-danger-gradient btn-wave waves-effect waves-light"
                                                     onclick="confirmDelete({{ $feedbackQuestion->id }})">Delete</button>
