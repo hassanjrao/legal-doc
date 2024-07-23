@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminDocumentCategoryController;
 use App\Http\Controllers\AdminDocumentController;
 use App\Http\Controllers\AdminDonorController;
+use App\Http\Controllers\AdminFeedbackQuestionController;
 use App\Http\Controllers\AdminLawAreaController;
 use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\AdminUserController;
@@ -82,6 +83,9 @@ Route::middleware(["auth",'verified'])->group(function () {
 
 
         Route::resource('donors', AdminDonorController::class)->middleware('role:admin');
+
+
+        Route::resource('feedback-questions', AdminFeedbackQuestionController::class)->middleware('role:admin');
 
 
         Route::resource('profile', AdminProfileController::class)->only(['index', 'update']);

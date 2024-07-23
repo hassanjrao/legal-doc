@@ -344,6 +344,14 @@
                                     <span class="side-menu__label">Donors</span>
                                 </a>
                             </li>
+
+                            <li class="slide">
+                                <a href="{{ route('admin.feedback-questions.index') }}"
+                                    class="side-menu__item {{ request()->is('admin/feedback-questions/*') || request()->is('admin/feedback-questions') ? ' active' : '' }}">
+                                    <i class="fe fe-message-square side-menu__icon"></i>
+                                    <span class="side-menu__label">Feedback Questions</span>
+                                </a>
+                            </li>
                             <!-- End::slide -->
                         @endhasrole
 
