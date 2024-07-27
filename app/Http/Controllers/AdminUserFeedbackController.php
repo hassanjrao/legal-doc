@@ -18,6 +18,13 @@ class AdminUserFeedbackController extends Controller
 
         $userFeedbacks=$userFeedbacks->groupBy('user_id');
 
+        $userFeedbacks=$userFeedbacks->map(function($feedbacks){
+            return [
+                'user'=>$feedbacks->first()->user,
+                'feedbacks'=>$feedbacks
+            ];
+        });
+
 
         return view('admin.user-feedbacks.index', compact('userFeedbacks'));
     }

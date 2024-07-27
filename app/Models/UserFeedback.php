@@ -16,12 +16,12 @@ class UserFeedback extends Model
 
     public function choice()
     {
-        return $this->belongsTo(FeedbackQuestionChoice::class);
+        return $this->belongsTo(FeedbackQuestionChoice::class, 'feedback_question_choice_id');
     }
 
     public function question()
     {
-        return $this->belongsTo(FeedbackQuestion::class);
+        return $this->belongsTo(FeedbackQuestion::class, 'feedback_question_id');
     }
 
     public function user()

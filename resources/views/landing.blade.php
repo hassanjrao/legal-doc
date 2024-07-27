@@ -387,7 +387,7 @@
                     </p>
                     <span class="landing-title"></span>
                     @if (!Auth::check())
-                    <h5 class="fw-semibold">Please Login To Leave a feedback</span></h3>
+                        <h5 class="fw-semibold">Please Login To Leave a feedback</span></h3>
                     @endif
                 </div>
                 <div class="card-body text-dark">
@@ -400,30 +400,31 @@
 
                                 @foreach ($feedbackQuestions as $feedbackQuestion)
                                     <div class="form-group mb-4">
-                                        <h4 >{{ $feedbackQuestion->question }}</h4>
+                                        <h4>{{ $feedbackQuestion->question }}</h4>
                                         <div class="col-xs-12">
                                             @foreach ($feedbackQuestion->choices as $choice)
-
                                                 <div class="form-check form-check-md form-check-inline">
                                                     <input class="form-check-input" type="radio"
-                                                    name="questions[{{ $feedbackQuestion->id }}]"
-                                                    id="question_{{ $feedbackQuestion->id }}_{{ $choice->id }}"
-                                                    value="{{ $choice->id }}" required>
-                                                    <label class="form-check-label" for="question_{{ $feedbackQuestion->id }}_{{ $choice->id }}">
+                                                        name="questions[{{ $feedbackQuestion->id }}]"
+                                                        id="question_{{ $feedbackQuestion->id }}_{{ $choice->id }}"
+                                                        value="{{ $choice->id }}" required>
+                                                    <label class="form-check-label"
+                                                        for="question_{{ $feedbackQuestion->id }}_{{ $choice->id }}">
                                                         {{ $choice->choice }}
                                                     </label>
                                                 </div>
                                             @endforeach
                                         </div>
                                         <div class="col-xs-12 mt-2">
-                                            <textarea class="form-control" name="comments[{{ $feedbackQuestion->id }}]"
-                                            >Your Comment</textarea>
+                                            <textarea class="form-control" name="comments[{{ $feedbackQuestion->id }}]" placeholder="Your Comment"></textarea>
                                         </div>
                                     </div>
                                 @endforeach
 
-                                <button type="submit"
-                                    class="btn btn-primary btn-rounded  waves-effect waves-light mt-3">Submit</button>
+                                @if (Auth::check())
+                                    <button type="submit"
+                                        class="btn btn-primary btn-rounded  waves-effect waves-light mt-3">Submit</button>
+                                @endif
                             </form>
                         </div>
                     </div>
