@@ -7,6 +7,7 @@ use App\Models\ContactUsUser;
 use App\Models\Document;
 use App\Models\Donor;
 use App\Models\FeedbackQuestion;
+use App\Models\Testimonial;
 use App\Models\UserFeedback;
 use Illuminate\Http\Request;
 use PhpOffice\PhpWord\IOFactory;
@@ -34,11 +35,13 @@ class HomeController extends Controller
 
         $blogs = Blog::latest()->take(4)->get();
 
-        $donors = Donor::latest()->get();
+        // $donors = Donor::latest()->get();
+
+        $testimonials=Testimonial::latest()->get();
 
         $feedbackQuestions=FeedbackQuestion::with('choices')->get();
 
-        return view('landing', compact('documents', 'blogs', 'donors','feedbackQuestions'));
+        return view('landing', compact('documents', 'blogs', 'testimonials','feedbackQuestions'));
     }
 
     public function download($id)

@@ -166,32 +166,56 @@
     </section>
 
 
-    <section class="section landing-Features" id="features">
-        <div class="container text-center">
-            <p class="fs-18 fw-medium mb-1 text-fixed-white"><span class="landing-section-heading">Donors</span></p>
-            <span class="landing-title"></span>
-            <h2 class="fw-semibold mb-3 text-fixed-white">Donors list</h2>
-            <div class="feature-logos mt-sm-5 flex-wrap">
-                <div class="swiper features-slide text-start">
-                    <div class="swiper-wrapper">
 
-                        @foreach ($donors as $donor)
-                            <div class="swiper-slide">
-                                <div class="ms-sm-5 ms-2 text-center">
-                                    <img src="{{ $donor->image_url }}" alt="image" class="featur-icon">
-                                    <h5 class="mt-3 text-fixed-white ">
-                                        {{ $donor->name }}
-                                    </h5>
+    <section class="section landing-testimonials" id="testimonials">
+        <div class="container text-center">
+            <p class="fs-18 fw-medium mb-1"><span class="landing-section-heading">Testinominals</span></p>
+            <span class="landing-title"></span>
+            {{-- <h3 class="fw-semibold mb-5">We never failed to reach expectations</h3> --}}
+            <div class="swiper pagination-dynamic text-start">
+                <div class="swiper-wrapper">
+
+                    @foreach ($testimonials as $testimonial)
+                        <div class="swiper-slide">
+                            <div class="card  testimonial-card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <span class="avatar avatar-md avatar-rounded me-3">
+                                            <img src="{{ $testimonial->image_url }}" alt="">
+                                        </span>
+                                        <div>
+                                            <p class="mb-0 fw-semibold fs-14">
+                                                {{ $testimonial->name }}
+                                            </p>
+                                            <p class="mb-0 fs-10 fw-semibold text-muted">
+                                                {{ $testimonial->company_name }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <span class="text-muted">-  {{ $testimonial->comment }}  --</span>
+                                    </div>
+                                    {{-- <div class="d-flex align-items-center justify-content-end w-100">
+                                        <div class="float-end fs-12 fw-semibold text-muted text-end">
+                                            <span>
+                                                {{ $testimonial->created_at->diffForHumans() }}
+                                            </span>
+                                            <span class="d-block fw-normal fs-12 text-success"><i>
+                                                {{ $testimonial->name }}
+                                                </i></span>
+                                        </div>
+                                    </div> --}}
                                 </div>
                             </div>
-                        @endforeach
+                        </div>
+                    @endforeach
 
-
-                    </div>
                 </div>
+                <div class="swiper-pagination mt-4"></div>
             </div>
         </div>
     </section>
+
 
     <section class="section section-bg" id="blogs">
         <div class="container text-center">

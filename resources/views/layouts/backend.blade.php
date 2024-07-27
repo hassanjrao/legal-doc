@@ -346,6 +346,14 @@
                             </li>
 
                             <li class="slide">
+                                <a href="{{ route('admin.testimonials.index') }}"
+                                    class="side-menu__item {{ request()->is('admin/testimonials/*') || request()->is('admin/testimonials') ? ' active' : '' }}">
+                                    <i class="fe fe-radio side-menu__icon"></i>
+                                    <span class="side-menu__label">Testimonials</span>
+                                </a>
+                            </li>
+
+                            <li class="slide">
                                 <a href="{{ route('admin.feedback-questions.index') }}"
                                     class="side-menu__item {{ request()->is('admin/feedback-questions/*') || request()->is('admin/feedback-questions') ? ' active' : '' }}">
                                     <i class="fe fe-message-square side-menu__icon"></i>
