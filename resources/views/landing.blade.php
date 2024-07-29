@@ -167,54 +167,6 @@
 
 
 
-    <section class="section landing-testimonials" id="testimonials">
-        <div class="container text-center">
-            <p class="fs-18 fw-medium mb-1"><span class="landing-section-heading">Testinominals</span></p>
-            <span class="landing-title"></span>
-            {{-- <h3 class="fw-semibold mb-5">We never failed to reach expectations</h3> --}}
-            <div class="swiper pagination-dynamic text-start">
-                <div class="swiper-wrapper">
-
-                    @foreach ($testimonials as $testimonial)
-                        <div class="swiper-slide">
-                            <div class="card  testimonial-card">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <span class="avatar avatar-md avatar-rounded me-3">
-                                            <img src="{{ $testimonial->image_url }}" alt="">
-                                        </span>
-                                        <div>
-                                            <p class="mb-0 fw-semibold fs-14">
-                                                {{ $testimonial->name }}
-                                            </p>
-                                            <p class="mb-0 fs-10 fw-semibold text-muted">
-                                                {{ $testimonial->company_name }}
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <span class="text-muted">-  {{ $testimonial->comment }}  --</span>
-                                    </div>
-                                    {{-- <div class="d-flex align-items-center justify-content-end w-100">
-                                        <div class="float-end fs-12 fw-semibold text-muted text-end">
-                                            <span>
-                                                {{ $testimonial->created_at->diffForHumans() }}
-                                            </span>
-                                            <span class="d-block fw-normal fs-12 text-success"><i>
-                                                {{ $testimonial->name }}
-                                                </i></span>
-                                        </div>
-                                    </div> --}}
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-
-                </div>
-                <div class="swiper-pagination mt-4"></div>
-            </div>
-        </div>
-    </section>
 
 
     <section class="section section-bg" id="blogs">
@@ -228,8 +180,11 @@
                     <div class="col-sm-3 col-md-12 col-lg-3 col-xl-3">
                         <div class="card">
                             <a href="{{ route('blogs.show', $blog->id) }}">
-                                <img class="card-img-top img-fluid" style="height: 200px" src="{{ $blog->image_url }}"
-                                    alt="Well, I didn&#39;t vote for you.">
+
+                                <span class="avatar avatar-xxl avatar-rounded mb-3 team-avatar">
+                                    <img class="img-fluid" style="height: 100px" src="{{ $blog->image_url }}"
+                                        alt="Well, I didn&#39;t vote for you.">
+                                </span>
                             </a>
                             <div class="card-body d-flex flex-column">
                                 <h4 class="fw-normal">
@@ -324,6 +279,55 @@
 
 
 
+
+    <section class="section section-bg landing-testimonials" id="testimonials">
+        <div class="container text-center">
+            <p class="fs-18 fw-medium mb-1"><span class="landing-section-heading">Testinominals</span></p>
+            <span class="landing-title"></span>
+            {{-- <h3 class="fw-semibold mb-5">We never failed to reach expectations</h3> --}}
+            <div class="swiper pagination-dynamic text-start">
+                <div class="swiper-wrapper">
+
+                    @foreach ($testimonials as $testimonial)
+                        <div class="swiper-slide">
+                            <div class="card  testimonial-card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <span class="avatar avatar-md avatar-rounded me-3">
+                                            <img src="{{ $testimonial->image_url }}" alt="">
+                                        </span>
+                                        <div>
+                                            <p class="mb-0 fw-semibold fs-14">
+                                                {{ $testimonial->name }}
+                                            </p>
+                                            <p class="mb-0 fs-10 fw-semibold text-muted">
+                                                {{ $testimonial->company_name }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <span class="text-muted">- {{ $testimonial->comment }} --</span>
+                                    </div>
+                                    {{-- <div class="d-flex align-items-center justify-content-end w-100">
+                                        <div class="float-end fs-12 fw-semibold text-muted text-end">
+                                            <span>
+                                                {{ $testimonial->created_at->diffForHumans() }}
+                                            </span>
+                                            <span class="d-block fw-normal fs-12 text-success"><i>
+                                                {{ $testimonial->name }}
+                                                </i></span>
+                                        </div>
+                                    </div> --}}
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+
+                </div>
+                <div class="swiper-pagination mt-4"></div>
+            </div>
+        </div>
+    </section>
 
 
 
