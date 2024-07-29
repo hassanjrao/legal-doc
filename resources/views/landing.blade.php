@@ -179,7 +179,7 @@
                 @foreach ($blogs as $blog)
                     <div class="col-sm-3 col-md-12 col-lg-3 col-xl-3">
                         <div class="card">
-                            <a href="{{ route('blogs.show', $blog->id) }}" class="pt-4">
+                            <a href="{{ route('blogs.show', $blog->id) }}" class="pt-5">
 
                                 <span class="avatar avatar-xxl avatar-rounded mb-3 team-avatar">
                                     <img class="" style="height: 100px" src="{{ $blog->image_url }}"
