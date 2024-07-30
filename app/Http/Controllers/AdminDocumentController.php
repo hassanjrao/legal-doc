@@ -673,7 +673,7 @@ class AdminDocumentController extends Controller
 
         // Keep styles and other elements
         $config->set('HTML.Allowed', 'div,span,b,strong,i,em,u,ul,ol,li,p,br,table,thead,tbody,tr,td,th,h1,h2,h3,h4,h5,h6,img,a[style|href|title|alt|src|width|height],span[style],custom,custom[style]');
-        $config->set('CSS.AllowedProperties', 'color, font-size, font-family, background-color, text-align, text-decoration, font-weight, font-style, border,  padding, margin, width, height');
+        $config->set('CSS.AllowedProperties', 'color, font-size, font-family, background-color, text-align, text-decoration, font-weight, font-style, border, width, height');
 
         $config->set('HTML.AllowedAttributes', 'style,href,src,width,height,alt');
 
