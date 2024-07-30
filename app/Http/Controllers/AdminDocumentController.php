@@ -262,6 +262,8 @@ class AdminDocumentController extends Controller
 
         $multiChoice = $this->processMcqs($htmlContent, $documentMultiChoices, $userMultiChoiceOptions, $isDownloading);
 
+        dd($multiChoice);
+
         // Replace placeholders with editable spans
         $htmlContent = preg_replace('/__+/', '<span class="editable" contenteditable="true">$0</span>', $multiChoice['htmlContent']);
 
