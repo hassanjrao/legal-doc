@@ -418,6 +418,7 @@ class AdminDocumentController extends Controller
                 }
             }
 
+            dd($options);
 
             // Generate HTML
             $htmlOutput .= '<div class="content-block">';
