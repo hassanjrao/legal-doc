@@ -1,6 +1,6 @@
 @extends('layouts.backend')
 
-@section('page-name','Fill Document')
+@section('page-name', 'Fill Document')
 
 @section('css')
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
@@ -70,11 +70,23 @@
     <script>
         var documentPlaceholdersIds = @json($documentPlaceholdersIds);
 
-        console.log('documentPlaceholdersIds',documentPlaceholdersIds);
+        console.log('documentPlaceholdersIds', documentPlaceholdersIds);
 
         var userDocumentResponses = @json($userDocumentResponses);
 
-        console.log('userDocumentResponses',userDocumentResponses);
+        console.log('userDocumentResponses', userDocumentResponses);
+
+        document.addEventListener('keydown', function(e) {
+            console.log(e.key, e.target.tagName);
+            if (e.key === ' ' && (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA')) {
+                // make focus on the current input
+                e.target.focus();
+                // add space to the input
+                e.target.value += ' ';
+                e.preventDefault();
+            }
+        });
+
 
         $(document).ready(function() {
             $('.summernote').summernote({
@@ -168,7 +180,8 @@
                         // delay before redirecting
                         setTimeout(function() {
                             // redirect to the documents page
-                            window.location.href = "{{ route('admin.documents.index') }}";
+                            window.location.href =
+                                "{{ route('admin.documents.index') }}";
                         }, 1500);
 
 

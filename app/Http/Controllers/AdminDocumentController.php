@@ -439,7 +439,8 @@ class AdminDocumentController extends Controller
                 if ($isDownloading) {
                 // if not isChecked, then add between {D_ST} and {D_EN} tags
                     if ($isChecked) {
-                        $htmlOutput .= '<span class="editable" contenteditable="true">' . htmlspecialchars($option) . '</span>';
+                        $htmlOutput .= '<span class="editable" style="display:inline" contenteditable="true">' . htmlspecialchars($option) . '</span>';
+
                     } else {
                         $htmlOutput .= '{D_ST}' . htmlspecialchars($option) . '{D_EN}';
                     }
@@ -600,12 +601,22 @@ class AdminDocumentController extends Controller
             ->where('user_id', auth()->user()->id)
             ->get();
 
-        $userDocumentResponses = $userDocumentResponses->pluck('response')->toArray();
+        // $userDocumentResponses = $userDocumentResponses->pluck('response')->toArray();
 
         foreach ($userDocumentResponses as $response) {
             // MAKE response bold
-            $response = '<b>' . ' ' . $response . ' ' . '</b>';
-            $htmlContent = preg_replace('/<span class="editable" contenteditable="true">__+<\/span>/', $response, $htmlContent, 1);
+            $resp = '<b>' . $response->response . '</b>';
+
+            // $resp=$response->response;
+
+            // // remove new line characters from response
+            // $resp= preg_replace('/\s+/', ' ', $resp);
+            $htmlContent = preg_replace('/<span class="editable" contenteditable="true">__+<\/span>/', $resp, $htmlContent, 1);
+            // dd($htmlContent,$response);
+
+            // if($response->id==660){
+            //     dd($resp,$htmlContent);
+            // }
         }
 
 
@@ -614,6 +625,7 @@ class AdminDocumentController extends Controller
 
         $htmlContent = $this->removeContentBetweenTags($htmlContent, '{D_ST}', '{D_EN}');
 
+        // dd($htmlContent);
 
         // dd($htmlContent);
 
@@ -638,7 +650,7 @@ class AdminDocumentController extends Controller
         $config = HTMLPurifier_Config::createDefault();
 
         // Keep styles and other elements
-        $config->set('HTML.Allowed', 'div,span,b,strong,i,em,u,ul,ol,li,p,br,table,thead,tbody,tr,td,th,h1,h2,h3,h4,h5,h6,img,a[style|href|title|alt|src|width|height],span[style]');
+        $config->set('HTML.Allowed', 'div,span,b,strong,i,em,u,ul,ol,li,p,br,table,thead,tbody,tr,td,th,h1,h2,h3,h4,h5,h6,img,a[style|href|title|alt|src|width|height],span[style],custom,custom[style]');
         $config->set('CSS.AllowedProperties', 'color, font-size, font-family, background-color, text-align, text-decoration, font-weight, font-style, border,  padding, margin, width, height');
 
         $config->set('HTML.AllowedAttributes', 'style,href,src,width,height,alt');

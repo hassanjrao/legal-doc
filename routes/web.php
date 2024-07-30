@@ -86,7 +86,7 @@ Route::middleware(["auth",'verified'])->group(function () {
         Route::resource('law-areas', AdminLawAreaController::class)->middleware('role:admin');
 
 
-        Route::resource('donors', AdminDonorController::class)->middleware('role:admin');
+        // Route::resource('donors', AdminDonorController::class)->middleware('role:admin');
 
         Route::resource('testimonials', AdminTestimonialController::class)->middleware('role:admin');
 
