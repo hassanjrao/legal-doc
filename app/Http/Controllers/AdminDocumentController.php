@@ -450,7 +450,7 @@ class AdminDocumentController extends Controller
 
                     $htmlOutput .= '<div class="form-check">';
                     $htmlOutput .= '<input class="form-check-input" type="radio" name="option-' . $multiChoiceId . '" id="option-' . $multiChoiceId . '-' . $multiChoiceOptionId . '" value="' . $multiChoiceOptionId . '" ' . ($isChecked ? 'checked' : '') . '>';
-                    $htmlOutput .= '<label class="form-check-label" for="option-' . $multiChoiceId . '-' . $multiChoiceOptionId . '">' . htmlspecialchars($option) . '</label>';
+                    $htmlOutput .= '<label class="form-check-label" for="option-' . $multiChoiceId . '-' . $multiChoiceOptionId . '">' . ($option) . '</label>';
                     $htmlOutput .= '</div>';
                 }
             }
