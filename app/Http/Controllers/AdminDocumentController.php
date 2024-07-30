@@ -262,7 +262,6 @@ class AdminDocumentController extends Controller
 
         $multiChoice = $this->processMcqs($htmlContent, $documentMultiChoices, $userMultiChoiceOptions, $isDownloading);
 
-        dd($multiChoice);
 
         // Replace placeholders with editable spans
         $htmlContent = preg_replace('/__+/', '<span class="editable" contenteditable="true">$0</span>', $multiChoice['htmlContent']);
@@ -346,6 +345,27 @@ class AdminDocumentController extends Controller
 
         $text = preg_replace('/<[^>]*>/', '', $htmlContent);
 
+        // remove new line characters
+        $text = preg_replace('/\s+/', ' ', $text);
+
+        // remove multiple spaces
+        $text = preg_replace('/\s+/', ' ', $text);
+
+        // remove spaces between MCO_EN, there are some tags which become like this {MCO_ EN }. So, remove the space between MCO_EN
+        $text = preg_replace('/MCO_ EN/', 'MCO_EN', $text);
+        $text = preg_replace('/MCH_ EN/', 'MCH_EN', $text);
+        $text = preg_replace('/MC_ EN/', 'MC_EN', $text);
+        $text = preg_replace('/MC_ ST/', 'MC_ST', $text);
+        $text = preg_replace('/MCO_ ST/', 'MCO_ST', $text);
+        $text = preg_replace('/MCH_ ST/', 'MCH_ST', $text);
+        $text = preg_replace('/MC_ ST/', 'MC_ST', $text);
+
+        // remove spaces between { }
+        $text = preg_replace('/{ /', '{', $text);
+        $text = preg_replace('/ }/', '}', $text);
+
+        // remove &nbsp; characters
+        $text = preg_replace('/&nbsp;/', '', $text);
 
         // romove tags
 
@@ -418,7 +438,6 @@ class AdminDocumentController extends Controller
                 }
             }
 
-            dd($options);
 
             // Generate HTML
             $htmlOutput .= '<div class="content-block">';
