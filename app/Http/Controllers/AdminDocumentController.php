@@ -10,6 +10,8 @@ use App\Models\DocumentPlaceHolder;
 use App\Models\LawArea;
 use App\Models\UserDocumentResponse;
 use App\Models\UserMultiChoiceOption;
+use DOMDocument;
+use DOMXPath;
 use HTMLPurifier;
 use HTMLPurifier_Config;
 use Illuminate\Http\Request;
@@ -123,12 +125,48 @@ class AdminDocumentController extends Controller
     }
 
 
+
+    private function cleanUpHtml($html)
+    {
+        // Load HTML into DOMDocument
+        $dom = new DOMDocument();
+        libxml_use_internal_errors(true);
+        $dom->loadHTML($html);
+        libxml_clear_errors();
+
+        // XPath to find all <p> tags
+        $xpath = new DOMXPath($dom);
+        $paragraphs = $xpath->query('//p');
+
+        // Merge <p> tags that only contain text
+        $mergedHtml = '';
+        $textBuffer = '';
+        foreach ($paragraphs as $paragraph) {
+            if ($paragraph->childNodes->length == 1 && $paragraph->childNodes->item(0)->nodeType == XML_TEXT_NODE) {
+                $textBuffer .= ' ' . $paragraph->textContent;
+            } else {
+                if ($textBuffer) {
+                    $mergedHtml .= '<p>' . trim($textBuffer) . '</p>';
+                    $textBuffer = '';
+                }
+                $mergedHtml .= $dom->saveHTML($paragraph);
+            }
+        }
+        if ($textBuffer) {
+            $mergedHtml .= '<p>' . trim($textBuffer) . '</p>';
+        }
+
+        // Return the cleaned HTML with preserved styles
+        return $mergedHtml;
+    }
+
     // Convert the document to HTML and display the form to fill in placeholders
     public function showFillForm($id)
     {
         $document = Document::findOrFail($id);
         $htmlContent = $this->convertDocToHtml(storage_path('app/public/' . $document->file_path));
 
+        // $htmlContent = $this->cleanUpHtml($htmlContent);
 
 
         $documentPlaceholders = DocumentPlaceHolder::where('document_id', $document->id)->get();
@@ -260,6 +298,27 @@ class AdminDocumentController extends Controller
 
 
 
+        // remove margin-left, margin-right, margin-top, margin-bottom, padding-left, padding-right, padding-top, padding-bottom from the style attribute
+        $htmlContent = preg_replace('/(margin-left|margin-right|margin-top|margin-bottom|padding-left|padding-right|padding-top|padding-bottom):[^;]+;/', '', $htmlContent);
+
+        // remove tags which do not have any content
+        $htmlContent = preg_replace('/<[^>]*><\/[^>]*>/', '', $htmlContent);
+        // remove tags which have only &nbsp; content
+        $htmlContent = preg_replace('/<[^>]*>&nbsp;<\/[^>]*>/', '', $htmlContent);
+        // remove tags which have spans with only &nbsp; content
+        $htmlContent = preg_replace('/<span[^>]*>&nbsp;<\/span>/', '', $htmlContent);
+
+        // remove all span tags but keep the content
+        $htmlContent = preg_replace('/<span[^>]*>([^<]*)<\/span>/', '$1', $htmlContent);
+
+
+        // remove tags which do not have any content
+        $htmlContent = preg_replace('/<(\w+)[^>]*>(&nbsp;|\\s+)<\/\1>/i', '', $htmlContent);
+
+        // $htmlContent=$this->cleanUpHtml($htmlContent);
+
+
+
         $multiChoice = $this->processMcqs($htmlContent, $documentMultiChoices, $userMultiChoiceOptions, $isDownloading);
 
 
@@ -267,6 +326,21 @@ class AdminDocumentController extends Controller
         $htmlContent = preg_replace('/__+/', '<span class="editable" contenteditable="true">$0</span>', $multiChoice['htmlContent']);
 
 
+        $dom = new DOMDocument();
+        libxml_use_internal_errors(true); // Suppress HTML parsing warnings
+        $dom->loadHTML($htmlContent);
+        libxml_clear_errors();
+
+        $xpath = new DOMXPath($dom);
+
+        // Find all nodes that contain only &nbsp;
+        $nodes = $xpath->query('//*[normalize-space(.)=" "]');
+
+        foreach ($nodes as $node) {
+            $node->parentNode->removeChild($node);
+        }
+
+        $htmlContent = $dom->saveHTML();
 
 
 
@@ -459,15 +533,12 @@ class AdminDocumentController extends Controller
 
 
                 if ($isDownloading) {
-                // if not isChecked, then add between {D_ST} and {D_EN} tags
+                    // if not isChecked, then add between {D_ST} and {D_EN} tags
                     if ($isChecked) {
                         $htmlOutput .= '<span class="editable" style="display:inline" contenteditable="true">' . htmlspecialchars($option) . '</span>';
-
                     } else {
                         $htmlOutput .= '{D_ST}' . htmlspecialchars($option) . '{D_EN}';
                     }
-
-
                 } else {
 
                     $htmlOutput .= '<div class="form-check">';
