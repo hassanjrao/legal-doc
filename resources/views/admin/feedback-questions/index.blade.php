@@ -42,7 +42,7 @@
                                         </td>
 
                                         <td>{{ $feedbackQuestion->created_at }}</td>
-                                        <td class="d-flex">
+                                        <td class="">
 
                                             <a href="{{ route('admin.feedback-questions.edit', $feedbackQuestion->id) }}"
                                                 type="button"

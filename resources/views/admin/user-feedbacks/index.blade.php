@@ -48,7 +48,7 @@
                                         {{ $feedback->question->question }}
                                     </h6>
                                     <p class="card-text mb-2">
-                                        {{ $feedback->choice->choice }}
+                                        {{ $feedback->choice ? $feedback->choice->choice : '' }}
                                     </p>
 
                                     <p class="card-text mb-0">

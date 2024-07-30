@@ -43,19 +43,21 @@ class AdminFeedbackQuestionController extends Controller
     {
         $request->validate([
             'question' => 'required',
-            'options' => 'required|array|min:2',
+            'options' => 'nullable|array|min:2',
         ]);
+
 
         $feedbackQuestion = FeedbackQuestion::create([
             'question' => $request->question,
         ]);
 
-        foreach ($request->options as $option) {
-            $feedbackQuestion->choices()->create([
-                'choice' => $option,
-            ]);
+        if ($request->options) {
+            foreach ($request->options as $option) {
+                $feedbackQuestion->choices()->create([
+                    'choice' => $option,
+                ]);
+            }
         }
-
         return redirect()->route('admin.feedback-questions.index')->withToastSuccess('Feedback Question added successfully');
     }
 
@@ -96,7 +98,7 @@ class AdminFeedbackQuestionController extends Controller
 
         $request->validate([
             'question' => 'required',
-            'options' => 'required|array|min:2',
+            'options' => 'nullable|array|min:2',
         ]);
 
         $feedbackQuestion->update([
@@ -105,10 +107,12 @@ class AdminFeedbackQuestionController extends Controller
 
         $feedbackQuestion->choices()->delete();
 
-        foreach ($request->options as $option) {
-            $feedbackQuestion->choices()->create([
-                'choice' => $option,
-            ]);
+        if ($request->options) {
+            foreach ($request->options as $option) {
+                $feedbackQuestion->choices()->create([
+                    'choice' => $option,
+                ]);
+            }
         }
 
         return redirect()->route('admin.feedback-questions.index')->withToastSuccess('Feedback Question updated successfully');

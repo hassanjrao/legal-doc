@@ -134,13 +134,18 @@ class HomeController extends Controller
         $questions=$request->questions;
         $comments=$request->comments;
 
-        foreach ($questions as $questionId=>$selectedChoice){
+        // dd($request->all());
+
+        $sessionId=session()->getId().time().rand(1000,9999);
+
+        foreach ($comments as $questionId=>$comment){
 
             UserFeedback::create([
                 'user_id'=>auth()->id(),
                 'feedback_question_id'=>$questionId,
-                'feedback_question_choice_id'=>$selectedChoice,
-                'comment'=>$comments[$questionId]??null,
+                'feedback_question_choice_id'=>$questions[$questionId] ?? null,
+                'comment'=>$comment,
+                'session_id'=>$sessionId
             ]);
         }
 

@@ -16,7 +16,9 @@ class AdminUserFeedbackController extends Controller
     {
         $userFeedbacks = UserFeedback::with('user', 'question', 'choice')->latest()->get();
 
-        $userFeedbacks=$userFeedbacks->groupBy('user_id');
+
+        $userFeedbacks=$userFeedbacks->groupBy('session_id');
+
 
         $userFeedbacks=$userFeedbacks->map(function($feedbacks){
             return [
