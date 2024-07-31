@@ -304,16 +304,16 @@ class AdminDocumentController extends Controller
         // remove tags which do not have any content
         $htmlContent = preg_replace('/<[^>]*><\/[^>]*>/', '', $htmlContent);
         // remove tags which have only &nbsp; content
-        $htmlContent = preg_replace('/<[^>]*>&nbsp;<\/[^>]*>/', '', $htmlContent);
+        // $htmlContent = preg_replace('/<[^>]*>&nbsp;<\/[^>]*>/', '', $htmlContent);
         // remove tags which have spans with only &nbsp; content
-        $htmlContent = preg_replace('/<span[^>]*>&nbsp;<\/span>/', '', $htmlContent);
+        // $htmlContent = preg_replace('/<span[^>]*>&nbsp;<\/span>/', '', $htmlContent);
 
         // remove all span tags but keep the content
-        $htmlContent = preg_replace('/<span[^>]*>([^<]*)<\/span>/', '$1', $htmlContent);
+        // $htmlContent = preg_replace('/<span[^>]*>([^<]*)<\/span>/', '$1', $htmlContent);
 
 
         // remove tags which do not have any content
-        $htmlContent = preg_replace('/<(\w+)[^>]*>(&nbsp;|\\s+)<\/\1>/i', '', $htmlContent);
+        // $htmlContent = preg_replace('/<(\w+)[^>]*>(&nbsp;|\\s+)<\/\1>/i', '', $htmlContent);
 
         // $htmlContent=$this->cleanUpHtml($htmlContent);
 
@@ -326,21 +326,21 @@ class AdminDocumentController extends Controller
         $htmlContent = preg_replace('/__+/', '<span class="editable" contenteditable="true">$0</span>', $multiChoice['htmlContent']);
 
 
-        $dom = new DOMDocument();
-        libxml_use_internal_errors(true); // Suppress HTML parsing warnings
-        $dom->loadHTML($htmlContent);
-        libxml_clear_errors();
+        // $dom = new DOMDocument();
+        // libxml_use_internal_errors(true); // Suppress HTML parsing warnings
+        // $dom->loadHTML($htmlContent);
+        // libxml_clear_errors();
 
-        $xpath = new DOMXPath($dom);
+        // $xpath = new DOMXPath($dom);
 
-        // Find all nodes that contain only &nbsp;
-        $nodes = $xpath->query('//*[normalize-space(.)=" "]');
+        // // Find all nodes that contain only &nbsp;
+        // $nodes = $xpath->query('//*[normalize-space(.)=" "]');
 
-        foreach ($nodes as $node) {
-            $node->parentNode->removeChild($node);
-        }
+        // foreach ($nodes as $node) {
+        //     $node->parentNode->removeChild($node);
+        // }
 
-        $htmlContent = $dom->saveHTML();
+        // $htmlContent = $dom->saveHTML();
 
 
 
@@ -743,7 +743,7 @@ class AdminDocumentController extends Controller
         $config = HTMLPurifier_Config::createDefault();
 
         // Keep styles and other elements
-        $config->set('HTML.Allowed', 'div,span,b,strong,i,em,u,ul,ol,li,p,br,table,thead,tbody,tr,td,th,h1,h2,h3,h4,h5,h6,img,a[style|href|title|alt|src|width|height],span[style],custom,custom[style]');
+        $config->set('HTML.Allowed', 'div,span,b,strong,i,em,u,ul,ol,li,p,br,table,thead,tbody,tr,td,th,h1,h2,h3,h4,h5,h6,img,a[style|href|title|alt|src|width|height],span[style]');
         $config->set('CSS.AllowedProperties', 'color, font-size, font-family, background-color, text-align, text-decoration, font-weight, font-style, border, width, height');
 
         $config->set('HTML.AllowedAttributes', 'style,href,src,width,height,alt');
