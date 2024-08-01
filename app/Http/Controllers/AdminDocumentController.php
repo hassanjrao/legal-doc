@@ -663,6 +663,7 @@ class AdminDocumentController extends Controller
 
     public function downloadUserDocument($id)
     {
+        ini_set('max_execution_time', 300);
         $document = Document::findOrFail($id);
 
         $htmlContent = $this->convertDocToHtml(storage_path('app/public/' . $document->file_path));
