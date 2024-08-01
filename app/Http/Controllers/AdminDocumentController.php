@@ -667,6 +667,7 @@ class AdminDocumentController extends Controller
         $document = Document::findOrFail($id);
 
         $htmlContent = $this->convertDocToHtml(storage_path('app/public/' . $document->file_path));
+        
 
         // Sanitize the HTML content
 
