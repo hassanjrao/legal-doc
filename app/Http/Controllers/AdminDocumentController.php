@@ -63,7 +63,7 @@ class AdminDocumentController extends Controller
             'title' => 'required',
             'type' => 'required|exists:document_categories,id',
             'law_area' => 'required|exists:law_areas,id',
-            'file' => 'required|mimes:doc,docx|max:2048',
+            'file' => 'required|mimes:doc,docx',
         ]);
 
         $document = $request->file('file');
