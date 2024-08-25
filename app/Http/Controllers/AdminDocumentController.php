@@ -38,7 +38,7 @@ class AdminDocumentController extends Controller
      */
     public function create()
     {
-        if(!auth()->user()->hasRole('admin')){
+        if (!auth()->user()->hasRole('admin')) {
             abort(403, 'Unauthorized action');
         }
 
@@ -120,9 +120,21 @@ class AdminDocumentController extends Controller
         $userDocumentResponses = $userDocumentResponses->pluck('response')->toArray();
 
 
+        // remove {D_ST} AND {D_EN} signs
+        $htmlContent = $this->deleteSigns($htmlContent);
+
 
 
         return view('admin.documents.fill', compact('document', 'htmlContent', 'documentPlaceholdersIds', 'userDocumentResponses'));
+    }
+
+
+    public function deleteSigns($htmlContent)
+    {
+        $htmlContent = preg_replace('/{D_ST}/', '', $htmlContent);
+        $htmlContent = preg_replace('/{D_EN}/', '', $htmlContent);
+
+        return $htmlContent;
     }
 
     // Fill placeholders in the document and save the filled document
@@ -280,6 +292,17 @@ class AdminDocumentController extends Controller
         return response()->download(storage_path('app/public/' . $document->file_path), $document->title . '.docx');
     }
 
+
+    public function removeContentBetweenTags($html, $startTag, $endTag)
+    {
+        while (strpos($html, $startTag) !== false && strpos($html, $endTag) !== false) {
+            $startPos = strpos($html, $startTag);
+            $endPos = strpos($html, $endTag) + strlen($endTag);
+            $html = substr_replace($html, '', $startPos, $endPos - $startPos);
+        }
+        return $html;
+    }
+
     public function downloadUserDocument($id)
     {
         $document = Document::findOrFail($id);
@@ -306,6 +329,9 @@ class AdminDocumentController extends Controller
 
         $htmlContent = $this->sanitizeHtml($htmlContent);
 
+        $htmlContent = $this->removeContentBetweenTags($htmlContent, '{D_ST}', '{D_EN}');
+
+
         // dd($htmlContent);
 
         $phpWord = new PhpWord();
@@ -318,7 +344,7 @@ class AdminDocumentController extends Controller
         $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
         $objWriter->save(storage_path('app/public/' . basename($document->file_path, '.docx') . '_filled.docx'));
 
-        $user=auth()->user();
+        $user = auth()->user();
         $user->downloadedDocuments()->attach($document->id);
 
         return response()->download(storage_path('app/public/' . basename($document->file_path, '.docx') . '_filled.docx'), $document->title . '.docx');
