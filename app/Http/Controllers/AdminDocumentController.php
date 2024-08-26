@@ -128,6 +128,14 @@ class AdminDocumentController extends Controller
         return view('admin.documents.fill', compact('document', 'htmlContent', 'documentPlaceholdersIds', 'userDocumentResponses'));
     }
 
+    public function removeCustomTags($html) {
+        // This regex pattern will match everything between {D_ST} and {D_EN}, including the tags
+        $pattern = '/\{D_ST\}.*?\{D_EN\}/s';
+        $cleanHtml = preg_replace($pattern, '', $html);
+
+        return $cleanHtml;
+    }
+
 
     public function deleteSigns($htmlContent)
     {
@@ -177,11 +185,6 @@ class AdminDocumentController extends Controller
         $phpWord = IOFactory::load($filePath);
         $htmlWriter = IOFactory::createWriter($phpWord, 'HTML');
 
-        // Ensure list elements are preserved
-        // $htmlWriter->getWriterPart('Document')->setUseXHTML(true);
-
-        // Ensure list elements are preserved
-        //  $htmlWriter->getWriterPart('Document')->setUseLists(true);
 
 
         $htmlFilePath = storage_path('app/public/' . basename($filePath, '.docx') . '.html');
@@ -190,7 +193,56 @@ class AdminDocumentController extends Controller
 
         $htmlContent = file_get_contents($htmlFilePath);
 
+        // Load the HTML content
+        $htmlContent = file_get_contents($htmlFilePath);
+
+        // Clean up HTML to remove unnecessary <p> tags
+        $htmlContent = $this->cleanUpHtml($htmlContent);
+
         return $htmlContent;
+    }
+
+    public function cleanUpHtml($html) {
+        // Remove empty <p> tags or those with just whitespace
+        $html = preg_replace('/<p>\s*<\/p>/', '', $html);
+
+        // Merge consecutive <p> tags
+        $html = preg_replace('/<\/p>\s*<p>/', ' ', $html);
+
+        // Further processing to merge paragraphs that may have been split incorrectly
+        $doc = new \DOMDocument();
+        @$doc->loadHTML($html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $xpath = new \DOMXPath($doc);
+
+        // find the lines which are inside {D_ST} AND {D_EN} signs
+
+        $lines = $xpath->query('//p[contains(text(), "{D_ST}")]/following-sibling::p[not(contains(text(), "{D_EN}"))]');
+
+        // add all the lines into a p tag
+
+        foreach ($lines as $line) {
+            $nextSibling = $line->nextSibling;
+            if ($nextSibling && $nextSibling->nodeName === 'p') {
+                $line->nodeValue .= ' ' . $nextSibling->nodeValue;
+                $line->parentNode->removeChild($nextSibling);
+            }
+        }
+
+        // Find single-word <p> tags and merge them
+        $singleWordParas = $xpath->query('//p[string-length(normalize-space(text())) < 30]');
+
+        foreach ($singleWordParas as $para) {
+            $nextSibling = $para->nextSibling;
+            if ($nextSibling && $nextSibling->nodeName === 'p') {
+                $para->nodeValue .= ' ' . $nextSibling->nodeValue;
+                $para->parentNode->removeChild($nextSibling);
+            }
+        }
+
+        // Save the modified HTML back to a string
+        $cleanedHtml = $doc->saveHTML();
+
+        return $cleanedHtml;
     }
 
 
@@ -200,6 +252,8 @@ class AdminDocumentController extends Controller
         // Replace placeholders with editable spans
         // Replace placeholders with editable spans
         $htmlContent = preg_replace('/__+/', '<span class="editable" contenteditable="true">$0</span>', $htmlContent);
+
+
 
         return $htmlContent;
     }
@@ -329,7 +383,11 @@ class AdminDocumentController extends Controller
 
         $htmlContent = $this->sanitizeHtml($htmlContent);
 
-        $htmlContent = $this->removeContentBetweenTags($htmlContent, '{D_ST}', '{D_EN}');
+                // remove {D_ST} AND {D_EN} signs
+                $htmlContent = $this->removeCustomTags($htmlContent);
+
+
+        // $htmlContent = $this->removeContentBetweenTags($htmlContent, '{D_ST}', '{D_EN}');
 
 
         // dd($htmlContent);
