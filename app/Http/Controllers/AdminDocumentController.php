@@ -165,7 +165,7 @@ class AdminDocumentController extends Controller
     }
 
     // Convert the document to HTML
-    private function convertDocToHtml($filePath)
+    public function convertDocToHtml($filePath)
     {
         Log::info('Converting document to HTML: ' . $filePath);
 
