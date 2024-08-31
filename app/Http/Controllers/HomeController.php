@@ -82,6 +82,14 @@ class HomeController extends Controller
 
     }
 
+    public function removeCustomTags($html) {
+        // This regex pattern will match everything between {D_ST} and {D_EN}, including the tags
+        $pattern = '/\{D_ST\}.*?\{D_EN\}/s';
+        $cleanHtml = preg_replace($pattern, '', $html);
+
+        return $cleanHtml;
+    }
+
     public function contactSubmit(Request $request)
     {
         $request->validate([
