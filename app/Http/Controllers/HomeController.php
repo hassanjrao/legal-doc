@@ -87,6 +87,14 @@ class HomeController extends Controller
     {
         $htmlContent = preg_replace('/{D_ST}/', '', $htmlContent);
         $htmlContent = preg_replace('/{D_EN}/', '', $htmlContent);
+        // also remove {D_ or {D or _ST} or _EN} or _ST or _EN
+        $htmlContent = preg_replace('/{D_/', '', $htmlContent);
+        $htmlContent = preg_replace('/_ST}/', '', $htmlContent);
+        $htmlContent = preg_replace('/_EN}/', '', $htmlContent);
+        $htmlContent = preg_replace('/{D/', '', $htmlContent);
+        $htmlContent = preg_replace('/_ST/', '', $htmlContent);
+        $htmlContent = preg_replace('/_EN/', '', $htmlContent);
+        
 
         return $htmlContent;
     }
