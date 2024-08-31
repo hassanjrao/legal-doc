@@ -62,9 +62,10 @@ class HomeController extends Controller
 
 
 
-                        // remove {D_ST} AND {D_EN} signs
+        // remove {D_ST} AND {D_EN} signs
         $htmlContent = $this->removeCustomTags($htmlContent);
 
+        $htmlContent = $this->deleteSigns($htmlContent);
 
 
         $phpWord = new PhpWord();
@@ -81,6 +82,15 @@ class HomeController extends Controller
         return response()->download(storage_path('app/public/' . basename($document->file_path, '.docx') . '_downloaded.docx'), $document->title . '_downloaded.docx')->deleteFileAfterSend(true);
 
     }
+
+    public function deleteSigns($htmlContent)
+    {
+        $htmlContent = preg_replace('/{D_ST}/', '', $htmlContent);
+        $htmlContent = preg_replace('/{D_EN}/', '', $htmlContent);
+
+        return $htmlContent;
+    }
+
 
     public function removeCustomTags($html) {
         // This regex pattern will match everything between {D_ST} and {D_EN}, including the tags
