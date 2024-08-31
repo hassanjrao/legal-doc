@@ -249,6 +249,12 @@ class AdminDocumentController extends Controller
     public function replacePlaceholdersWithEditableSpans($htmlContent)
     {
 
+        // remove margin-left, margin-right, margin-top, margin-bottom, padding-left, padding-right, padding-top, padding-bottom from the style attribute
+        $htmlContent = preg_replace('/(margin-left|margin-right|margin-top|margin-bottom|padding-left|padding-right|padding-top|padding-bottom):[^;]+;/', '', $htmlContent);
+
+        // remove tags which do not have any content
+        $htmlContent = preg_replace('/<[^>]*><\/[^>]*>/', '', $htmlContent);
+
         // Replace placeholders with editable spans
         // Replace placeholders with editable spans
         $htmlContent = preg_replace('/__+/', '<span class="editable" contenteditable="true">$0</span>', $htmlContent);

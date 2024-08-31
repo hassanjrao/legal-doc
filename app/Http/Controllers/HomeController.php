@@ -60,36 +60,10 @@ class HomeController extends Controller
 
         $htmlContent = $adminDocController->sanitizeHtml($htmlContent);
 
-        // REMOVE SPACES BETWEEN {_ST} AND {_EN}
-        $htmlContent = preg_replace('/\{MC_ST\}\s+\{MC_EN\}/', '{MC_ST}{MC_EN}', $htmlContent);
-        $htmlContent = preg_replace('/\{MCH_ST\}\s+\{MCH_EN\}/', '{MCH_ST}{MCH_EN}', $htmlContent);
-        $htmlContent = preg_replace('/\{MCO_ST\}\s+\{MCO_EN\}/', '{MCO_ST}{MCO_EN}', $htmlContent);
-        $htmlContent = preg_replace('/\{D_ST\}\s+\{E_EN\}/', '{D_ST}{D_EN}', $htmlContent);
-
-        // remove {MC_ST} words from the content
-        $htmlContent = str_replace('{MC_ST}', '', $htmlContent);
-        $htmlContent = str_replace('{MC_EN}', '', $htmlContent);
-        $htmlContent = str_replace('{MCH_ST}', '', $htmlContent);
-        $htmlContent = str_replace('{MCH_EN}', '', $htmlContent);
-        $htmlContent = str_replace('{MCO_ST}', '', $htmlContent);
-        $htmlContent = str_replace('{MCO_EN}', '', $htmlContent);
-        $htmlContent = str_replace('{D_ST}', '', $htmlContent);
-        $htmlContent = str_replace('{D_EN}', '', $htmlContent);
-
-        // REMOVE even if there is a single space or like this {MCO_
-// EN
-// }
-        $htmlContent = preg_replace('/\{MCO_/', '{MCO_', $htmlContent);
-        $htmlContent = preg_replace('/EN\}/', 'EN}', $htmlContent);
-        $htmlContent = preg_replace('/\{MCH_/', '{MCH_', $htmlContent);
-        $htmlContent = preg_replace('/EN\}/', 'EN}', $htmlContent);
-        $htmlContent = preg_replace('/\{MC_/', '{MC_', $htmlContent);
-        $htmlContent = preg_replace('/EN\}/', 'EN}', $htmlContent);
-        $htmlContent = preg_replace('/\{D_/', '{D_', $htmlContent);
-        $htmlContent = preg_replace('/EN\}/', 'EN}', $htmlContent);
 
 
-
+                        // remove {D_ST} AND {D_EN} signs
+        $htmlContent = $this->removeCustomTags($htmlContent);
 
 
 
