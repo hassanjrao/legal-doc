@@ -9,8 +9,8 @@
     <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title> @yield('page-title')</title>
-    <meta name="Description" content="Bootstrap Responsive Admin Web Dashboard HTML5 Template">
-    <meta name="Author" content="Spruko Technologies Private Limited">
+    <meta name="Description" content="Our goal is to simplify access to justice by providing free and easy-to-use legal documents for all citizens of Kosovo.">
+    <meta name="Author" content="dokumenteligjore">
 
     <!-- Favicon -->
     <link rel="icon" href="{{ asset('assets/images/brand-logos/favicon.png') }}"
